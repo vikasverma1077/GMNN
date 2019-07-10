@@ -54,6 +54,8 @@ train_file = opt['dataset'] + '/train.txt'
 dev_file = opt['dataset'] + '/dev.txt'
 test_file = opt['dataset'] + '/test.txt'
 
+import pdb; pdb.set_trace()
+
 vocab_node = loader.Vocab(net_file, [0, 1])
 vocab_label = loader.Vocab(label_file, [1])
 vocab_feature = loader.Vocab(feature_file, [1])
@@ -188,11 +190,11 @@ def get_accuracy(results):
             best_dev, acc_test = d, t
     return acc_test
 
-acc_test = get_accuracy(q_results)
+acc_test = get_accuracy(base_results)
 
 print('{:.3f}'.format(acc_test * 100))
 
 if opt['save'] != '/':
     trainer_q.save(opt['save'] + '/gnnq.pt')
     trainer_p.save(opt['save'] + '/gnnp.pt')
-
+##
