@@ -78,6 +78,8 @@ class MLP(nn.Module):
         self.relu = nn.ReLU()
         self.fc6 = nn.Linear(opt['hidden_dim'],opt['num_class'] )
         
+        if opt['cuda']:
+            self.cuda()
         
     
     def forward(self, x):
