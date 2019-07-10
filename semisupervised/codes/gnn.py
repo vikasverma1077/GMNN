@@ -60,4 +60,39 @@ class GNNp(nn.Module):
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = self.m2(x)
         return x
+    
+
+class MLP(nn.Module):
+    def __init__(self, opt):
+        super(MLP, self).__init__()
+        self.opt = opt
+        self.fc1 = nn.Linear(opt['num_feature'],1000) 
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(1000, 500) 
+        self.relu = nn.ReLU()
+        self.fc3 = nn.Linear(500, 200)
+        self.relu = nn.ReLU()
+        self.fc4 = nn.Linear(200, 100)
+        self.relu = nn.ReLU()
+        self.fc5 = nn.Linear(100, opt['hidden_dim'])
+        self.relu = nn.ReLU()
+        self.fc6 = nn.Linear(opt['hidden_dim'],opt['num_class'] )
+        
+        
+    
+    def forward(self, x):
+        out = self.fc1(x)
+        out = self.relu(out)
+        out = self.fc2(out)
+        out = self.relu(out)
+        out = self.fc3(x)
+        out = self.relu(out)
+        out = self.fc4(x)
+        out = self.relu(out)
+        out = self.fc5(x)
+        out = self.relu(out)
+        out = self.fc6(x)
+        return out
+
+
         

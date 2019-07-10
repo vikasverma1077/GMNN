@@ -13,7 +13,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 
 from trainer import Trainer
-from gnn import GNNq, GNNp
+from gnn import GNNq, GNNp, MLP
 import loader
 
 parser = argparse.ArgumentParser()
@@ -54,7 +54,6 @@ train_file = opt['dataset'] + '/train.txt'
 dev_file = opt['dataset'] + '/dev.txt'
 test_file = opt['dataset'] + '/test.txt'
 
-import pdb; pdb.set_trace()
 
 vocab_node = loader.Vocab(net_file, [0, 1])
 vocab_label = loader.Vocab(label_file, [1])
@@ -102,7 +101,8 @@ if opt['cuda']:
     inputs_p = inputs_p.cuda()
     target_p = target_p.cuda()
 
-gnnq = GNNq(opt, adj)
+#gnnq = GNNq(opt, adj)
+gnnq = MLP(opt)
 trainer_q = Trainer(opt, gnnq)
 
 gnnp = GNNp(opt, adj)
@@ -146,7 +146,7 @@ def pre_train(epoches):
     init_q_data()
     results = []
     for epoch in range(epoches):
-        loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+        loss = trainer_q.update_soft_mlp(inputs_q, target_q, idx_train)
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]

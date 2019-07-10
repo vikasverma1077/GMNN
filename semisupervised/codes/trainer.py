@@ -72,6 +72,24 @@ class Trainer(object):
         self.optimizer.step()
         return loss.item()
     
+    def update_soft_mlp(self, inputs, target, idx):
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+            target = target.cuda()
+            idx = idx.cuda()
+
+        self.model.train()
+        self.optimizer.zero_grad()
+
+        logits = self.model(inputs[idx])
+        logits = torch.log_softmax(logits, dim=-1)
+        
+        loss = -torch.mean(torch.sum(target[idx] * logits, dim=-1))
+        
+        loss.backward()
+        self.optimizer.step()
+        return loss.item()
+    
     def evaluate(self, inputs, target, idx):
         if self.opt['cuda']:
             inputs = inputs.cuda()
