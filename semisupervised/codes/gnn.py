@@ -87,13 +87,13 @@ class MLP(nn.Module):
         out = self.relu(out)
         out = self.fc2(out)
         out = self.relu(out)
-        out = self.fc3(x)
+        out = self.fc3(out)
         out = self.relu(out)
-        out = self.fc4(x)
+        out = self.fc4(out)
         out = self.relu(out)
-        out = self.fc5(x)
+        out = self.fc5(out)
         out = self.relu(out)
-        out = self.fc6(x)
+        out = self.fc6(out)
         return out
 
 
