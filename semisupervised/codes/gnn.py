@@ -22,6 +22,36 @@ def mixup_data(x, y, alpha):
     return mixed_x, mixed_y
 
 
+class GNN_mix(nn.Module):
+    def __init__(self, opt, adj):
+        super(GNNq, self).__init__()
+        self.opt = opt
+        self.adj = adj
+
+        opt_ = dict([('in', opt['num_feature']), ('out', opt['hidden_dim'])])
+        self.m1 = GraphConvolution(opt_, adj)
+
+        opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
+        self.m2 = GraphConvolution(opt_, adj)
+
+        if opt['cuda']:
+            self.cuda()
+
+    def reset(self):
+        self.m1.reset_parameters()
+        self.m2.reset_parameters()
+
+    def forward(self, x, target=None, train_idx= None, mix=False):
+        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+        if mix == True:
+            x_labeled = x[train_idx]
+            y_labeled = target[train_idx]
+        x = self.m1(x)
+        x = F.relu(x)
+        x = F.dropout(x, self.opt['dropout'], training=self.training)
+        x = self.m2(x)
+        return x
+
 class GNNq(nn.Module):
     def __init__(self, opt, adj):
         super(GNNq, self).__init__()
