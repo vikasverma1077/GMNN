@@ -87,7 +87,7 @@ class EntityFeature(object):
             for fid, wt in self.itof[k]:
                 if binary:
                     wt = 1.0
-                self.one_hot[k][fid] = wt / sm
+                self.one_hot[k][fid] = wt# / sm
 
 class Graph(object):
     def __init__(self, file_name, entity, weight=None):

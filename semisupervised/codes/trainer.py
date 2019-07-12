@@ -7,6 +7,12 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 from torch.optim import Optimizer
 
+bce_loss = nn.BCELoss().cuda()
+softmax = nn.Softmax(dim=1).cuda()
+class_criterion = nn.CrossEntropyLoss().cuda()
+def mixup_criterion(y_a, y_b, lam):
+        return lambda criterion, pred: lam * criterion(pred, y_a) + (1 - lam) * criterion(pred, y_b)
+
 def get_optimizer(name, parameters, lr, weight_decay=0):
     if name == 'sgd':
         return torch.optim.SGD(parameters, lr=lr, weight_decay=weight_decay)
@@ -80,12 +86,20 @@ class Trainer(object):
 
         self.model.train()
         self.optimizer.zero_grad()
+        temp = inputs[idx]
+        target_temp = target[idx]
+       
+        rand_idx = torch.randint(0, idx.shape[0]-1, (32,))
+        #import pdb; pdb.set_trace()
+        logits, mixed_target = self.model(temp[rand_idx], target=target_temp[rand_idx], mixup_input = False, mixup_hidden= True, mixup_alpha=1.0,layer_mix=4)
+        #logits = torch.log_softmax(logits, dim=-1)
+        
+        #loss = -torch.mean(torch.sum(t * logits, dim=-1))
+    
+        #loss_func = mixup_criterion(y_a, y_b, lam)
+        #class_loss = loss_func(class_criterion, output_mixed_l)
+        loss = bce_loss(softmax(logits), mixed_target)
 
-        logits = self.model(inputs[idx])
-        logits = torch.log_softmax(logits, dim=-1)
-        
-        loss = -torch.mean(torch.sum(target[idx] * logits, dim=-1))
-        
         loss.backward()
         self.optimizer.step()
         return loss.item()
@@ -97,7 +111,6 @@ class Trainer(object):
             idx = idx.cuda()
 
         self.model.eval()
-
         logits = self.model(inputs)
         loss = self.criterion(logits[idx], target[idx])
         preds = torch.max(logits[idx], dim=1)[1]

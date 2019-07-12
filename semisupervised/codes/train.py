@@ -101,8 +101,8 @@ if opt['cuda']:
     inputs_p = inputs_p.cuda()
     target_p = target_p.cuda()
 
-#gnnq = GNNq(opt, adj)
-gnnq = MLP(opt)
+gnnq = GNNq(opt, adj)
+#gnnq = MLP(opt)
 trainer_q = Trainer(opt, gnnq)
 
 gnnp = GNNp(opt, adj)
@@ -146,7 +146,9 @@ def pre_train(epoches):
     init_q_data()
     results = []
     for epoch in range(epoches):
-        loss = trainer_q.update_soft_mlp(inputs_q, target_q, idx_train)
+        #loss = trainer_q.update_soft_mlp(inputs_q, target_q, idx_train)
+        loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+        print (loss)
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
@@ -179,9 +181,10 @@ def train_q(epoches):
 
 base_results, q_results, p_results = [], [], []
 base_results += pre_train(opt['pre_epoch'])
-for k in range(opt['iter']):
-    p_results += train_p(opt['epoch'])
-    q_results += train_q(opt['epoch'])
+
+#for k in range(opt['iter']):
+#    p_results += train_p(opt['epoch'])
+#    q_results += train_q(opt['epoch'])
 
 def get_accuracy(results):
     best_dev, acc_test = 0.0, 0.0
@@ -194,7 +197,7 @@ acc_test = get_accuracy(base_results)
 
 print('{:.3f}'.format(acc_test * 100))
 
-if opt['save'] != '/':
-    trainer_q.save(opt['save'] + '/gnnq.pt')
-    trainer_p.save(opt['save'] + '/gnnp.pt')
+#if opt['save'] != '/':
+#    trainer_q.save(opt['save'] + '/gnnq.pt')
+#    trainer_p.save(opt['save'] + '/gnnp.pt')
 ##
