@@ -51,17 +51,20 @@ class GNN_mix(nn.Module):
         opt_ = dict([('in', opt['num_feature']), ('out', 1000)])
         self.m1 = GraphConvolution(opt_, adj)
 
-        self.linear_m1 = nn.Linear(1000,opt['num_class'] )
+        self.linear_m1_1 = nn.Linear(1000,500)
+        self.linear_m1_2 = nn.Linear(500,opt['num_class'] )
         
         opt_ = dict([('in', 1000), ('out', 500)])
         self.m2 = GraphConvolution(opt_, adj)
         
-        self.linear_m2 = nn.Linear(500,opt['num_class'] )
+        self.linear_m2_1 = nn.Linear(500,200)
+        self.linear_m2_2 = nn.Linear(200,opt['num_class'] )
         
         opt_ = dict([('in', 500), ('out', 100)])
         self.m3 = GraphConvolution(opt_, adj)
         
-        self.linear_m3 = nn.Linear(100,opt['num_class'] )
+        self.linear_m3_1 = nn.Linear(100,50 )
+        self.linear_m3_2 = nn.Linear(50,opt['num_class'] )
 
         opt_ = dict([('in', 100), ('out', opt['num_class'])])
         self.m4 = GraphConvolution(opt_, adj)
@@ -127,7 +130,9 @@ class GNN_mix(nn.Module):
         x = F.relu(x)
         ## mix h1 ##
         x, target_a, target_b,lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
-        x = self.linear_m1(x)
+        x = self.linear_m1_1(x)
+        x = F.relu(x)
+        x = self.linear_m1_2(x)
         return x, target_a, target_b, lam
    
    
@@ -140,7 +145,9 @@ class GNN_mix(nn.Module):
         x = F.relu(x)
         ## mix h2 ##
         x, target_a, target_b,lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
-        x = self.linear_m2(x)
+        x = self.linear_m2_1(x)
+        x = F.relu(x)
+        x = self.linear_m2_2(x)
         return x, target_a, target_b, lam
 
     def get_m3_mix(self, x,target=None, train_idx= None, mixup_alpha = 0.0):
@@ -155,7 +162,9 @@ class GNN_mix(nn.Module):
         x = F.relu(x)
         ## mix h3
         x, target_a, target_b,lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
-        x = self.linear_m3(x)
+        x = self.linear_m3_1(x)
+        x = F.relu(x)
+        x = self.linear_m3_2(x)
         return x, target_a, target_b, lam
 
 class GNNq(nn.Module):
