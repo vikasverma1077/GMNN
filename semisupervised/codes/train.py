@@ -13,7 +13,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 
 from trainer import Trainer
-from gnn import GNNq, GNNp, MLP
+from gnn import GNNq, GNNp, MLP, GNN_mix
 import loader
 
 parser = argparse.ArgumentParser()
@@ -101,8 +101,9 @@ if opt['cuda']:
     inputs_p = inputs_p.cuda()
     target_p = target_p.cuda()
 
-gnnq = GNNq(opt, adj)
+#gnnq = GNNq(opt, adj)
 #gnnq = MLP(opt)
+gnnq = GNN_mix(opt, adj)
 trainer_q = Trainer(opt, gnnq)
 
 gnnp = GNNp(opt, adj)
@@ -147,8 +148,11 @@ def pre_train(epoches):
     results = []
     for epoch in range(epoches):
         #loss = trainer_q.update_soft_mlp(inputs_q, target_q, idx_train)
-        loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
-        print (loss)
+        #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+        loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)
+        
+        _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) 
+        print ('loss:{:.10f}, train_acc:{:.3f}'.format( loss,accuracy_train))
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
@@ -195,7 +199,7 @@ def get_accuracy(results):
 
 acc_test = get_accuracy(base_results)
 
-print('{:.3f}'.format(acc_test * 100))
+print('Test acc{:.3f}'.format(acc_test * 100))
 
 #if opt['save'] != '/':
 #    trainer_q.save(opt['save'] + '/gnnq.pt')

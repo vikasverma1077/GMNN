@@ -87,7 +87,7 @@ class EntityFeature(object):
             for fid, wt in self.itof[k]:
                 if binary:
                     wt = 1.0
-                self.one_hot[k][fid] = wt# / sm
+                self.one_hot[k][fid] = wt/ sm
 
 class Graph(object):
     def __init__(self, file_name, entity, weight=None):
@@ -118,6 +118,7 @@ class Graph(object):
                     continue
 
                 self.edges += [(u, v, w)]
+    
 
     def get_node_size(self):
         return self.node_size
@@ -134,7 +135,7 @@ class Graph(object):
         pair2wt = dict()
         for u, v, w in self.edges:
             pair2wt[(u, v)] = w
-
+        
         edges_ = list()
         for (u, v), w in pair2wt.items():
             if u == v:
@@ -144,13 +145,15 @@ class Graph(object):
                 edges_ += [(u, v, w), (v, u, w)]
             elif w == w_:
                 edges_ += [(u, v, w)]
+
+
         for k in vocab:
             edges_ += [(k, k, self_link_weight)]
         
         d = dict()
         for u, v, w in edges_:
             d[u] = d.get(u, 0.0) + w
-
+        
         self.edges = [(u, v, w/math.sqrt(d[u]*d[v])) for u, v, w in edges_]
 
     def get_sparse_adjacency(self, cuda=True):

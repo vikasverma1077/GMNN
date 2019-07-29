@@ -1,4 +1,5 @@
 import math
+import random
 import numpy as np
 import torch
 from torch import nn
@@ -77,7 +78,78 @@ class Trainer(object):
         loss.backward()
         self.optimizer.step()
         return loss.item()
+
+    def update_soft_mix(self, inputs, target, idx):
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+            target = target.cuda()
+            idx = idx.cuda()
+
+        self.model.train()
+        self.optimizer.zero_grad()
+        #import pdb; pdb.set_trace()
+        logits, target_a, target_b, lam = self.model(inputs, target=target, train_idx= idx, mixup_input= True, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
+        logits = torch.log_softmax(logits, dim=-1)
+        loss = -(torch.mean(lam*torch.sum(target_a * logits[idx], dim=-1, keepdim= True))+ torch.mean((1-lam)*torch.sum(target_b * logits[idx], dim=-1, keepdim =True)))
+        #loss = bce_loss(softmax(logits), target)
+        #loss_func = mixup_criterion(target_a, target_b, lam)
+        #loss = loss_func(class_criterion, logits[idx])
+        
     
+        layer = random.randint(1,3)
+        if layer ==1:
+            logits_aux, target_a_aux, target_b_aux, lam_aux = self.model.get_m1_mix(inputs,target= target, train_idx= idx, mixup_alpha = 1.0)
+        elif layer ==2:
+            logits_aux, target_a_aux, target_b_aux, lam_aux = self.model.get_m2_mix(inputs,target= target, train_idx= idx, mixup_alpha = 1.0)
+        elif layer ==3:
+            logits_aux, target_a_aux, target_b_aux, lam_aux = self.model.get_m3_mix(inputs,target= target, train_idx= idx, mixup_alpha = 1.0)
+        logits_aux = torch.log_softmax(logits_aux, dim=-1)
+    
+        loss_aux = -(torch.mean(lam_aux*torch.sum(target_a_aux * logits_aux[idx], dim=-1, keepdim= True))+ torch.mean((1-lam_aux)*torch.sum(target_b_aux * logits_aux[idx], dim=-1, keepdim =True)))
+        loss = loss+ 1.0*loss_aux
+        
+        """
+        temp = random.randint(0,1)
+        if temp==0:
+            loss = loss
+        else:
+            loss = loss_aux
+        """
+        """
+        temp = random.randint(0,1)
+        if temp==0:
+            loss = loss
+            loss.backward()
+            self.optimizer.step()
+            self.optimizer.zero_grad()
+        else:
+            optimizer_aux = get_optimizer(self.opt['optimizer'], self.parameters, self.opt['lr'], self.opt['decay'])
+            layer = random.randint(1,3)
+            for i in range(100):
+                #import pdb; pdb.set_trace()
+                #self.model.zero_grad()
+                rand_idx = torch.randint(0, idx.shape[0]-1, (32,))
+                
+                if layer ==1:
+                    logits_aux, target_a_aux, target_b_aux, lam_aux = self.model.get_m1_mix(inputs,target= target, train_idx= idx, mixup_alpha = 1.0)
+                elif layer ==2:
+                    logits_aux, target_a_aux, target_b_aux, lam_aux = self.model.get_m2_mix(inputs,target= target, train_idx= idx, mixup_alpha = 1.0)
+                elif layer ==3:
+                    logits_aux, target_a_aux, target_b_aux, lam_aux = self.model.get_m3_mix(inputs,target= target, train_idx= idx, mixup_alpha = 1.0)
+                
+                logits_aux = torch.log_softmax(logits_aux, dim=-1)
+                
+                rand_idx = torch.randint(0, idx.shape[0]-1, (32,))
+                loss_aux = -(torch.mean(lam_aux*torch.sum(target_a_aux[rand_idx] * logits_aux[idx][rand_idx], dim=-1, keepdim= True))+ torch.mean((1-lam_aux)*torch.sum(target_b_aux[rand_idx] * logits_aux[idx][rand_idx], dim=-1, keepdim =True)))
+                loss_aux.backward()
+                optimizer_aux.step()
+                #print (loss_aux)
+        """
+
+        loss.backward()
+        self.optimizer.step()
+        return loss.item()
+
     def update_soft_mlp(self, inputs, target, idx):
         if self.opt['cuda']:
             inputs = inputs.cuda()
