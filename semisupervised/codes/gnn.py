@@ -33,13 +33,14 @@ def mixup_gnn_hidden(x, target, train_idx, alpha):
     permuted_train_idx = train_idx[torch.randperm(train_idx.shape[0])]
     x[train_idx] = lam*x[train_idx]+ (1-lam)*x[permuted_train_idx]
     #target[train_idx] = lam*target[train_idx]+ (1-lam)*target[permuted_train_idx]
-    
+    """
     ### mix the unlabeded nodes###
     all_idx = set(range(0,x.shape[0]))
     train_idx_set = set(list(train_idx.cpu().numpy()))
     unlabeled_idx = np.asarray(list(all_idx-train_idx_set))
     permuted_unlabeled_idx = unlabeled_idx[torch.randperm(unlabeled_idx.shape[0])]
     x[unlabeled_idx] = lam*x[unlabeled_idx]+ (1-lam)*x[permuted_unlabeled_idx]
+    """
     return x, target[train_idx], target[permuted_train_idx],lam
 
 class GNN_mix(nn.Module):
@@ -51,79 +52,104 @@ class GNN_mix(nn.Module):
         opt_ = dict([('in', opt['num_feature']), ('out', 1000)])
         self.m1 = GraphConvolution(opt_, adj)
 
-        self.linear_m1_1 = nn.Linear(1000,500)
-        self.linear_m1_2 = nn.Linear(500,opt['num_class'] )
+        #self.linear_m1_1 = nn.Linear(1000,500)
+        #self.linear_m1_2 = nn.Linear(50,opt['num_class'] )
         
         opt_ = dict([('in', 1000), ('out', 500)])
         self.m2 = GraphConvolution(opt_, adj)
         
-        self.linear_m2_1 = nn.Linear(500,200)
-        self.linear_m2_2 = nn.Linear(200,opt['num_class'] )
+        #self.linear_m2_1 = nn.Linear(50,20)
+        #self.linear_m2_2 = nn.Linear(20,opt['num_class'] )
         
         opt_ = dict([('in', 500), ('out', 100)])
         self.m3 = GraphConvolution(opt_, adj)
         
-        self.linear_m3_1 = nn.Linear(100,50 )
-        self.linear_m3_2 = nn.Linear(50,opt['num_class'] )
+        #self.linear_m3_1 = nn.Linear(10,5 )
+        #self.linear_m3_2 = nn.Linear(5,opt['num_class'] )
 
         opt_ = dict([('in', 100), ('out', opt['num_class'])])
         self.m4 = GraphConvolution(opt_, adj)
-    
+        """
+        opt_ = dict([('in', opt['num_feature']), ('out', opt['hidden_dim'])])
+        self.m1 = GraphConvolution(opt_, adj)
+
+        opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
+        self.m2 = GraphConvolution(opt_, adj)
+        """  
         if opt['cuda']:
             self.cuda()
 
     def reset(self):
         self.m1.reset_parameters()
         self.m2.reset_parameters()
-
+    
     def forward(self, x, target=None, train_idx= None, mixup_input=False, mixup_hidden= False,  mixup_alpha = 0.0, layer_mix = None):
-        #import pdb; pdb.set_trace()        
-        
-        if mixup_hidden == True:
-            layer_mix = random.randint(0,layer_mix)
-        elif mixup_input == True:
-            layer_mix = 0
-
-    
-        if layer_mix ==0:
+        """    
+        #import pdb; pdb.set_trace()
+        if target is not None: 
             x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
-
         x = F.dropout(x, self.opt['input_dropout'], training=self.training)
-    
         x = self.m1(x)
         x = F.relu(x)
-        if layer_mix == 1:
+        if target is not None: 
             x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
-
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = self.m2(x)
-        x = F.relu(x)
-
-        if layer_mix == 2:
-            x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
-        
-        x = F.dropout(x, self.opt['dropout'], training=self.training)
-        x = self.m3(x)
-        x = F.relu(x)
-
-        if layer_mix == 3:
-            x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
-
-        x = F.dropout(x, self.opt['dropout'], training=self.training)
-        x = self.m4(x)
-
-        if layer_mix == None:
-            return x
-        else:
+        if target is not None:
             return x, target_a, target_b, lam
+        else: 
+            return x
         """
-        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
-        x = self.m1(x)
-        x = F.relu(x)
-        x = F.dropout(x, self.opt['dropout'], training=self.training)
-        x = self.m2(x)self.linear_m2 = nn.Linear(500,opt['num_classe'] )
-        return x
-        """
+        #import pdb; pdb.set_trace()        
+        if mixup_hidden == True or mixup_input == True:
+            if mixup_hidden == True:
+                layer_mix = random.randint(1,layer_mix)
+            elif mixup_input == True:
+                layer_mix = 0
+
+    
+            if layer_mix ==0:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+    
+            x = self.m1(x)
+            x = F.relu(x)
+            if layer_mix == 1:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m2(x)
+            x = F.relu(x)
+
+            if layer_mix == 2:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+        
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m3(x)
+            x = F.relu(x)
+
+            if layer_mix == 3:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m4(x)
+
+            return x, target_a, target_b, lam
+        else:
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = self.m1(x)
+            x = F.relu(x)
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m2(x)
+            x = F.relu(x)
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = self.m3(x)
+            x = F.relu(x)
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m4(x)
+            return x
+    """
     def get_m1_mix(self, x,target=None, train_idx= None, mixup_alpha = 0.0):
         x = F.dropout(x, self.opt['input_dropout'], training=self.training)
         x = self.m1(x)
@@ -166,7 +192,7 @@ class GNN_mix(nn.Module):
         x = F.relu(x)
         x = self.linear_m3_2(x)
         return x, target_a, target_b, lam
-
+    """
 class GNNq(nn.Module):
     def __init__(self, opt, adj):
         super(GNNq, self).__init__()
@@ -192,6 +218,13 @@ class GNNq(nn.Module):
         x = F.relu(x)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = self.m2(x)
+        return x
+    def forward_aux(self, x):
+        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+        x = self.m1.forward_aux(x)
+        x = F.relu(x)
+        x = F.dropout(x, self.opt['dropout'], training=self.training)
+        x = self.m2.forward_aux(x)
         return x
 
 class GNNp(nn.Module):
@@ -243,6 +276,7 @@ class MLP(nn.Module):
         
     
     def forward(self, x, target=None, mixup_input = False, mixup_hidden = False,  mixup_alpha = 0.1, layer_mix=None):
+        
         if mixup_hidden == True:
             layer_mix = random.randint(1,layer_mix)
         elif mixup_input == True:

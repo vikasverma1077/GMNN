@@ -102,7 +102,6 @@ class Graph(object):
 
         self.adj_w = None
         self.adj_t = None
-
         with open(file_name, 'r') as fi:
 
             for line in fi:

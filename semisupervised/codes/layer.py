@@ -42,3 +42,7 @@ class GraphConvolution(nn.Module):
         m = torch.mm(x, self.weight)
         m = SparseMM(self.adj)(m)
         return m
+
+    def forward_aux(self,x):
+        m = torch.mm(x, self.weight)
+        return m

@@ -88,14 +88,17 @@ class Trainer(object):
         self.model.train()
         self.optimizer.zero_grad()
         #import pdb; pdb.set_trace()
-        logits, target_a, target_b, lam = self.model(inputs, target=target, train_idx= idx, mixup_input= True, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
-        logits = torch.log_softmax(logits, dim=-1)
-        loss = -(torch.mean(lam*torch.sum(target_a * logits[idx], dim=-1, keepdim= True))+ torch.mean((1-lam)*torch.sum(target_b * logits[idx], dim=-1, keepdim =True)))
-        #loss = bce_loss(softmax(logits), target)
-        #loss_func = mixup_criterion(target_a, target_b, lam)
-        #loss = loss_func(class_criterion, logits[idx])
+        mixup = False
+        if mixup == True:
+            logits, target_a, target_b, lam = self.model(inputs, target=target, train_idx= idx, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
+            logits = torch.log_softmax(logits, dim=-1)
+            loss = -(torch.mean(lam*torch.sum(target_a * logits[idx], dim=-1, keepdim= True))+ torch.mean((1-lam)*torch.sum(target_b * logits[idx], dim=-1, keepdim =True)))
+        else:
+            logits = self.model(inputs, target=None, train_idx= idx, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
+            logits = torch.log_softmax(logits, dim=-1)
+            loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
         
-    
+        """
         layer = random.randint(1,3)
         if layer ==1:
             logits_aux, target_a_aux, target_b_aux, lam_aux = self.model.get_m1_mix(inputs,target= target, train_idx= idx, mixup_alpha = 1.0)
@@ -106,7 +109,9 @@ class Trainer(object):
         logits_aux = torch.log_softmax(logits_aux, dim=-1)
     
         loss_aux = -(torch.mean(lam_aux*torch.sum(target_a_aux * logits_aux[idx], dim=-1, keepdim= True))+ torch.mean((1-lam_aux)*torch.sum(target_b_aux * logits_aux[idx], dim=-1, keepdim =True)))
-        loss = loss+ 1.0*loss_aux
+       """ 
+
+        loss = loss#+ 1.0*loss_aux
         
         """
         temp = random.randint(0,1)

@@ -18,13 +18,14 @@ import loader
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='data')
-parser.add_argument('--save', type=str, default='/')
+parser.add_argument('--save', type=str, default='exp', help = 'name of the folder where the results are saved')
 parser.add_argument('--hidden_dim', type=int, default=16, help='Hidden dimension.')
 parser.add_argument('--input_dropout', type=float, default=0.5, help='Input dropout rate.')
 parser.add_argument('--dropout', type=float, default=0.5, help='Dropout rate.')
 parser.add_argument('--optimizer', type=str, default='adam', help='Optimizer.')
 parser.add_argument('--lr', type=float, default=0.01, help='Learning rate.')
 parser.add_argument('--decay', type=float, default=5e-4, help='Weight decay for optimization')
+parser.add_argument('--mixup_alpha', type=float, default=1.0, help='alpha for mixing')
 parser.add_argument('--self_link_weight', type=float, default=1.0, help='Weight of self-links.')
 parser.add_argument('--pre_epoch', type=int, default=200, help='Number of pre-training epochs.')
 parser.add_argument('--epoch', type=int, default=200, help='Number of training epochs per iteration.')
@@ -37,6 +38,7 @@ parser.add_argument('--cuda', type=bool, default=torch.cuda.is_available())
 parser.add_argument('--cpu', action='store_true', help='Ignore CUDA.')
 args = parser.parse_args()
 
+
 torch.manual_seed(args.seed)
 np.random.seed(args.seed)
 random.seed(args.seed)
@@ -47,6 +49,8 @@ elif args.cuda:
 
 opt = vars(args)
 
+
+    
 net_file = opt['dataset'] + '/net.txt'
 label_file = opt['dataset'] + '/label.txt'
 feature_file = opt['dataset'] + '/feature.txt'
@@ -54,6 +58,14 @@ train_file = opt['dataset'] + '/train.txt'
 dev_file = opt['dataset'] + '/dev.txt'
 test_file = opt['dataset'] + '/test.txt'
 
+#import pdb;pdb.set_trace()
+### create a temporart net file
+exp_dir = os.path.join(os.getcwd(),args.save)
+if not os.path.exists(exp_dir):
+    os.makedirs(exp_dir)
+net_temp_file = os.path.join(exp_dir,'net_temp.txt')
+
+#net_file = exp_dir+ '/net_temp.txt'
 
 vocab_node = loader.Vocab(net_file, [0, 1])
 vocab_label = loader.Vocab(label_file, [1])
@@ -62,6 +74,8 @@ vocab_feature = loader.Vocab(feature_file, [1])
 opt['num_node'] = len(vocab_node)
 opt['num_feature'] = len(vocab_feature)
 opt['num_class'] = len(vocab_label)
+
+#import pdb; pdb.set_trace()
 
 graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
 label = loader.EntityLabel(file_name=label_file, entity=[vocab_node, 0], label=[vocab_label, 1])
@@ -101,9 +115,9 @@ if opt['cuda']:
     inputs_p = inputs_p.cuda()
     target_p = target_p.cuda()
 
-#gnnq = GNNq(opt, adj)
+gnnq = GNNq(opt, adj)
 #gnnq = MLP(opt)
-gnnq = GNN_mix(opt, adj)
+#gnnq = GNN_mix(opt, adj)
 trainer_q = Trainer(opt, gnnq)
 
 gnnp = GNNp(opt, adj)
@@ -149,18 +163,82 @@ def pre_train(epoches):
     for epoch in range(epoches):
         #loss = trainer_q.update_soft_mlp(inputs_q, target_q, idx_train)
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
-        loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)
+        #import pdb; pdb.set_trace()
+        ### create mix of feature and labels
+        """
+        ### create a new net file###
+        if os.path.exists(net_temp_file):
+            os.remove(net_temp_file)
+            copyfile(net_file, net_temp_file)
+        else:
+            copyfile(net_file, net_temp_file)
         
+        lamb = np.random.beta(opt['mixup_alpha'],opt['mixup_alpha'])
+        
+        inputs_q_new = inputs_q
+        target_q_new = target_q
+        idx_train_new = idx_train
+        target_new = target
+
+        for j in range(2):
+            permuted_train_idx = idx_train[torch.randperm(idx_train.shape[0])]
+            train_x_additional = lamb*inputs_q[idx_train]+ (1-lamb)*inputs_q[permuted_train_idx]
+            train_y_additional = lamb*target_q[idx_train]+ (1-lamb)*target_q[permuted_train_idx]
+            idx_train_additional = np.arange(idx_train.shape[0])
+            idx_train_additional = torch.from_numpy(idx_train_additional)
+            idx_train_additional = idx_train_additional.cuda()
+            idx_train_additional = idx_train_additional + target_q_new.shape[0]
+
+            inputs_q_new = torch.cat((inputs_q_new, train_x_additional),0)
+            target_q_new = torch.cat((target_q_new, train_y_additional),0)
+            idx_train_new = torch.cat((idx_train_new, idx_train_additional),0)
+        
+            ## add dummy labels to the target tensor, these dummy values will not be used so I just used '0'##
+            #import pdb; pdb.set_trace()
+            
+            temp = torch.zeros(train_y_additional.shape[0], dtype = target.dtype)
+            temp = temp.cuda()
+            target_new = torch.cat((target_new, temp),0)
+
+            #import pdb; pdb.set_trace()
+            fi = open(net_temp_file, 'a+')
+            start_index_for_additional_nodes = target_q.shape[0]+j*idx_train.shape[0]
+            for i in range(idx_train.shape[0]):
+                node_index = start_index_for_additional_nodes+i
+                fi.write(str(node_index)+'\t'+str(idx_train[i].item())+'\t'+str(1)+'\n')
+                fi.write(str(idx_train[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
+                fi.write(str(node_index)+'\t'+str(permuted_train_idx[i].item())+'\t'+str(1)+'\n')
+                fi.write(str(permuted_train_idx[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
+            fi.close()
+        
+        #import pdb; pdb.set_trace()
+        ## reload the net file in the adjacency matrix###
+        vocab_node = loader.Vocab(net_temp_file, [0, 1])
+        graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
+        graph.to_symmetric(opt['self_link_weight'])
+        adj = graph.get_sparse_adjacency(opt['cuda'])
+        #import pdb; pdb.set_trace()
+        trainer_q.model.adj = adj
+        trainer_q.model.m1.adj = adj
+        trainer_q.model.m2.adj = adj
+        #trainer_q.model.m3.adj = adj
+        #trainer_q.model.m4.adj = adj
+        """
+        #idx_train_new = 
+        #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features 
+        #loss = trainer_q.update_soft_mix(inputs_q_new, target_q_new, idx_train_new)## for augmented nodes
+        loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) 
-        print ('loss:{:.10f}, train_acc:{:.3f}'.format( loss,accuracy_train))
+        if epoch%10 == 0:
+            print ('loss:{:.10f}, train_acc:{:.3f}'.format( loss,accuracy_train))
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
         if accuracy_dev > best:
             best = accuracy_dev
             state = dict([('model', copy.deepcopy(trainer_q.model.state_dict())), ('optim', copy.deepcopy(trainer_q.optimizer.state_dict()))])
-    trainer_q.model.load_state_dict(state['model'])
-    trainer_q.optimizer.load_state_dict(state['optim'])
+    #trainer_q.model.load_state_dict(state['model'])
+    #trainer_q.optimizer.load_state_dict(state['optim'])
     return results
 
 def train_p(epoches):

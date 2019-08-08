@@ -20,6 +20,9 @@ opt['iter'] = 1
 opt['use_gold'] = 1
 opt['draw'] = 'smp'
 opt['tau'] = 0.1
+opt['save'] = 'exp_pubmed'
+opt['mixup_alpha'] = 0.1
+
 
 def generate_command(opt):
     cmd = 'python3 train.py'
