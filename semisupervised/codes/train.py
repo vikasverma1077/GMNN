@@ -228,6 +228,7 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features 
         #loss = trainer_q.update_soft_mix(inputs_q_new, target_q_new, idx_train_new)## for augmented nodes
         loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+        loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for auxiliary net with shared parameters
         _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) 
         if epoch%10 == 0:
             print ('loss:{:.10f}, train_acc:{:.3f}'.format( loss,accuracy_train))

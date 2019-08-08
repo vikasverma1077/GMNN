@@ -78,6 +78,38 @@ class Trainer(object):
         loss.backward()
         self.optimizer.step()
         return loss.item()
+    
+    
+    def update_soft_aux(self, inputs, target, idx):
+        """uses the auxiliary loss as well, which does not use the adjacency information"""
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+            target = target.cuda()
+            idx = idx.cuda()
+
+        self.model.train()
+        self.optimizer.zero_grad()
+
+        logits = self.model(inputs)
+        logits = torch.log_softmax(logits, dim=-1)
+        loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
+        
+        import pdb ;pdb.set_trace()
+        mixup = False
+        if mixup == True:
+            logits, target_a, target_b, lam = self.model.forward_aux(inputs, target=target, train_idx= idx, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
+            logits = torch.log_softmax(logits, dim=-1)
+            loss_aux = -(torch.mean(lam*torch.sum(target_a * logits[idx], dim=-1, keepdim= True))+ torch.mean((1-lam)*torch.sum(target_b * logits[idx], dim=-1, keepdim =True)))
+        else:
+            logits = self.model.forward_aux(inputs, target=None, train_idx= idx, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
+            logits = torch.log_softmax(logits, dim=-1)
+            loss_aux = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
+        
+        loss = loss + 1.0*loss_aux
+        
+        loss.backward()
+        self.optimizer.step()
+        return loss.item()
 
     def update_soft_mix(self, inputs, target, idx):
         if self.opt['cuda']:
