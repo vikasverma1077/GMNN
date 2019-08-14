@@ -87,7 +87,7 @@ class EntityFeature(object):
             for fid, wt in self.itof[k]:
                 if binary:
                     wt = 1.0
-                self.one_hot[k][fid] = wt/ sm
+                self.one_hot[k][fid] = wt/sm ### one_hot value (1) is divided by total number of features present in the node. I dont understand this.
 
 class Graph(object):
     def __init__(self, file_name, entity, weight=None):

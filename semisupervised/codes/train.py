@@ -75,11 +75,11 @@ opt['num_node'] = len(vocab_node)
 opt['num_feature'] = len(vocab_feature)
 opt['num_class'] = len(vocab_label)
 
-#import pdb; pdb.set_trace()
 
 graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
 label = loader.EntityLabel(file_name=label_file, entity=[vocab_node, 0], label=[vocab_label, 1])
 feature = loader.EntityFeature(file_name=feature_file, entity=[vocab_node, 0], feature=[vocab_feature, 1])
+#import pdb; pdb.set_trace()
 graph.to_symmetric(opt['self_link_weight'])
 feature.to_one_hot(binary=True)
 adj = graph.get_sparse_adjacency(opt['cuda'])
@@ -165,7 +165,7 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
-        """
+        
         ### create a new net file###
         if os.path.exists(net_temp_file):
             os.remove(net_temp_file)
@@ -177,7 +177,7 @@ def pre_train(epoches):
         
         inputs_q_new = inputs_q
         target_q_new = target_q
-        idx_train_new = idx_train
+        idx_train_new = torch.tensor([], dtype= idx_train.dtype).cuda()# idx_train# [] for not adding the original idx_train in the additional train data
         target_new = target
 
         for j in range(2):
@@ -216,25 +216,30 @@ def pre_train(epoches):
         vocab_node = loader.Vocab(net_temp_file, [0, 1])
         graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
         graph.to_symmetric(opt['self_link_weight'])
-        adj = graph.get_sparse_adjacency(opt['cuda'])
+        adj_new = graph.get_sparse_adjacency(opt['cuda'])
         #import pdb; pdb.set_trace()
-        trainer_q.model.adj = adj
-        trainer_q.model.m1.adj = adj
-        trainer_q.model.m2.adj = adj
+        trainer_q.model.adj = adj_new
+        trainer_q.model.m1.adj = adj_new
+        trainer_q.model.m2.adj = adj_new
         #trainer_q.model.m3.adj = adj
         #trainer_q.model.m4.adj = adj
-        """
+        
         #idx_train_new = 
         #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features 
-        #loss = trainer_q.update_soft_mix(inputs_q_new, target_q_new, idx_train_new)## for augmented nodes
+        rand_index = random.randint(0,1)
+        loss = trainer_q.update_soft(inputs_q_new, target_q_new, idx_train_new)## for augmented nodes
         loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
-        loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for auxiliary net with shared parameters
-        _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) 
-        if epoch%10 == 0:
-            print ('loss:{:.10f}, train_acc:{:.3f}'.format( loss,accuracy_train))
-        _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
-        _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
+        #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
+        loss_aux = loss
+        #loss, loss_aux = trainer_q.update_soft_aux(inputs_q, target_q, idx_train, epoch, opt)## for auxiliary net with shared parameters
+        import pdb; pdb.set_trace()
+        _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target_new, idx_train) ## target_new : for augmented nodes
+        _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target_new, idx_dev)
+        _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target_new, idx_test)
         results += [(accuracy_dev, accuracy_test)]
+        if epoch%100 == 0:
+            print ('epoch :{:4d},loss:{:.10f},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss,loss_aux, accuracy_train, accuracy_dev, accuracy_test))
+
         if accuracy_dev > best:
             best = accuracy_dev
             state = dict([('model', copy.deepcopy(trainer_q.model.state_dict())), ('optim', copy.deepcopy(trainer_q.optimizer.state_dict()))])
@@ -272,7 +277,7 @@ base_results += pre_train(opt['pre_epoch'])
 def get_accuracy(results):
     best_dev, acc_test = 0.0, 0.0
     for d, t in results:
-        if d > best_dev:
+        if d >= best_dev:
             best_dev, acc_test = d, t
     return acc_test
 
