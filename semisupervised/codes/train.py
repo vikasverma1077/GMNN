@@ -218,7 +218,6 @@ def pre_train(epoches):
             graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
             graph.to_symmetric(opt['self_link_weight'])
             adj_new = graph.get_sparse_adjacency(opt['cuda'])
-            import pdb; pdb.set_trace()
             trainer_q.model.adj = adj_new
             trainer_q.model.m1.adj = adj_new
             trainer_q.model.m2.adj = adj_new
