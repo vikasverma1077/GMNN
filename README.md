@@ -7,7 +7,7 @@
 
 ## Alternate training of Manifold Mixup and GCN.
 
-
+## for changing to alternate minimization, change line 169
 
 
 
