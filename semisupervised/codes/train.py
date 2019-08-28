@@ -162,16 +162,15 @@ def pre_train(epoches):
     results = []
     for epoch in range(epoches):
         #loss = trainer_q.update_soft_mlp(inputs_q, target_q, idx_train)
-        loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
-        #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
-        #loss, loss_aux = trainer_q.update_soft_aux(inputs_q, target_q, idx_train, epoch, opt)## for auxiliary net with shared parameters
+        #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+        loss, loss_aux = trainer_q.update_soft_aux(inputs_q, target_q, idx_train, epoch, opt)## for auxiliary net with shared parameters
         #import pdb; pdb.set_trace()
         _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) ## target_new : for augmented nodes
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
         if epoch%100 == 0:
-            print ('epoch :{:4d},loss:{:.10f},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss,loss_aux, accuracy_train, accuracy_dev, accuracy_test))
+            print ('epoch :{:4d},loss:{:.10f},loss_aux:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss,loss_aux, accuracy_train, accuracy_dev, accuracy_test))
 
         if accuracy_dev > best:
             best = accuracy_dev
