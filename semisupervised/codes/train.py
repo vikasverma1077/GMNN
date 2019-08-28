@@ -166,7 +166,7 @@ def pre_train(epoches):
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
         rand_index = random.randint(0,1)
-        if rand_index = 0:
+        if rand_index == 0:
             ### create a new net file###
             if os.path.exists(net_temp_file):
                 os.remove(net_temp_file)
@@ -218,7 +218,7 @@ def pre_train(epoches):
             graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
             graph.to_symmetric(opt['self_link_weight'])
             adj_new = graph.get_sparse_adjacency(opt['cuda'])
-            #import pdb; pdb.set_trace()
+            import pdb; pdb.set_trace()
             trainer_q.model.adj = adj_new
             trainer_q.model.m1.adj = adj_new
             trainer_q.model.m2.adj = adj_new
@@ -233,7 +233,10 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
         loss_aux = loss
         #loss, loss_aux = trainer_q.update_soft_aux(inputs_q, target_q, idx_train, epoch, opt)## for auxiliary net with shared parameters
-        import pdb; pdb.set_trace()
+        #import pdb; pdb.set_trace()
+        trainer_q.model.adj = adj
+        trainer_q.model.m1.adj = adj
+        trainer_q.model.m2.adj = adj
         _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) ## target_new : for augmented nodes
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
