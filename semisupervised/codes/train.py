@@ -162,78 +162,10 @@ def pre_train(epoches):
     results = []
     for epoch in range(epoches):
         #loss = trainer_q.update_soft_mlp(inputs_q, target_q, idx_train)
-        #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
-        #import pdb; pdb.set_trace()
-        ### create mix of feature and labels
-        rand_index = random.randint(0,1)
-        if rand_index = 0:
-            ### create a new net file###
-            if os.path.exists(net_temp_file):
-                os.remove(net_temp_file)
-                copyfile(net_file, net_temp_file)
-            else:
-                copyfile(net_file, net_temp_file)
-            
-            lamb = np.random.beta(opt['mixup_alpha'],opt['mixup_alpha'])
-            
-            inputs_q_new = inputs_q
-            target_q_new = target_q
-            idx_train_new = torch.tensor([], dtype= idx_train.dtype).cuda()# idx_train# [] for not adding the original idx_train in the additional train data
-            target_new = target
-    
-            for j in range(2):
-                permuted_train_idx = idx_train[torch.randperm(idx_train.shape[0])]
-                train_x_additional = lamb*inputs_q[idx_train]+ (1-lamb)*inputs_q[permuted_train_idx]
-                train_y_additional = lamb*target_q[idx_train]+ (1-lamb)*target_q[permuted_train_idx]
-                idx_train_additional = np.arange(idx_train.shape[0])
-                idx_train_additional = torch.from_numpy(idx_train_additional)
-                idx_train_additional = idx_train_additional.cuda()
-                idx_train_additional = idx_train_additional + target_q_new.shape[0]
-    
-                inputs_q_new = torch.cat((inputs_q_new, train_x_additional),0)
-                target_q_new = torch.cat((target_q_new, train_y_additional),0)
-                idx_train_new = torch.cat((idx_train_new, idx_train_additional),0)
-            
-                ## add dummy labels to the target tensor, these dummy values will not be used so I just used '0'##
-                #import pdb; pdb.set_trace()
-                
-                temp = torch.zeros(train_y_additional.shape[0], dtype = target.dtype)
-                temp = temp.cuda()
-                target_new = torch.cat((target_new, temp),0)
-    
-                #import pdb; pdb.set_trace()
-                fi = open(net_temp_file, 'a+')
-                start_index_for_additional_nodes = target_q.shape[0]+j*idx_train.shape[0]
-                for i in range(idx_train.shape[0]):
-                    node_index = start_index_for_additional_nodes+i
-                    fi.write(str(node_index)+'\t'+str(idx_train[i].item())+'\t'+str(1)+'\n')
-                    fi.write(str(idx_train[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
-                    fi.write(str(node_index)+'\t'+str(permuted_train_idx[i].item())+'\t'+str(1)+'\n')
-                    fi.write(str(permuted_train_idx[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
-                fi.close()
-            
-            #import pdb; pdb.set_trace()
-            ## reload the net file in the adjacency matrix###
-            vocab_node = loader.Vocab(net_temp_file, [0, 1])
-            graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
-            graph.to_symmetric(opt['self_link_weight'])
-            adj_new = graph.get_sparse_adjacency(opt['cuda'])
-            #import pdb; pdb.set_trace()
-            trainer_q.model.adj = adj_new
-            trainer_q.model.m1.adj = adj_new
-            trainer_q.model.m2.adj = adj_new
-            #trainer_q.model.m3.adj = adj
-            #trainer_q.model.m4.adj = adj
-            
-            #idx_train_new = 
-            #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features 
-            loss = trainer_q.update_soft(inputs_q_new, target_q_new, idx_train_new)## for augmented nodes
-        else:
-            loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+        loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
-        loss_aux = loss
         #loss, loss_aux = trainer_q.update_soft_aux(inputs_q, target_q, idx_train, epoch, opt)## for auxiliary net with shared parameters
-        import pdb; pdb.set_trace()
+        #import pdb; pdb.set_trace()
         _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) ## target_new : for augmented nodes
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)

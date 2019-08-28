@@ -7,7 +7,7 @@
 
 ## Alternate training of Manifold Mixup and GCN.
 
-## for changing to alternate minimization, change line 169
+## for changing to alternate minimization, change line 129 of trainer.py
 
 
 

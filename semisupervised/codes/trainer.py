@@ -111,11 +111,15 @@ class Trainer(object):
             logits = torch.log_softmax(logits, dim=-1)
             loss_aux = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
         
+        logits = self.model.forward(inputs)
+        logits = torch.log_softmax(logits, dim=-1)
+        loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
+                    
         rand_ix = np.random.randint(2)
-        #if rand_ix == 0:
-        #    loss_total = loss_aux #+ 1.0* loss_aux
-        #else:
-        #    loss_total = loss
+        if rand_ix == 0:
+            loss_total = loss_aux #+ 1.0* loss_aux
+        else:
+            loss_total = loss
         loss_total = loss_aux
         loss_total.backward()
         self.optimizer.step()
