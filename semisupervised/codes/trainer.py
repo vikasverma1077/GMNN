@@ -120,7 +120,7 @@ class Trainer(object):
             loss_total = loss_aux #+ 1.0* loss_aux
         else:
             loss_total = loss
-        loss_total = loss_aux
+        #loss_total = loss_aux
         loss_total.backward()
         self.optimizer.step()
         
@@ -135,7 +135,7 @@ class Trainer(object):
         self.model.train()
         self.optimizer.zero_grad()
         #import pdb; pdb.set_trace()
-        mixup = False
+        mixup = True
         if mixup == True:
             logits, target_a, target_b, lam = self.model(inputs, target=target, train_idx= idx, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
             logits = torch.log_softmax(logits, dim=-1)
