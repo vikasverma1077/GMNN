@@ -162,7 +162,7 @@ def update_q_data():
         target_q[idx_train] = temp
 
 
-def get_augmented_network_input(inputs_q, target_q,idx_train,opt, net_file, net_temp_file):
+def get_augmented_network_input(inputs_q, target_q,idx_train,opt):
 
     ### create a new net file###
     if os.path.exists(net_temp_file):
