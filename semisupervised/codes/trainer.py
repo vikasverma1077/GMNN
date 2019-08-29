@@ -74,7 +74,7 @@ class Trainer(object):
         self.model.train()
         self.optimizer.zero_grad()
 
-        logits = self.model(inputs, mixup_layer =[0,1])
+        logits, target, idx = self.model_mix(inputs, target, idx, mixup_layer =[0,1])
         logits = torch.log_softmax(logits, dim=-1)
         #import pdb; pdb.set_trace()
         loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))

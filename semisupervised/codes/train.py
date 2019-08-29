@@ -65,6 +65,11 @@ if not os.path.exists(exp_dir):
     os.makedirs(exp_dir)
 net_temp_file = os.path.join(exp_dir,'net_temp.txt')
 
+
+opt['net_file'] = net_file
+opt['net_temp_file'] = net_temp_file
+
+
 #net_file = exp_dir+ '/net_temp.txt'
 
 vocab_node = loader.Vocab(net_file, [0, 1])
@@ -157,7 +162,7 @@ def update_q_data():
         target_q[idx_train] = temp
 
 
-def get_augmented_network_input():
+def get_augmented_network_input(inputs_q, target_q,idx_train,opt, net_file, net_temp_file):
 
     ### create a new net file###
     if os.path.exists(net_temp_file):
@@ -230,7 +235,7 @@ def pre_train(epoches):
         rand_index = random.randint(0,1)
         if rand_index == 0: ## do the augmented node training
 
-            inputs_q_new, target_q_new, idx_train_new = get_augmented_network_input() ## get the augmented nodes in the input space
+            inputs_q_new, target_q_new, idx_train_new = get_augmented_network_input(inputs_q, target_q,idx_train,opt, net_file, net_temp_file) ## get the augmented nodes in the input space
             #idx_train_new = 
             #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features 
             loss = trainer_q.update_soft(inputs_q_new, target_q_new, idx_train_new)## for augmented nodes

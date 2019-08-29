@@ -7,6 +7,8 @@ from torch.nn import init
 from torch.autograd import Variable
 import torch.nn.functional as F
 from layer import GraphConvolution
+import loader
+
 
 def mixup_data(x, y, alpha):
     '''Compute the mixup data. Return mixed inputs, pairs of targets, and lambda'''
@@ -219,6 +221,20 @@ class GNNq(nn.Module):
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = self.m2(x)
         return x
+    
+    
+    def forward_mix(self, x, target, idx, opt, mixup_layer):
+        layer = random.choice(mixup_layer)
+        if layer == 0:
+            x, target, idx = get_augmented_network_input(inputs, target,idx,opt)
+        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+        x = self.m1(x)
+        x = F.relu(x)
+        if layer == 1:
+            x, target, idx = get_augmented_network_input(inputs, target,idx,opt)
+        x = F.dropout(x, self.opt['dropout'], training=self.training)
+        x = self.m2(x)
+        return x, target, idx
     
     def forward_aux(self, x, target=None, train_idx= None, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None):
         
