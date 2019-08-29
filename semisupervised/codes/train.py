@@ -173,9 +173,11 @@ def pre_train(epoches):
                 copyfile(net_file, net_temp_file)
             else:
                 copyfile(net_file, net_temp_file)
-            
-            lamb = np.random.beta(opt['mixup_alpha'],opt['mixup_alpha'])
-            
+            #import pdb; pdb.set_trace()
+            lamb = np.random.beta(opt['mixup_alpha'],opt['mixup_alpha'], size = target_q[idx_train].shape[0])
+            lamb = torch.from_numpy(lamb)
+            lamb = lamb.reshape(-1,1).type(torch.FloatTensor).cuda()
+
             inputs_q_new = inputs_q
             target_q_new = target_q
             idx_train_new = torch.tensor([], dtype= idx_train.dtype).cuda()# idx_train# [] for not adding the original idx_train in the additional train data
@@ -183,8 +185,8 @@ def pre_train(epoches):
     
             for j in range(2):
                 permuted_train_idx = idx_train[torch.randperm(idx_train.shape[0])]
-                train_x_additional = lamb*inputs_q[idx_train]+ (1-lamb)*inputs_q[permuted_train_idx]
-                train_y_additional = lamb*target_q[idx_train]+ (1-lamb)*target_q[permuted_train_idx]
+                train_x_additional = lamb.repeat(1,inputs_q[idx_train].shape[1])*inputs_q[idx_train]+ (1-lamb).repeat(1,inputs_q[idx_train].shape[1])*inputs_q[permuted_train_idx]
+                train_y_additional = lamb.repeat(1,target_q[idx_train].shape[1])*target_q[idx_train]+ (1-lamb).repeat(1,target_q[idx_train].shape[1])*target_q[permuted_train_idx]
                 idx_train_additional = np.arange(idx_train.shape[0])
                 idx_train_additional = torch.from_numpy(idx_train_additional)
                 idx_train_additional = idx_train_additional.cuda()
