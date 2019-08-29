@@ -195,6 +195,73 @@ class GNN_mix(nn.Module):
         x = self.linear_m3_2(x)
         return x, target_a, target_b, lam
     """
+    
+    
+def get_augmented_network_input(model, inputs_q, target_q,idx_train,opt):
+
+    ### create a new net file###
+    if os.path.exists(opt['net_temp_file']):
+        os.remove(opt['net_temp_file'])
+        copyfile(opt['net_file'], opt['net_temp_file'])
+    else:
+        copyfile(opt['net_file'], opt['net_temp_file'])
+    
+    lamb = np.random.beta(opt['mixup_alpha'],opt['mixup_alpha'])
+    
+    inputs_q_new = inputs_q
+    target_q_new = target_q
+    idx_train_new = torch.tensor([], dtype= idx_train.dtype).cuda()# idx_train# [] for not adding the original idx_train in the additional train data
+    target_new = target
+
+    for j in range(1):
+        permuted_train_idx = idx_train[torch.randperm(idx_train.shape[0])]
+        train_x_additional = lamb*inputs_q[idx_train]+ (1-lamb)*inputs_q[permuted_train_idx]
+        train_y_additional = lamb*target_q[idx_train]+ (1-lamb)*target_q[permuted_train_idx]
+        idx_train_additional = np.arange(idx_train.shape[0])
+        idx_train_additional = torch.from_numpy(idx_train_additional)
+        idx_train_additional = idx_train_additional.cuda()
+        idx_train_additional = idx_train_additional + target_q_new.shape[0]
+
+        inputs_q_new = torch.cat((inputs_q_new, train_x_additional),0)
+        target_q_new = torch.cat((target_q_new, train_y_additional),0)
+        idx_train_new = torch.cat((idx_train_new, idx_train_additional),0)
+    
+        ## add dummy labels to the target tensor, these dummy values will not be used so I just used '0'##
+        #import pdb; pdb.set_trace()
+        
+        temp = torch.zeros(train_y_additional.shape[0], dtype = target.dtype)
+        temp = temp.cuda()
+        target_new = torch.cat((target_new, temp),0)
+
+        #import pdb; pdb.set_trace()
+        fi = open(net_temp_file, 'a+')
+        start_index_for_additional_nodes = target_q.shape[0]+j*idx_train.shape[0]
+        for i in range(idx_train.shape[0]):
+            node_index = start_index_for_additional_nodes+i
+            fi.write(str(node_index)+'\t'+str(idx_train[i].item())+'\t'+str(1)+'\n')
+            fi.write(str(idx_train[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
+            fi.write(str(node_index)+'\t'+str(permuted_train_idx[i].item())+'\t'+str(1)+'\n')
+            fi.write(str(permuted_train_idx[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
+        fi.close()
+    
+    #import pdb; pdb.set_trace()
+    ## reload the net file in the adjacency matrix###
+    vocab_node = loader.Vocab(net_temp_file, [0, 1])
+    graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
+    graph.to_symmetric(opt['self_link_weight'])
+    adj_new = graph.get_sparse_adjacency(opt['cuda'])
+    
+    model.m1.adj = adj_new
+    model.m2.adj = adj_new
+    #trainer_q.model.adj = adj_new
+    #trainer_q.model.m1.adj = adj_new
+    #trainer_q.model.m2.adj = adj_new
+    #trainer_q.model.m3.adj = adj
+    #trainer_q.model.m4.adj = adj
+    
+    return inputs_q_new, target_q_new, idx_train_new, adj_new
+
+
 class GNNq(nn.Module):
     def __init__(self, opt, adj):
         super(GNNq, self).__init__()
@@ -226,12 +293,12 @@ class GNNq(nn.Module):
     def forward_mix(self, x, target, idx, opt, mixup_layer):
         layer = random.choice(mixup_layer)
         if layer == 0:
-            x, target, idx = get_augmented_network_input(inputs, target,idx,opt)
+            x, target, idx = get_augmented_network_input(self, inputs, target,idx,opt)
         x = F.dropout(x, self.opt['input_dropout'], training=self.training)
         x = self.m1(x)
         x = F.relu(x)
         if layer == 1:
-            x, target, idx = get_augmented_network_input(inputs, target,idx,opt)
+            x, target, idx = get_augmented_network_input(self, inputs, target,idx,opt)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = self.m2(x)
         return x, target, idx

@@ -74,7 +74,26 @@ class Trainer(object):
         self.model.train()
         self.optimizer.zero_grad()
 
-        logits, target, idx = self.model_mix(inputs, target, idx, mixup_layer =[0,1])
+        logits, target, idx = self.model(inputs, target,idx)
+        logits = torch.log_softmax(logits, dim=-1)
+        #import pdb; pdb.set_trace()
+        loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
+        
+        loss.backward()
+        self.optimizer.step()
+        return loss.item()
+    
+    
+    def update_soft_mix(self, inputs, target, idx,opt, mixup_layer = [0,1]):
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+            target = target.cuda()
+            idx = idx.cuda()
+
+        self.model.train()
+        self.optimizer.zero_grad()
+
+        logits, target, idx = self.model_mix(inputs, target, idx, opt, mixup_layer)
         logits = torch.log_softmax(logits, dim=-1)
         #import pdb; pdb.set_trace()
         loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
