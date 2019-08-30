@@ -14,6 +14,7 @@ import torch.nn.functional as F
 
 from trainer import Trainer
 from gnn import GNNq, GNNp, MLP, GNN_mix
+from ramps import *
 import loader
 
 parser = argparse.ArgumentParser()
@@ -36,6 +37,45 @@ parser.add_argument('--draw', type=str, default='max', help='Method for drawing 
 parser.add_argument('--seed', type=int, default=1)
 parser.add_argument('--cuda', type=bool, default=torch.cuda.is_available())
 parser.add_argument('--cpu', action='store_true', help='Ignore CUDA.')
+### ict hyperparameters ###
+#parser.add_argument('--lr', '--learning-rate', default=0.1, type=float,
+#                    metavar='LR', help='max learning rate')
+#parser.add_argument('--initial_lr', default=0.0, type=float,##TODO
+#                    metavar='LR', help='initial learning rate when using linear rampup')
+#parser.add_argument('--lr_rampup', default=0, type=int, metavar='EPOCHS',##TODO
+#                    help='length of learning rate rampup in the beginning')
+#parser.add_argument('--lr_rampdown_epochs', default=None, type=int, metavar='EPOCHS',##TODO
+#                    help='length of learning rate cosine rampdown (>= length of training)')
+#parser.add_argument('--schedule', type=int, nargs='+', default=[150, 225], help='Decrease learning rate at these epochs.')
+#parser.add_argument('--gammas', type=float, nargs='+', default=[0.1, 0.1], help='LR is multiplied by gamma on schedule, number of gammas should be equal to schedule')
+#parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
+#                    help='momentum')
+#parser.add_argument('--nesterov', action='store_true',
+#                    help='use nesterov momentum')
+#parser.add_argument('--weight-decay', '--wd', default=1e-4, type=float,
+#                    metavar='W', help='weight decay (default: 1e-4)')
+parser.add_argument('--ema_decay', default=0.999, type=float, metavar='ALPHA',
+                    help='ema variable decay rate (default: 0.999)')
+#parser.add_argument('--consistency', default=None, type=float, metavar='WEIGHT',
+#                    help='use consistency loss with given weight (default: None)')
+parser.add_argument('--consistency_type', default="mse", type=str, metavar='TYPE',
+                    choices=['mse', 'kl'],
+                    help='consistency loss type to use')
+parser.add_argument('--consistency_rampup_starts', default=30, type=int, metavar='EPOCHS',
+                    help='epoch at which consistency loss ramp-up starts')
+parser.add_argument('--consistency_rampup_ends', default=30, type=int, metavar='EPOCHS',
+                    help='lepoch at which consistency loss ramp-up ends')
+#parser.add_argument('--mixup_sup_alpha', default=0.0, type=float,
+#                    help='for supervised loss, the alpha parameter for the beta distribution from where the mixing lambda is drawn')
+#parser.add_argument('--mixup_usup_alpha', default=0.0, type=float,
+#                    help='for unsupervised loss, the alpha parameter for the beta distribution from where the mixing lambda is drawn')
+#parser.add_argument('--mixup_hidden', action='store_true',
+#                    help='apply mixup in hidden layers')
+#parser.add_argument('--num_mix_layer', default=3, type=int,
+#                    help='number of hidden layers on which mixup is applied in addition to input layer')
+parser.add_argument('--mixup_consistency', default=1.0, type=float,
+                    help='max consistency coeff for mixup usup loss')
+
 args = parser.parse_args()
 
 
@@ -125,6 +165,15 @@ gnnq = GNNq(opt, adj)
 #gnnq = GNN_mix(opt, adj)
 trainer_q = Trainer(opt, gnnq)
 
+# Build the ema model
+gnnq_ema = GNNq(opt, adj)
+for param in net.parameters():
+            param.detach_()
+trainer_q_ema = Trainer(opt, gnnq_ema)
+
+
+
+
 gnnp = GNNp(opt, adj)
 trainer_p = Trainer(opt, gnnp)
 
@@ -162,71 +211,34 @@ def update_q_data():
         target_q[idx_train] = temp
 
 
-def get_augmented_network_input(inputs_q, target_q,idx_train,opt):
 
-    ### create a new net file###
-    if os.path.exists(net_temp_file):
-        os.remove(net_temp_file)
-        copyfile(net_file, net_temp_file)
-    else:
-        copyfile(net_file, net_temp_file)
-    
-    lamb = np.random.beta(opt['mixup_alpha'],opt['mixup_alpha'])
-    
-    inputs_q_new = inputs_q
-    target_q_new = target_q
-    idx_train_new = torch.tensor([], dtype= idx_train.dtype).cuda()# idx_train# [] for not adding the original idx_train in the additional train data
-    target_new = target
+def update_ema_variables(model, ema_model, alpha, epoch):
+    # Use the true average until the exponential average is more correct
+    alpha = min(1 - 1 / (epoch + 1), alpha)
+    for ema_param, param in zip(ema_model.parameters(), model.parameters()):
+        ema_param.data.mul_(alpha).add_(1 - alpha, param.data)
 
-    for j in range(1):
-        permuted_train_idx = idx_train[torch.randperm(idx_train.shape[0])]
-        train_x_additional = lamb*inputs_q[idx_train]+ (1-lamb)*inputs_q[permuted_train_idx]
-        train_y_additional = lamb*target_q[idx_train]+ (1-lamb)*target_q[permuted_train_idx]
-        idx_train_additional = np.arange(idx_train.shape[0])
-        idx_train_additional = torch.from_numpy(idx_train_additional)
-        idx_train_additional = idx_train_additional.cuda()
-        idx_train_additional = idx_train_additional + target_q_new.shape[0]
 
-        inputs_q_new = torch.cat((inputs_q_new, train_x_additional),0)
-        target_q_new = torch.cat((target_q_new, train_y_additional),0)
-        idx_train_new = torch.cat((idx_train_new, idx_train_additional),0)
-    
-        ## add dummy labels to the target tensor, these dummy values will not be used so I just used '0'##
-        #import pdb; pdb.set_trace()
-        
-        temp = torch.zeros(train_y_additional.shape[0], dtype = target.dtype)
-        temp = temp.cuda()
-        target_new = torch.cat((target_new, temp),0)
+def get_current_consistency_weight(final_consistency_weight, epoch):
+    # Consistency ramp-up from https://arxiv.org/abs/1610.02242
+    epoch = epoch - args.consistency_rampup_starts
+    #epoch = epoch + step_in_epoch / total_steps_in_epoch
+    return final_consistency_weight *sigmoid_rampup(epoch, args.consistency_rampup_ends - args.consistency_rampup_starts )
 
-        #import pdb; pdb.set_trace()
-        fi = open(net_temp_file, 'a+')
-        start_index_for_additional_nodes = target_q.shape[0]+j*idx_train.shape[0]
-        for i in range(idx_train.shape[0]):
-            node_index = start_index_for_additional_nodes+i
-            fi.write(str(node_index)+'\t'+str(idx_train[i].item())+'\t'+str(1)+'\n')
-            fi.write(str(idx_train[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
-            fi.write(str(node_index)+'\t'+str(permuted_train_idx[i].item())+'\t'+str(1)+'\n')
-            fi.write(str(permuted_train_idx[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
-        fi.close()
-    
-    #import pdb; pdb.set_trace()
-    ## reload the net file in the adjacency matrix###
-    vocab_node = loader.Vocab(net_temp_file, [0, 1])
-    graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
-    graph.to_symmetric(opt['self_link_weight'])
-    adj_new = graph.get_sparse_adjacency(opt['cuda'])
-    trainer_q.model.adj = adj_new
-    trainer_q.model.m1.adj = adj_new
-    trainer_q.model.m2.adj = adj_new
-    #trainer_q.model.m3.adj = adj
-    #trainer_q.model.m4.adj = adj
-    
-    return inputs_q_new, target_q_new, idx_train_new
+
+
+
 
 def pre_train(epoches):
     best = 0.0
     init_q_data()
     results = []
+    
+    if args.consistency_type == 'mse':
+        consistency_criterion = softmax_mse_loss # remember to divide by the batch size
+    elif args.consistency_type == 'kl':
+        consistency_criterion = softmax_kl_loss 
+    
     for epoch in range(epoches):
         #loss = trainer_q.update_soft_mlp(inputs_q, target_q, idx_train)
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
@@ -260,6 +272,10 @@ def pre_train(epoches):
             state = dict([('model', copy.deepcopy(trainer_q.model.state_dict())), ('optim', copy.deepcopy(trainer_q.optimizer.state_dict()))])
     #trainer_q.model.load_state_dict(state['model'])
     #trainer_q.optimizer.load_state_dict(state['optim'])
+        
+        update_ema_variables(model, ema_model, opt['ema_decay'], epoch)
+    
+        
     return results
 
 def train_p(epoches):

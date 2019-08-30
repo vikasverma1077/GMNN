@@ -23,6 +23,13 @@ opt['tau'] = 0.1
 opt['save'] = 'exp_pubmed'
 opt['mixup_alpha'] = 0.1
 
+### ict hyperparameters ###
+opt['ema_decay'] = 0.999
+opt['consistency_type'] = "mse"
+opt['consistency_rampup_starts'] = 100
+opt['consistency_rampup_ends'] = 500
+opt['mixup_consistency'] = 1.0
+
 
 def generate_command(opt):
     cmd = 'python3 train.py'
