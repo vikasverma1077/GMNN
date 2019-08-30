@@ -238,7 +238,7 @@ def pre_train(epoches):
             #inputs_q_new, target_q_new, idx_train_new = get_augmented_network_input(inputs_q, target_q,idx_train,opt, net_file, net_temp_file) ## get the augmented nodes in the input space
             #idx_train_new = 
             #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features 
-            loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train, opt, mixup_layer = [0,1])## for augmented nodes
+            loss = trainer_q.update_soft_augmented_mix_nodes(inputs_q, target_q, target, idx_train, opt, mixup_layer =[1])## for augmented nodes
         else:
             loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks

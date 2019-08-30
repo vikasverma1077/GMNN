@@ -21,7 +21,7 @@ opt['use_gold'] = 1
 opt['draw'] = 'smp'
 opt['tau'] = 0.1
 opt['save'] = 'exp_citeseer'
-opt['mixup_alpha'] = 0.1
+opt['mixup_alpha'] = 1.0
 
 
 def generate_command(opt):

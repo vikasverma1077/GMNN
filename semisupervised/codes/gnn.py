@@ -6,9 +6,10 @@ from torch import nn
 from torch.nn import init
 from torch.autograd import Variable
 import torch.nn.functional as F
+import os
 from layer import GraphConvolution
 import loader
-
+from shutil import copyfile
 
 def mixup_data(x, y, alpha):
     '''Compute the mixup data. Return mixed inputs, pairs of targets, and lambda'''
@@ -197,7 +198,7 @@ class GNN_mix(nn.Module):
     """
     
     
-def get_augmented_network_input(model, inputs_q, target_q,idx_train,opt):
+def get_augmented_network_input(model, inputs_q, target_q, target, idx_train,opt):
 
     ### create a new net file###
     if os.path.exists(opt['net_temp_file']):
@@ -212,7 +213,7 @@ def get_augmented_network_input(model, inputs_q, target_q,idx_train,opt):
     target_q_new = target_q
     idx_train_new = torch.tensor([], dtype= idx_train.dtype).cuda()# idx_train# [] for not adding the original idx_train in the additional train data
     target_new = target
-
+    
     for j in range(1):
         permuted_train_idx = idx_train[torch.randperm(idx_train.shape[0])]
         train_x_additional = lamb*inputs_q[idx_train]+ (1-lamb)*inputs_q[permuted_train_idx]
@@ -234,7 +235,7 @@ def get_augmented_network_input(model, inputs_q, target_q,idx_train,opt):
         target_new = torch.cat((target_new, temp),0)
 
         #import pdb; pdb.set_trace()
-        fi = open(net_temp_file, 'a+')
+        fi = open(opt['net_temp_file'], 'a+')
         start_index_for_additional_nodes = target_q.shape[0]+j*idx_train.shape[0]
         for i in range(idx_train.shape[0]):
             node_index = start_index_for_additional_nodes+i
@@ -244,13 +245,12 @@ def get_augmented_network_input(model, inputs_q, target_q,idx_train,opt):
             fi.write(str(permuted_train_idx[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
         fi.close()
     
-    #import pdb; pdb.set_trace()
+
     ## reload the net file in the adjacency matrix###
-    vocab_node = loader.Vocab(net_temp_file, [0, 1])
-    graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
+    vocab_node = loader.Vocab(opt['net_temp_file'], [0, 1])
+    graph = loader.Graph(file_name=opt['net_file'], entity=[vocab_node, 0, 1])
     graph.to_symmetric(opt['self_link_weight'])
     adj_new = graph.get_sparse_adjacency(opt['cuda'])
-    
     model.m1.adj = adj_new
     model.m2.adj = adj_new
     #trainer_q.model.adj = adj_new
@@ -259,7 +259,7 @@ def get_augmented_network_input(model, inputs_q, target_q,idx_train,opt):
     #trainer_q.model.m3.adj = adj
     #trainer_q.model.m4.adj = adj
     
-    return inputs_q_new, target_q_new, idx_train_new, adj_new
+    return inputs_q_new, target_q_new, idx_train_new
 
 
 class GNNq(nn.Module):
@@ -290,15 +290,15 @@ class GNNq(nn.Module):
         return x
     
     
-    def forward_mix(self, x, target, idx, opt, mixup_layer):
+    def forward_mix(self, x, target, target_discrete, idx, opt, mixup_layer):
         layer = random.choice(mixup_layer)
         if layer == 0:
-            x, target, idx = get_augmented_network_input(self, inputs, target,idx,opt)
+            x, target, idx = get_augmented_network_input(self, x, target, target_discrete, idx,opt)
         x = F.dropout(x, self.opt['input_dropout'], training=self.training)
         x = self.m1(x)
         x = F.relu(x)
         if layer == 1:
-            x, target, idx = get_augmented_network_input(self, inputs, target,idx,opt)
+            x, target, idx = get_augmented_network_input(self, x, target, target_discrete, idx,opt)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = self.m2(x)
         return x, target, idx
