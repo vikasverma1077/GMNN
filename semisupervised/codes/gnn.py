@@ -198,7 +198,10 @@ class GNN_mix(nn.Module):
     """
     
     
+
 def get_augmented_network_input(model, inputs_q, target_q, target, idx_train,opt):
+    # idx_train : this is the index of the nodes that will be mixed
+    # pass the train node idx ( labeled nodes) or the unlabeled node idx here
 
     ### create a new net file###
     if os.path.exists(opt['net_temp_file']):
