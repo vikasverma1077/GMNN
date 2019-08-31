@@ -211,7 +211,7 @@ def get_augmented_network_input(model, inputs_q, target_q, target, idx_train,opt
         copyfile(opt['net_file'], opt['net_temp_file'])
     
     lamb = np.random.beta(opt['mixup_alpha'],opt['mixup_alpha'])
-    
+    #import pdb; pdb.set_trace()
     inputs_q_new = inputs_q
     target_q_new = target_q
     idx_train_new = torch.tensor([], dtype= idx_train.dtype).cuda()# idx_train# [] for not adding the original idx_train in the additional train data
