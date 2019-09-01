@@ -73,11 +73,11 @@ class Trainer(object):
 
         self.model.train()
         self.optimizer.zero_grad()
-
+        #import pdb; pdb.set_trace()
         logits = self.model(inputs)
-        logits = torch.log_softmax(logits, dim=-1)
-        loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
-
+        #logits = torch.log_softmax(logits, dim=-1)
+        #loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
+        loss = bce_loss(softmax(logits[idx]), target[idx])
         
         loss.backward()
         self.optimizer.step()

@@ -165,8 +165,9 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
-        rand_index = random.randint(0,1)
-        if rand_index == 0:
+        rand_index = 0 #random.randint(0,1)
+        #print (rand_index)
+        if epoch > 1000:
             ### create a new net file###
             if os.path.exists(net_temp_file):
                 os.remove(net_temp_file)
@@ -184,8 +185,12 @@ def pre_train(epoches):
             target_new = target
     
             for j in range(2):
+                #import pdb; pdb.set_trace()
                 permuted_train_idx = idx_train[torch.randperm(idx_train.shape[0])]
                 train_x_additional = lamb.repeat(1,inputs_q[idx_train].shape[1])*inputs_q[idx_train]+ (1-lamb).repeat(1,inputs_q[idx_train].shape[1])*inputs_q[permuted_train_idx]
+                
+                ###row wise normalization : the sum of the row should be one
+                
                 train_y_additional = lamb.repeat(1,target_q[idx_train].shape[1])*target_q[idx_train]+ (1-lamb).repeat(1,target_q[idx_train].shape[1])*target_q[permuted_train_idx]
                 idx_train_additional = np.arange(idx_train.shape[0])
                 idx_train_additional = torch.from_numpy(idx_train_additional)
@@ -242,7 +247,8 @@ def pre_train(epoches):
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
         if epoch%100 == 0:
-            print ('epoch :{:4d},loss:{:.10f},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss,loss_aux, accuracy_train, accuracy_dev, accuracy_test))
+            print ( rand_index)
+            print ('epoch :{:4d},loss:{:.15f},loss:{:.15f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss,loss_aux, accuracy_train, accuracy_dev, accuracy_test))
 
         if accuracy_dev > best:
             best = accuracy_dev
