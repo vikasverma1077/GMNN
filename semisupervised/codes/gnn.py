@@ -251,7 +251,7 @@ def get_augmented_network_input(model, inputs_q, target_q, target, idx_train,opt
 
     ## reload the net file in the adjacency matrix###
     vocab_node = loader.Vocab(opt['net_temp_file'], [0, 1])
-    graph = loader.Graph(file_name=opt['net_file'], entity=[vocab_node, 0, 1])
+    graph = loader.Graph(file_name=opt['net_temp_file'], entity=[vocab_node, 0, 1])
     graph.to_symmetric(opt['self_link_weight'])
     adj_new = graph.get_sparse_adjacency(opt['cuda'])
     model.m1.adj = adj_new
