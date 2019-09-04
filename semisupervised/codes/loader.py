@@ -152,7 +152,6 @@ class Graph(object):
         d = dict()
         for u, v, w in edges_:
             d[u] = d.get(u, 0.0) + w
-        
         self.edges = [(u, v, w/math.sqrt(d[u]*d[v])) for u, v, w in edges_]
 
     def get_sparse_adjacency(self, cuda=True):
@@ -169,6 +168,7 @@ class Graph(object):
             index = index.cuda()
             value = value.cuda()
         adj = torch.sparse.FloatTensor(index, value, shape)
+        #import pdb; pdb.set_trace()
         if cuda:
             adj = adj.cuda()
 

@@ -11,7 +11,7 @@ opt['hidden_dim'] = 16
 opt['input_dropout'] = 0.5
 opt['dropout'] = 0
 opt['optimizer'] = 'adam'
-opt['lr'] = 0.1
+opt['lr'] = 0.01
 opt['decay'] = 5e-4
 opt['self_link_weight'] = 1.0
 opt['pre_epoch'] = 1000
@@ -21,7 +21,7 @@ opt['use_gold'] = 1
 opt['draw'] = 'smp'
 opt['tau'] = 0.1
 opt['save'] = 'exp_cora'
-opt['mixup_alpha'] = 1.0
+opt['mixup_alpha'] = 0.1
 
 def generate_command(opt):
     cmd = 'python3 train.py'
