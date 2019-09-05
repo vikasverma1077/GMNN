@@ -140,7 +140,7 @@ idx_all = list(range(opt['num_node']))
 
 #import pdb; pdb.set_trace()
 idx_unlabeled = list(set(idx_all)-set(idx_train))
-#idx_unlabeled = random.sample(idx_unlabeled, len(idx_train))
+idx_unlabeled = random.sample(idx_unlabeled, len(idx_train))
 inputs = torch.Tensor(feature.one_hot)
 target = torch.LongTensor(label.itol)
 idx_train = torch.LongTensor(idx_train)
@@ -261,7 +261,7 @@ def pre_train(epoches):
             #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features
             temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
             idx_unlabeled_subset = idx_unlabeled[temp]
-            loss , loss_usup= trainer_q.update_soft_augmented_mix_nodes(inputs_q, target_q, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[0])## for augmented nodes
+            loss , loss_usup= trainer_q.update_soft_aux(inputs_q, target_q, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[0,1])## for augmented nodes
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
             trainer_q.model.train()

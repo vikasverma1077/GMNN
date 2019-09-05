@@ -310,7 +310,7 @@ class GNNq(nn.Module):
         
         if mixup_hidden == True or mixup_input == True:
             if mixup_hidden == True:
-                layer_mix = random.randint(1,layer_mix)
+                layer_mix = random.choice(layer_mix)
             elif mixup_input == True:
                 layer_mix = 0
 

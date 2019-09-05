@@ -21,14 +21,14 @@ opt['use_gold'] = 1
 opt['draw'] = 'smp'
 opt['tau'] = 0.1
 opt['save'] = 'exp_cora'
-opt['mixup_alpha'] = 0.1
+opt['mixup_alpha'] = 1.0
 
 ### ict hyperparameters ###
 opt['ema_decay'] = 0.999
 opt['consistency_type'] = "mse"
 opt['consistency_rampup_starts'] = 500
 opt['consistency_rampup_ends'] = 1000
-opt['mixup_consistency'] = 1.0
+opt['mixup_consistency'] = 0.0
 
 
 
