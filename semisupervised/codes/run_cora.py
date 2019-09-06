@@ -26,7 +26,7 @@ opt['mixup_alpha'] = 1.0
 ### ict hyperparameters ###
 opt['ema_decay'] = 0.999
 opt['consistency_type'] = "mse"
-opt['consistency_rampup_starts'] = 500
+opt['consistency_rampup_starts'] = 0
 opt['consistency_rampup_ends'] = 1000
 opt['mixup_consistency'] = 0.0
 
@@ -42,7 +42,7 @@ def run(opt):
     opt_ = copy.deepcopy(opt)
     os.system(generate_command(opt_))
 
-for k in range(1):
+for k in range(5):
     seed = k + 1
     opt['seed'] = seed
     run(opt)

@@ -221,6 +221,7 @@ def update_q_data():
 def update_ema_variables(model, ema_model, alpha, epoch):
     # Use the true average until the exponential average is more correct
     alpha = min(1 - 1 / (epoch + 1), alpha)
+    #print (alpha)
     for ema_param, param in zip(ema_model.parameters(), model.parameters()):
         ema_param.data.mul_(alpha).add_(1 - alpha, param.data)
 
@@ -231,6 +232,14 @@ def get_current_consistency_weight(final_consistency_weight, epoch):
     #epoch = epoch + step_in_epoch / total_steps_in_epoch
     return final_consistency_weight *sigmoid_rampup(epoch, args.consistency_rampup_ends - args.consistency_rampup_starts )
 
+
+
+def sharpen(prob, temperature):
+    temp_reciprocal = 1.0/ temperature
+    prob = torch.pow(prob, temp_reciprocal)
+    row_sum = prob.sum(dim=1).reshape(-1,1)
+    out = prob/row_sum
+    return out 
 
 
 
@@ -254,14 +263,17 @@ def pre_train(epoches):
         if rand_index == 0: ## do the augmented node training
             
             ## get the psudolabels for the unlabeled nodes ##
-            target_predict = trainer_q_ema.predict(inputs_q)
+            target_predict = trainer_q.predict(inputs_q)
+            #target_predict = sharpen(target_predict,0.1)
+            #if epoch == 500:
+            #    print (target_predict)
             target_q[idx_unlabeled] = target_predict[idx_unlabeled]
             #inputs_q_new, target_q_new, idx_train_new = get_augmented_network_input(inputs_q, target_q,idx_train,opt, net_file, net_temp_file) ## get the augmented nodes in the input space
             #idx_train_new = 
             #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features
             temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
             idx_unlabeled_subset = idx_unlabeled[temp]
-            loss , loss_usup= trainer_q.update_soft_aux(inputs_q, target_q, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[0,1])## for augmented nodes
+            loss , loss_usup= trainer_q.update_soft_aux(inputs_q, target_q, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[1])## for augmented nodes
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
             trainer_q.model.train()
@@ -285,10 +297,11 @@ def pre_train(epoches):
         _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) ## target_new : for augmented nodes
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
+        _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
         if epoch%100 == 0:
             if rand_index == 0:
-                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test))
+                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
             else : 
                  print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss.item(), accuracy_train, accuracy_dev, accuracy_test))
         if accuracy_dev > best:
