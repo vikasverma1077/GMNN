@@ -304,9 +304,9 @@ def pre_train(epoches):
         #loss_aux = loss
         #loss, loss_aux = trainer_q.update_soft_aux(inputs_q, target_q, idx_train, epoch, opt)## for auxiliary net with shared parameters
 
-        trainer_q.model.adj = adj
-        trainer_q.model.m1.adj = adj
-        trainer_q.model.m2.adj = adj
+        #trainer_q.model.adj = adj
+        #trainer_q.model.m1.adj = adj
+        #trainer_q.model.m2.adj = adj
         _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) ## target_new : for augmented nodes
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
