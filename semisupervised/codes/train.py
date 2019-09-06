@@ -140,7 +140,7 @@ idx_all = list(range(opt['num_node']))
 
 #import pdb; pdb.set_trace()
 idx_unlabeled = list(set(idx_all)-set(idx_train))
-idx_unlabeled = random.sample(idx_unlabeled, len(idx_train))
+#idx_unlabeled = random.sample(idx_unlabeled, len(idx_train))
 inputs = torch.Tensor(feature.one_hot)
 target = torch.LongTensor(label.itol)
 idx_train = torch.LongTensor(idx_train)
@@ -282,10 +282,23 @@ def pre_train(epoches):
             trainer_q.optimizer.step()
 
         else:
+            
             loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+            
+            target_predict = trainer_q_ema.predict(inputs_q)
+            target_q[idx_unlabeled] = target_predict[idx_unlabeled]
+            
+            temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
+            idx_unlabeled_subset = idx_unlabeled[temp]
+            
+            loss_usup = trainer_q.update_soft(inputs_q, target_q, idx_unlabeled_subset)
+
+            mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
+            total_loss = loss + mixup_consistency*loss_usup
+        
             trainer_q.model.train()
             trainer_q.optimizer.zero_grad()
-            loss.backward()
+            total_loss.backward()
             trainer_q.optimizer.step()
         #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
         #loss_aux = loss
