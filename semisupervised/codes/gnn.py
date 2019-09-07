@@ -6,7 +6,10 @@ from torch import nn
 from torch.nn import init
 from torch.autograd import Variable
 import torch.nn.functional as F
-from layer import GraphConvolution
+import os
+from layer import *
+import loader
+from shutil import copyfile
 
 def mixup_data(x, y, alpha):
     '''Compute the mixup data. Return mixed inputs, pairs of targets, and lambda'''
@@ -193,17 +196,141 @@ class GNN_mix(nn.Module):
         x = self.linear_m3_2(x)
         return x, target_a, target_b, lam
     """
+    
+    
+
+def get_augmented_network_input(model, inputs_q, target_q, target, idx_train,opt):
+    # idx_train : this is the index of the nodes that will be mixed
+    # pass the train node idx ( labeled nodes) or the unlabeled node idx here
+
+    ### create a new net file###
+    if os.path.exists(opt['net_temp_file']):
+        os.remove(opt['net_temp_file'])
+        copyfile(opt['net_file'], opt['net_temp_file'])
+    else:
+        copyfile(opt['net_file'], opt['net_temp_file'])
+    
+    lamb = np.random.beta(opt['mixup_alpha'],opt['mixup_alpha'])
+    #import pdb; pdb.set_trace()
+    inputs_q_new = inputs_q
+    target_q_new = target_q
+    idx_train_new = torch.tensor([], dtype= idx_train.dtype).cuda()# idx_train# [] for not adding the original idx_train in the additional train data
+    target_new = target
+    
+    for j in range(1):
+        permuted_train_idx = idx_train[torch.randperm(idx_train.shape[0])]
+        train_x_additional = lamb*inputs_q[idx_train]+ (1-lamb)*inputs_q[permuted_train_idx]
+        train_y_additional = lamb*target_q[idx_train]+ (1-lamb)*target_q[permuted_train_idx]
+        idx_train_additional = np.arange(idx_train.shape[0])
+        idx_train_additional = torch.from_numpy(idx_train_additional)
+        idx_train_additional = idx_train_additional.cuda()
+        idx_train_additional = idx_train_additional + target_q_new.shape[0]
+
+        inputs_q_new = torch.cat((inputs_q_new, train_x_additional),0)
+        target_q_new = torch.cat((target_q_new, train_y_additional),0)
+        idx_train_new = torch.cat((idx_train_new, idx_train_additional),0)
+    
+        ## add dummy labels to the target tensor, these dummy values will not be used so I just used '0'##
+        #import pdb; pdb.set_trace()
+        
+        temp = torch.zeros(train_y_additional.shape[0], dtype = target.dtype)
+        temp = temp.cuda()
+        target_new = torch.cat((target_new, temp),0)
+
+        #import pdb; pdb.set_trace()
+        fi = open(opt['net_temp_file'], 'a+')
+        start_index_for_additional_nodes = target_q.shape[0]+j*idx_train.shape[0]
+        for i in range(idx_train.shape[0]):
+            node_index = start_index_for_additional_nodes+i
+            fi.write(str(node_index)+'\t'+str(idx_train[i].item())+'\t'+str(1)+'\n')
+            fi.write(str(idx_train[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
+            fi.write(str(node_index)+'\t'+str(permuted_train_idx[i].item())+'\t'+str(1)+'\n')
+            fi.write(str(permuted_train_idx[i].item())+'\t'+str(node_index)+'\t'+str(1)+'\n')
+        fi.close()
+    
+
+    ## reload the net file in the adjacency matrix###
+    vocab_node = loader.Vocab(opt['net_temp_file'], [0, 1])
+    graph = loader.Graph(file_name=opt['net_temp_file'], entity=[vocab_node, 0, 1])
+    graph.to_symmetric(opt['self_link_weight'])
+    adj_new = graph.get_sparse_adjacency(opt['cuda'])
+    model.m1.adj = adj_new
+    model.m2.adj = adj_new
+    #trainer_q.model.adj = adj_new
+    #trainer_q.model.m1.adj = adj_new
+    #trainer_q.model.m2.adj = adj_new
+    #trainer_q.model.m3.adj = adj
+    #trainer_q.model.m4.adj = adj
+    
+    return inputs_q_new, target_q_new, idx_train_new
+
+class GAT(nn.Module):
+    def __init__(self, nfeat, nhid, nclass, dropout, alpha, nheads):
+        """Dense version of GAT."""
+        super(GAT, self).__init__()
+        self.dropout = dropout
+
+        self.attentions = [GraphAttentionLayer(nfeat, nhid, dropout=dropout, alpha=alpha, concat=True) for _ in range(nheads)]
+        for i, attention in enumerate(self.attentions):
+            self.add_module('attention_{}'.format(i), attention)
+
+        self.out_att = GraphAttentionLayer(nhid * nheads, nclass, dropout=dropout, alpha=alpha, concat=False)
+
+    def forward(self, x, adj):
+        x = F.dropout(x, self.dropout, training=self.training)
+        x = torch.cat([att(x, adj) for att in self.attentions], dim=1)
+        x = F.dropout(x, self.dropout, training=self.training)
+        x = F.elu(self.out_att(x, adj))
+        return F.log_softmax(x, dim=1)
+
+
+class SpGAT(nn.Module):
+    def __init__(self, nfeat, nhid, nclass, dropout, alpha, nheads):
+        """Sparse version of GAT."""
+        super(SpGAT, self).__init__()
+        self.dropout = dropout
+
+        self.attentions = [SpGraphAttentionLayer(nfeat, 
+                                                 nhid, 
+                                                 dropout=dropout, 
+                                                 alpha=alpha, 
+                                                 concat=True) for _ in range(nheads)]
+        for i, attention in enumerate(self.attentions):
+            self.add_module('attention_{}'.format(i), attention)
+
+        self.out_att = SpGraphAttentionLayer(nhid * nheads, 
+                                             nclass, 
+                                             dropout=dropout, 
+                                             alpha=alpha, 
+                                             concat=False)
+
+    def forward(self, x, adj):
+        x = F.dropout(x, self.dropout, training=self.training)
+        x = torch.cat([att(x, adj) for att in self.attentions], dim=1)
+        x = F.dropout(x, self.dropout, training=self.training)
+        x = F.elu(self.out_att(x, adj))
+        return F.log_softmax(x, dim=1)
+
+
 class GNNq(nn.Module):
     def __init__(self, opt, adj):
         super(GNNq, self).__init__()
         self.opt = opt
         self.adj = adj
 
-        opt_ = dict([('in', opt['num_feature']), ('out', opt['hidden_dim'])])
-        self.m1 = GraphConvolution(opt_, adj)
+        self.attentions = [SpGraphAttentionLayer(opt['num_feature'], 
+                                                 opt['hidden_dim'], 
+                                                 dropout=opt['dropout'], 
+                                                 alpha=opt['alpha'], 
+                                                 concat=True) for _ in range(opt['nheads'])]
+        for i, attention in enumerate(self.attentions):
+            self.add_module('attention_{}'.format(i), attention)
 
-        opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
-        self.m2 = GraphConvolution(opt_, adj)
+        self.out_att = SpGraphAttentionLayer(opt['hidden_dim'] * opt['nheads'], 
+                                             opt['num_class'], 
+                                             dropout=opt['dropout'], 
+                                             alpha=opt['alpha'], 
+                                             concat=False)
 
         if opt['cuda']:
             self.cuda()
@@ -214,17 +341,30 @@ class GNNq(nn.Module):
 
     def forward(self, x):
         x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+        x = torch.cat([att(x, self.adj) for att in self.attentions], dim=1)
+        x = F.dropout(x, self.opt['dropout'], training=self.training)
+        x = F.elu(self.out_att(x, self.adj))
+        return x
+    
+    
+    def forward_mix(self, x, target, target_discrete, idx, opt, mixup_layer):
+        layer = random.choice(mixup_layer)
+        if layer == 0:
+            x, target, idx = get_augmented_network_input(self, x, target, target_discrete, idx,opt)
+        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
         x = self.m1(x)
         x = F.relu(x)
+        if layer == 1:
+            x, target, idx = get_augmented_network_input(self, x, target, target_discrete, idx,opt)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = self.m2(x)
-        return x
+        return x, target, idx
     
     def forward_aux(self, x, target=None, train_idx= None, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None):
         
         if mixup_hidden == True or mixup_input == True:
             if mixup_hidden == True:
-                layer_mix = random.randint(1,layer_mix)
+                layer_mix = random.choice(layer_mix)
             elif mixup_input == True:
                 layer_mix = 0
 
@@ -234,23 +374,18 @@ class GNNq(nn.Module):
 
             x = F.dropout(x, self.opt['input_dropout'], training=self.training)
     
-            x = self.m1.forward_aux(x)
-            x = F.relu(x)
+            x = torch.cat([att.forward_aux(x) for att in self.attentions], dim=1)
             if layer_mix == 1:
                 x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
 
             x = F.dropout(x, self.opt['dropout'], training=self.training)
-            x = self.m2.forward_aux(x)
+            x = F.elu(self.out_att.forward_aux(x))
             
             return x, target_a, target_b, lam
         
         else:
-        
-            #x = F.dropout(x, self.opt['input_dropout'], training=self.training)
-            x = self.m1.forward_aux(x)
-            x = F.relu(x)
-            #x = F.dropout(x, self.opt['dropout'], training=self.training)
-            x = self.m2.forward_aux(x)
+            x = torch.cat([att.forward_aux(x) for att in self.attentions], dim=1)
+            x = F.elu(self.out_att.forward_aux(x))
             return x
 
 class GNNp(nn.Module):

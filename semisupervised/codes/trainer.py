@@ -36,18 +36,21 @@ bce_loss = nn.BCELoss().cuda()
 softmax = nn.Softmax(dim=1).cuda()
 
 class Trainer(object):
-    def __init__(self, opt, model):
+    def __init__(self, opt, model, ema= True):
         self.opt = opt
+        self.ema = ema
         self.model = model
         self.criterion = nn.CrossEntropyLoss()
         self.parameters = [p for p in self.model.parameters() if p.requires_grad]
         if opt['cuda']:
             self.criterion.cuda()
-        self.optimizer = get_optimizer(self.opt['optimizer'], self.parameters, self.opt['lr'], self.opt['decay'])
+        if  self.ema == True:
+            self.optimizer = get_optimizer(self.opt['optimizer'], self.parameters, self.opt['lr'], self.opt['decay'])
 
     def reset(self):
         self.model.reset()
-        self.optimizer = get_optimizer(self.opt['optimizer'], self.parameters, self.opt['lr'], self.opt['decay'])
+        if self.ema == True:
+            self.optimizer = get_optimizer(self.opt['optimizer'], self.parameters, self.opt['lr'], self.opt['decay'])
 
     def update(self, inputs, target, idx):
         if self.opt['cuda']:
@@ -71,56 +74,82 @@ class Trainer(object):
             target = target.cuda()
             idx = idx.cuda()
 
-        self.model.train()
-        self.optimizer.zero_grad()
+        #self.model.train()
+        #self.optimizer.zero_grad()
 
-        logits = self.model(inputs)
+        logits= self.model(inputs)
         logits = torch.log_softmax(logits, dim=-1)
+        #import pdb; pdb.set_trace()
         loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
-
         
-        loss.backward()
-        self.optimizer.step()
-        return loss.item()
+        #loss.backward()
+        #self.optimizer.step()
+        return loss
     
     
-    def update_soft_aux(self, inputs, target, idx, epoch, opt):
+    def update_soft_augmented_mix_nodes(self, inputs, target,target_discrete, idx, idx_unlabeled, adj, opt, mixup_layer):
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+            target = target.cuda()
+            idx = idx.cuda()
+            idx_unlabeled = idx_unlabeled.cuda()
+
+        #self.model.train()
+        #self.optimizer.zero_grad()
+        
+        ### get the loss by mixing the labeled samples  ####
+        logits, target_out, idx = self.model.forward_mix(inputs, target, target_discrete, idx,  opt, mixup_layer)
+        logits = torch.log_softmax(logits, dim=-1)
+        #import pdb; pdb.set_trace()
+        loss = -torch.mean(torch.sum(target_out[idx] * logits[idx], dim=-1))
+        
+        ## reset the adj matrix to original adj matrix##
+        self.model.m1.adj = adj
+        self.model.m2.adj = adj
+
+        #### get the loss by mixing unlabeled nodes###
+        logits, target_out, idx = self.model.forward_mix(inputs, target, target_discrete, idx_unlabeled, opt, mixup_layer)
+        logits = torch.log_softmax(logits, dim=-1)
+        #import pdb; pdb.set_trace()
+        loss_usup = -torch.mean(torch.sum(target_out[idx] * logits[idx], dim=-1))
+            
+        #loss.backward()
+        #self.optimizer.step()
+        return loss, loss_usup
+    
+    
+    def update_soft_aux(self, inputs, target,target_discrete, idx, idx_unlabeled, adj, opt, mixup_layer):
         """uses the auxiliary loss as well, which does not use the adjacency information"""
         if self.opt['cuda']:
             inputs = inputs.cuda()
             target = target.cuda()
             idx = idx.cuda()
+            idx_unlabeled = idx_unlabeled.cuda()
 
         self.model.train()
         self.optimizer.zero_grad()
 
-        logits = self.model(inputs)
-        logits = torch.log_softmax(logits, dim=-1)
-        loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
         #import pdb ;pdb.set_trace()
         mixup = True
         if mixup == True:
-            logits, target_a, target_b, lam = self.model.forward_aux(inputs, target=target, train_idx= idx, mixup_input=False, mixup_hidden = True, mixup_alpha = opt['mixup_alpha'],layer_mix=1)
+            # get the supervised mixup loss #
+            logits, target_a, target_b, lam = self.model.forward_aux(inputs, target=target, train_idx= idx, mixup_input=False, mixup_hidden = True, mixup_alpha = opt['mixup_alpha'],layer_mix=mixup_layer)
             #import pdb; pdb.set_trace()
             mixed_target = lam*target_a + (1-lam)*target_b
             #logits = torch.log_softmax(logits, dim=-1)
             #loss_aux = -(torch.mean(lam*torch.sum(target_a * logits[idx], dim=-1, keepdim= True))+ torch.mean((1-lam)*torch.sum(target_b * logits[idx], dim=-1, keepdim =True)))
-            loss_aux = bce_loss(softmax(logits[idx]), mixed_target)
+            loss = bce_loss(softmax(logits[idx]), mixed_target)
+
+            # get the unsupervised mixup loss #
+            logits, target_a, target_b, lam = self.model.forward_aux(inputs, target=target, train_idx= idx_unlabeled, mixup_input=False, mixup_hidden = True, mixup_alpha = opt['mixup_alpha'],layer_mix= mixup_layer)
+            mixed_target = lam*target_a + (1-lam)*target_b
+            loss_usup = bce_loss(softmax(logits[idx_unlabeled]), mixed_target)
         else:
             logits = self.model.forward_aux(inputs, target=None, train_idx= idx, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
             logits = torch.log_softmax(logits, dim=-1)
-            loss_aux = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
+            loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
         
-        rand_ix = np.random.randint(2)
-        #if rand_ix == 0:
-        #    loss_total = loss_aux #+ 1.0* loss_aux
-        #else:
-        #    loss_total = loss
-        loss_total = loss_aux
-        loss_total.backward()
-        self.optimizer.step()
-        
-        return loss.item(), loss_aux.item()
+        return loss, loss_usup
 
     def update_soft_mix(self, inputs, target, idx):
         if self.opt['cuda']:
