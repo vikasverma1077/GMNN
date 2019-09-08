@@ -317,7 +317,14 @@ class GNNq(nn.Module):
         super(GNNq, self).__init__()
         self.opt = opt
         self.adj = adj
+        
+        opt_ = dict([('in', opt['num_feature']), ('out', opt['hidden_dim'])])
+        self.m1 = GraphConvolution(opt_, adj)
 
+        opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
+        self.m2 = GraphConvolution(opt_, adj)
+
+        """                                                 
         self.attentions = [SpGraphAttentionLayer(opt['num_feature'], 
                                                  opt['hidden_dim'], 
                                                  dropout=opt['dropout'], 
@@ -331,7 +338,7 @@ class GNNq(nn.Module):
                                              dropout=opt['dropout'], 
                                              alpha=opt['alpha'], 
                                              concat=False)
-
+        """
         if opt['cuda']:
             self.cuda()
 
@@ -340,10 +347,18 @@ class GNNq(nn.Module):
         self.m2.reset_parameters()
 
     def forward(self, x):
+        """
         x = F.dropout(x, self.opt['input_dropout'], training=self.training)
         x = torch.cat([att(x, self.adj) for att in self.attentions], dim=1)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = F.elu(self.out_att(x, self.adj))
+        return x
+        """
+        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+        x = self.m1(x)
+        x = F.relu(x)
+        x = F.dropout(x, self.opt['dropout'], training=self.training)
+        x = self.m2(x)
         return x
     
     

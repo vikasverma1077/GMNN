@@ -131,7 +131,7 @@ feature = loader.EntityFeature(file_name=feature_file, entity=[vocab_node, 0], f
 #import pdb; pdb.set_trace()
 graph.to_symmetric(opt['self_link_weight'])
 feature.to_one_hot(binary=True)
-adj = graph.get_sparse_adjacency(opt['cuda']).to_dense()
+adj = graph.get_sparse_adjacency(opt['cuda'])#.to_dense()
 
 with open(train_file, 'r') as fi:
     idx_train = [vocab_node.stoi[line.strip()] for line in fi]
@@ -262,7 +262,7 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
-        rand_index = random.randint(0,1)
+        rand_index = 1# random.randint(0,1)
         if rand_index == 0: ## do the augmented node training
             
             ## get the psudolabels for the unlabeled nodes ##
@@ -287,7 +287,7 @@ def pre_train(epoches):
         else:
             
             loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
-            
+            """
             target_predict = trainer_q_ema.predict(inputs_q)
             target_q[idx_unlabeled] = target_predict[idx_unlabeled]
             
@@ -298,7 +298,8 @@ def pre_train(epoches):
 
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
-        
+            """
+            total_loss = loss
             trainer_q.model.train()
             trainer_q.optimizer.zero_grad()
             total_loss.backward()
@@ -313,7 +314,7 @@ def pre_train(epoches):
         _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) ## target_new : for augmented nodes
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
-        _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
+        #_, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
         if epoch%100 == 0:
             if rand_index == 0:
@@ -326,7 +327,7 @@ def pre_train(epoches):
     #trainer_q.model.load_state_dict(state['model'])
     #trainer_q.optimizer.load_state_dict(state['optim'])
         
-        update_ema_variables(gnnq, gnnq_ema, opt['ema_decay'], epoch)
+        #update_ema_variables(gnnq, gnnq_ema, opt['ema_decay'], epoch)
     
         
     return results
