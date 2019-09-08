@@ -259,12 +259,18 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
-        rand_index = random.randint(0,1)
+        rand_index =  random.randint(0,1)
         if rand_index == 0: ## do the augmented node training
             
             ## get the psudolabels for the unlabeled nodes ##
-            target_predict = trainer_q.predict(inputs_q)
-            #target_predict = sharpen(target_predict,0.1)
+            #import pdb; pdb.set_trace()
+            k = 10
+            temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
+            temp = temp.cuda()
+            for i in range(k):
+                temp[i,:,:] = trainer_q.predict_noisy(inputs_q)
+            target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
+            target_predict = sharpen(target_predict,0.1)
             #if epoch == 500:
             #    print (target_predict)
             target_q[idx_unlabeled] = target_predict[idx_unlabeled]
@@ -285,7 +291,14 @@ def pre_train(epoches):
             
             loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
             
-            target_predict = trainer_q_ema.predict(inputs_q)
+            """
+            k = 10
+            temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
+            temp = temp.cuda()
+            for i in range(k):
+                temp[i,:,:] = trainer_q.predict_noisy(inputs_q)
+            target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
+            target_predict = sharpen(target_predict,0.1)
             target_q[idx_unlabeled] = target_predict[idx_unlabeled]
             
             temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
@@ -295,7 +308,8 @@ def pre_train(epoches):
 
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
-        
+            """
+            total_loss = loss
             trainer_q.model.train()
             trainer_q.optimizer.zero_grad()
             total_loss.backward()

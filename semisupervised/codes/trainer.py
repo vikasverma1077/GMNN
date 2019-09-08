@@ -280,6 +280,45 @@ class Trainer(object):
 
         return logits
 
+
+    def predict_aux(self, inputs, tau=1):
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+
+        self.model.eval()
+
+        logits = self.model.forward_aux(inputs) / tau
+
+        logits = torch.softmax(logits, dim=-1).detach()
+
+        return logits
+
+    def predict_noisy(self, inputs, tau=1):
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+
+        #self.model.eval()
+
+        logits = self.model(inputs) / tau
+
+        logits = torch.softmax(logits, dim=-1).detach()
+
+        return logits
+
+
+    def predict_noisy_aux(self, inputs, tau=1):
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+
+        #self.model.eval()
+
+        logits = self.model.forward_aux(inputs) / tau
+
+        logits = torch.softmax(logits, dim=-1).detach()
+
+        return logits
+    
+    
     def save(self, filename):
         params = {
                 'model': self.model.state_dict(),

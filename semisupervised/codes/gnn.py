@@ -276,6 +276,9 @@ class GNNq(nn.Module):
 
         opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         self.m2 = GraphConvolution(opt_, adj)
+        
+        opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
+        self.m3 = GraphConvolution(opt_, adj)### used for auxiliary network. it will be used a fully-connected layer. for ease of implementation I used GCN layer.
 
         if opt['cuda']:
             self.cuda()
