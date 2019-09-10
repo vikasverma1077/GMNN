@@ -277,8 +277,8 @@ class GNNq(nn.Module):
         opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         self.m2 = GraphConvolution(opt_, adj)
         
-        opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
-        self.m3 = GraphConvolution(opt_, adj)### used for auxiliary network. it will be used a fully-connected layer. for ease of implementation I used GCN layer.
+        #opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
+        #self.m3 = GraphConvolution(opt_, adj)### used for auxiliary network. it will be used a fully-connected layer. for ease of implementation I used GCN layer.
 
         if opt['cuda']:
             self.cuda()
@@ -335,10 +335,10 @@ class GNNq(nn.Module):
         
         else:
         
-            #x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
             x = self.m1.forward_aux(x)
             x = F.relu(x)
-            #x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
             x = self.m2.forward_aux(x)
             return x
 
@@ -354,7 +354,7 @@ class GNNp(nn.Module):
         opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         self.m2 = GraphConvolution(opt_, adj)
 
-        if opt['cuda']:
+        if  opt['cuda']:
             self.cuda()
 
     def reset(self):

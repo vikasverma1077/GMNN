@@ -148,6 +148,11 @@ class Trainer(object):
             logits = self.model.forward_aux(inputs, target=None, train_idx= idx, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
             logits = torch.log_softmax(logits, dim=-1)
             loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
+            
+
+            logits = self.model.forward_aux(inputs, target=None, train_idx= idx_unlabeled, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
+            logits = torch.log_softmax(logits, dim=-1)
+            loss_usup = -torch.mean(torch.sum(target[idx_unlabeled] * logits[idx_unlabeled], dim=-1))
         
         return loss, loss_usup
 

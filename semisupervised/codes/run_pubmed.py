@@ -19,7 +19,7 @@ opt['epoch'] = 100
 opt['iter'] = 1
 opt['use_gold'] = 1
 opt['draw'] = 'smp'
-opt['tau'] = 0.1
+opt['tau'] = 0.0
 opt['save'] = 'exp_pubmed'
 opt['mixup_alpha'] = 1.0
 
@@ -43,5 +43,7 @@ def run(opt):
 
 for k in range(5):
     seed = k + 1
+    print(opt['mixup_alpha'])
+    print(opt['mixup_consistency'])
     opt['seed'] = seed
     run(opt)

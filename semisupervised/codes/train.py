@@ -173,6 +173,10 @@ trainer_q = Trainer(opt, gnnq)
 
 # Build the ema model
 gnnq_ema = GNNq(opt, adj)
+
+for ema_param, param in zip(gnnq_ema.parameters(), gnnq.parameters()):
+            ema_param.data= param.data
+
 for param in gnnq_ema.parameters():
             param.detach_()
 trainer_q_ema = Trainer(opt, gnnq_ema, ema = False)
@@ -264,12 +268,15 @@ def pre_train(epoches):
             
             ## get the psudolabels for the unlabeled nodes ##
             #import pdb; pdb.set_trace()
+            
             k = 10
             temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
             temp = temp.cuda()
             for i in range(k):
                 temp[i,:,:] = trainer_q.predict_noisy(inputs_q)
             target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
+            
+            #target_predict = trainer_q.predict(inputs_q)
             target_predict = sharpen(target_predict,0.1)
             #if epoch == 500:
             #    print (target_predict)
@@ -309,6 +316,7 @@ def pre_train(epoches):
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
             """
+            
             total_loss = loss
             trainer_q.model.train()
             trainer_q.optimizer.zero_grad()
@@ -326,7 +334,7 @@ def pre_train(epoches):
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
-        if epoch%100 == 0:
+        if epoch%400 == 0:
             if rand_index == 0:
                 print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
             else : 
