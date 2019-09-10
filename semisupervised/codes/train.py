@@ -1,5 +1,6 @@
 import sys
 import os
+import glob
 import copy
 from datetime import datetime
 import time
@@ -13,7 +14,7 @@ import torch.optim as optim
 import torch.nn.functional as F
 
 from trainer import Trainer
-from gnn import GNNq, GNNp, MLP, GNN_mix
+from gnn import GNNq, GNNp, MLP, GNN_mix, SpGAT
 from ramps import *
 from losses import *
 import loader
@@ -79,6 +80,7 @@ parser.add_argument('--mixup_consistency', default=1.0, type=float,
 
 parser.add_argument('--nheads', type=int, default=8, help='Number of head attentions.')
 parser.add_argument('--alpha', type=float, default=0.2, help='Alpha for the leaky_relu.')
+parser.add_argument('--patience', type=int, default=100, help='Patience')
 
 args = parser.parse_args()
 
@@ -131,7 +133,7 @@ feature = loader.EntityFeature(file_name=feature_file, entity=[vocab_node, 0], f
 #import pdb; pdb.set_trace()
 graph.to_symmetric(opt['self_link_weight'])
 feature.to_one_hot(binary=True)
-adj = graph.get_sparse_adjacency(opt['cuda'])#.to_dense()
+adj = graph.get_sparse_adjacency(opt['cuda'])
 
 with open(train_file, 'r') as fi:
     idx_train = [vocab_node.stoi[line.strip()] for line in fi]
@@ -169,13 +171,19 @@ if opt['cuda']:
     inputs_p = inputs_p.cuda()
     target_p = target_p.cuda()
 
-gnnq = GNNq(opt, adj)
+#gnnq = GNNq(opt, adj)
+gnnq = SpGAT(opt, adj.to_dense())
+
 #gnnq = MLP(opt)
 #gnnq = GNN_mix(opt, adj)
 trainer_q = Trainer(opt, gnnq)
 
 # Build the ema model
 gnnq_ema = GNNq(opt, adj)
+
+for ema_param, param in zip(gnnq_ema.parameters(), gnnq.parameters()):
+            ema_param.data= param.data
+
 for param in gnnq_ema.parameters():
             param.detach_()
 trainer_q_ema = Trainer(opt, gnnq_ema, ema = False)
@@ -251,6 +259,11 @@ def pre_train(epoches):
     best = 0.0
     init_q_data()
     results = []
+
+    loss_values = []
+    bad_counter = 0
+    best = opt['pre_epoch'] + 1
+    best_epoch = 0
     
     if args.consistency_type == 'mse':
         consistency_criterion = softmax_mse_loss # remember to divide by the batch size
@@ -266,8 +279,17 @@ def pre_train(epoches):
         if rand_index == 0: ## do the augmented node training
             
             ## get the psudolabels for the unlabeled nodes ##
-            target_predict = trainer_q.predict(inputs_q)
-            #target_predict = sharpen(target_predict,0.1)
+            #import pdb; pdb.set_trace()
+            
+            k = 10
+            temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
+            temp = temp.cuda()
+            for i in range(k):
+                temp[i,:,:] = trainer_q.predict_noisy(inputs_q)
+            target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
+            
+            #target_predict = trainer_q.predict(inputs_q)
+            target_predict = sharpen(target_predict,0.1)
             #if epoch == 500:
             #    print (target_predict)
             target_q[idx_unlabeled] = target_predict[idx_unlabeled]
@@ -286,9 +308,17 @@ def pre_train(epoches):
 
         else:
             
-            loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+            #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+            loss = trainer_q.update(inputs, target, idx_train)
+            
             """
-            target_predict = trainer_q_ema.predict(inputs_q)
+            k = 10
+            temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
+            temp = temp.cuda()
+            for i in range(k):
+                temp[i,:,:] = trainer_q.predict_noisy(inputs_q)
+            target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
+            target_predict = sharpen(target_predict,0.1)
             target_q[idx_unlabeled] = target_predict[idx_unlabeled]
             
             temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
@@ -299,11 +329,12 @@ def pre_train(epoches):
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
             """
-            total_loss = loss
-            trainer_q.model.train()
-            trainer_q.optimizer.zero_grad()
-            total_loss.backward()
-            trainer_q.optimizer.step()
+            
+            #total_loss = loss
+            #trainer_q.model.train()
+            #trainer_q.optimizer.zero_grad()
+            #total_loss.backward()
+            #trainer_q.optimizer.step()
         #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
         #loss_aux = loss
         #loss, loss_aux = trainer_q.update_soft_aux(inputs_q, target_q, idx_train, epoch, opt)## for auxiliary net with shared parameters
@@ -316,21 +347,55 @@ def pre_train(epoches):
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         #_, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
-        if epoch%100 == 0:
+        if epoch%1 == 0:
             if rand_index == 0:
-                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
+                #print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
+                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss,loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
             else : 
-                 print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss.item(), accuracy_train, accuracy_dev, accuracy_test))
-        if accuracy_dev > best:
-            best = accuracy_dev
-            state = dict([('model', copy.deepcopy(trainer_q.model.state_dict())), ('optim', copy.deepcopy(trainer_q.optimizer.state_dict()))])
+                 #print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss.item(), accuracy_train, accuracy_dev, accuracy_test))
+                 print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss, accuracy_train, accuracy_dev, accuracy_test))
+        #if accuracy_dev > best:
+        #    best = accuracy_dev
+        #    state = dict([('model', copy.deepcopy(trainer_q.model.state_dict())), ('optim', copy.deepcopy(trainer_q.optimizer.state_dict()))])
+    
+        # For early stopping:
+        loss_values.append(loss)
+
+        torch.save(gnnq.state_dict(), '{}.pkl'.format(epoch))
+        if loss_values[-1] < best:
+            best = loss_values[-1]
+            best_epoch = epoch
+            bad_counter = 0
+        else:
+            bad_counter += 1
+
+        if bad_counter == opt['patience']:
+            break
+
+        files = glob.glob('*.pkl')
+        for file in files:
+            epoch_nb = int(file.split('.')[0])
+            if epoch_nb < best_epoch:
+                os.remove(file)
+
     #trainer_q.model.load_state_dict(state['model'])
     #trainer_q.optimizer.load_state_dict(state['optim'])
         
-        #update_ema_variables(gnnq, gnnq_ema, opt['ema_decay'], epoch)
+        update_ema_variables(gnnq, gnnq_ema, opt['ema_decay'], epoch)
+
+
+    files = glob.glob('*.pkl')
+    for file in files:
+        epoch_nb = int(file.split('.')[0])
+        if epoch_nb > best_epoch:
+            os.remove(file)
+    
+    gnnq.load_state_dict(torch.load('{}.pkl'.format(best_epoch)))
+
+    _, preds, accuracy_test = trainer_q.evaluate(inputs, target, idx_test)
     
         
-    return results
+    return [(accuracy_test, accuracy_test)]
 
 def train_p(epoches):
     update_p_data()

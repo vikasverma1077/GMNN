@@ -264,81 +264,22 @@ def get_augmented_network_input(model, inputs_q, target_q, target, idx_train,opt
     
     return inputs_q_new, target_q_new, idx_train_new
 
-class GAT(nn.Module):
-    def __init__(self, nfeat, nhid, nclass, dropout, alpha, nheads):
-        """Dense version of GAT."""
-        super(GAT, self).__init__()
-        self.dropout = dropout
-
-        self.attentions = [GraphAttentionLayer(nfeat, nhid, dropout=dropout, alpha=alpha, concat=True) for _ in range(nheads)]
-        for i, attention in enumerate(self.attentions):
-            self.add_module('attention_{}'.format(i), attention)
-
-        self.out_att = GraphAttentionLayer(nhid * nheads, nclass, dropout=dropout, alpha=alpha, concat=False)
-
-    def forward(self, x, adj):
-        x = F.dropout(x, self.dropout, training=self.training)
-        x = torch.cat([att(x, adj) for att in self.attentions], dim=1)
-        x = F.dropout(x, self.dropout, training=self.training)
-        x = F.elu(self.out_att(x, adj))
-        return F.log_softmax(x, dim=1)
-
-
-class SpGAT(nn.Module):
-    def __init__(self, nfeat, nhid, nclass, dropout, alpha, nheads):
-        """Sparse version of GAT."""
-        super(SpGAT, self).__init__()
-        self.dropout = dropout
-
-        self.attentions = [SpGraphAttentionLayer(nfeat, 
-                                                 nhid, 
-                                                 dropout=dropout, 
-                                                 alpha=alpha, 
-                                                 concat=True) for _ in range(nheads)]
-        for i, attention in enumerate(self.attentions):
-            self.add_module('attention_{}'.format(i), attention)
-
-        self.out_att = SpGraphAttentionLayer(nhid * nheads, 
-                                             nclass, 
-                                             dropout=dropout, 
-                                             alpha=alpha, 
-                                             concat=False)
-
-    def forward(self, x, adj):
-        x = F.dropout(x, self.dropout, training=self.training)
-        x = torch.cat([att(x, adj) for att in self.attentions], dim=1)
-        x = F.dropout(x, self.dropout, training=self.training)
-        x = F.elu(self.out_att(x, adj))
-        return F.log_softmax(x, dim=1)
-
 
 class GNNq(nn.Module):
     def __init__(self, opt, adj):
         super(GNNq, self).__init__()
         self.opt = opt
         self.adj = adj
-        
+
         opt_ = dict([('in', opt['num_feature']), ('out', opt['hidden_dim'])])
         self.m1 = GraphConvolution(opt_, adj)
 
         opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         self.m2 = GraphConvolution(opt_, adj)
+        
+        #opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
+        #self.m3 = GraphConvolution(opt_, adj)### used for auxiliary network. it will be used a fully-connected layer. for ease of implementation I used GCN layer.
 
-        """                                                 
-        self.attentions = [SpGraphAttentionLayer(opt['num_feature'], 
-                                                 opt['hidden_dim'], 
-                                                 dropout=opt['dropout'], 
-                                                 alpha=opt['alpha'], 
-                                                 concat=True) for _ in range(opt['nheads'])]
-        for i, attention in enumerate(self.attentions):
-            self.add_module('attention_{}'.format(i), attention)
-
-        self.out_att = SpGraphAttentionLayer(opt['hidden_dim'] * opt['nheads'], 
-                                             opt['num_class'], 
-                                             dropout=opt['dropout'], 
-                                             alpha=opt['alpha'], 
-                                             concat=False)
-        """
         if opt['cuda']:
             self.cuda()
 
@@ -347,13 +288,6 @@ class GNNq(nn.Module):
         self.m2.reset_parameters()
 
     def forward(self, x):
-        """
-        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
-        x = torch.cat([att(x, self.adj) for att in self.attentions], dim=1)
-        x = F.dropout(x, self.opt['dropout'], training=self.training)
-        x = F.elu(self.out_att(x, self.adj))
-        return x
-        """
         x = F.dropout(x, self.opt['input_dropout'], training=self.training)
         x = self.m1(x)
         x = F.relu(x)
@@ -389,18 +323,23 @@ class GNNq(nn.Module):
 
             x = F.dropout(x, self.opt['input_dropout'], training=self.training)
     
-            x = torch.cat([att.forward_aux(x) for att in self.attentions], dim=1)
+            x = self.m1.forward_aux(x)
+            x = F.relu(x)
             if layer_mix == 1:
                 x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
 
             x = F.dropout(x, self.opt['dropout'], training=self.training)
-            x = F.elu(self.out_att.forward_aux(x))
+            x = self.m2.forward_aux(x)
             
             return x, target_a, target_b, lam
         
         else:
-            x = torch.cat([att.forward_aux(x) for att in self.attentions], dim=1)
-            x = F.elu(self.out_att.forward_aux(x))
+        
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = self.m1.forward_aux(x)
+            x = F.relu(x)
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m2.forward_aux(x)
             return x
 
 class GNNp(nn.Module):
@@ -415,7 +354,7 @@ class GNNp(nn.Module):
         opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         self.m2 = GraphConvolution(opt_, adj)
 
-        if opt['cuda']:
+        if  opt['cuda']:
             self.cuda()
 
     def reset(self):
@@ -487,4 +426,65 @@ class MLP(nn.Module):
             return out, mixed_target
 
 
+class SpGAT(nn.Module):
+    def __init__(self, opt, adj):
+        """Sparse version of GAT."""
+        super(SpGAT, self).__init__()
+        self.opt = opt
+        self.adj = adj
+
+        self.attentions = [SpGraphAttentionLayer(opt['num_feature'], 
+                                                 opt['hidden_dim'], 
+                                                 dropout=opt['dropout'], 
+                                                 alpha=opt['alpha'], 
+                                                 concat=True) for _ in range(opt['nheads'])]
+        for i, attention in enumerate(self.attentions):
+            self.add_module('attention_{}'.format(i), attention)
+
+        self.out_att = SpGraphAttentionLayer(opt['hidden_dim'] * opt['nheads'], 
+                                             opt['num_class'], 
+                                             dropout=opt['dropout'], 
+                                             alpha=opt['alpha'], 
+                                             concat=False)
+
+        if opt['cuda']:
+            self.cuda()
+
+    def forward(self, x):
+        x = F.dropout(x, self.opt['dropout'], training=self.training)
+        x = torch.cat([att(x, self.adj) for att in self.attentions], dim=1)
+        x = F.dropout(x, self.opt['dropout'], training=self.training)
+        x = F.elu(self.out_att(x, self.adj))
+        return x
+
+    def forward_aux(self, x, target=None, train_idx= None, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None):
         
+        if mixup_hidden == True or mixup_input == True:
+            if mixup_hidden == True:
+                layer_mix = random.choice(layer_mix)
+            elif mixup_input == True:
+                layer_mix = 0
+
+    
+            if layer_mix ==0:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+    
+            x = torch.cat([att(x, self.adj) for att in self.attentions], dim=1)
+            if layer_mix == 1:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = F.elu(self.out_att(x, self.adj))
+            
+            return x, target_a, target_b, lam
+        
+        else:
+        
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = self.m1.forward_aux(x)
+            x = F.relu(x)
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m2.forward_aux(x)
+            return x

@@ -7,6 +7,22 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 from torch.nn.parameter import Parameter
 
+class SparseMM(torch.autograd.Function):
+
+    def __init__(self, sparse):
+        super(SparseMM, self).__init__()
+        self.sparse = sparse
+
+    def forward(self, dense):
+        return torch.mm(self.sparse, dense)
+
+    def backward(self, grad_output):
+        grad_input = None
+        if self.needs_input_grad[0]:
+            grad_input = torch.mm(self.sparse.t(), grad_output)
+        return grad_input
+
+
 class GraphConvolution(nn.Module):
 
     def __init__(self, opt, adj):
@@ -24,7 +40,7 @@ class GraphConvolution(nn.Module):
     
     def forward(self, x):
         m = torch.mm(x, self.weight)
-        m = torch.spmm(self.adj, m)
+        m = SparseMM(self.adj)(m)
         return m
 
     def forward_aux(self,x):
@@ -68,13 +84,6 @@ class GraphAttentionLayer(nn.Module):
             return F.elu(h_prime)
         else:
             return h_prime
-
-    def forward_aux(self, input):
-        h = torch.mm(input, self.W)
-        if self.concat:
-            return F.elu(h)
-        else:
-            return h
 
     def __repr__(self):
         return self.__class__.__name__ + ' (' + str(self.in_features) + ' -> ' + str(self.out_features) + ')'
@@ -131,8 +140,6 @@ class SpGraphAttentionLayer(nn.Module):
         self.special_spmm = SpecialSpmm()
 
     def forward(self, input, adj):
-        dv = 'cuda' if input.is_cuda else 'cpu'
-
         N = input.size()[0]
         edge = adj.nonzero().t()
 
@@ -148,7 +155,7 @@ class SpGraphAttentionLayer(nn.Module):
         assert not torch.isnan(edge_e).any()
         # edge_e: E
 
-        e_rowsum = self.special_spmm(edge, edge_e, torch.Size([N, N]), torch.ones(size=(N,1), device=dv))
+        e_rowsum = self.special_spmm(edge, edge_e, torch.Size([N, N]), torch.ones(size=(N,1)).cuda())
         # e_rowsum: N x 1
 
         edge_e = self.dropout(edge_e)
@@ -168,13 +175,6 @@ class SpGraphAttentionLayer(nn.Module):
         else:
             # if this layer is last layer,
             return h_prime
-
-    def forward_aux(self, input):
-        h = torch.mm(input, self.W)
-        if self.concat:
-            return F.elu(h)
-        else:
-            return h
 
     def __repr__(self):
         return self.__class__.__name__ + ' (' + str(self.in_features) + ' -> ' + str(self.out_features) + ')'
