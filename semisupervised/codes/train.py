@@ -96,9 +96,9 @@ def run(seed):
     net_file = opt['dataset'] + '/net.txt'
     label_file = opt['dataset'] + '/label.txt'
     feature_file = opt['dataset'] + '/feature.txt'
-    train_file = opt['dataset'] + '/train.txt'
-    dev_file = opt['dataset'] + '/dev.txt'
-    test_file = opt['dataset'] + '/test.txt'
+    train_file = opt['dataset'] + '/train_temp.txt'
+    dev_file = opt['dataset'] + '/dev_temp.txt'
+    test_file = opt['dataset'] + '/test_temp.txt'
     
     #import pdb;pdb.set_trace()
     ### create a temporart net file

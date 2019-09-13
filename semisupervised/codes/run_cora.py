@@ -55,6 +55,43 @@ for k in range(5):
     
 """
 
+### create subset data###
+import numpy as np
+from operator import __or__
+
+data = np.loadtxt('../data/cora/label.txt').astype(int)
+labels = data[:,1]
+n_classes = len(np.unique(labels))
+
+(indices,) = np.where(reduce(__or__, [labels == i for i in np.arange(n_classes)]))
+# Ensure uniform distribution of labels
+np.random.shuffle(indices)
+        
+n = 10
+n_valid = 10
+n_test = 10
+indices_train = np.hstack([list(filter(lambda idx: labels[idx] == i, indices))[:n] for i in range(n_classes)])
+indices_valid = np.hstack([list(filter(lambda idx: labels[idx] == i, indices))[n:n+n_valid] for i in range(n_classes)])
+indices_test = np.hstack([list(filter(lambda idx: labels[idx] == i, indices))[n+n_valid:n+n_valid+n_test] for i in range(n_classes)])
+
+np.random.shuffle(indices_train)
+np.random.shuffle(indices_valid)
+np.random.shuffle(indices_test)
+
+
+
+if os.path.exists('../data/cora/train_temp.txt'):
+        os.remove('../data/cora/train_temp.txt')
+        os.remove('../data/cora/dev_temp.txt')
+        os.remove('../data/cora/test_temp.txt')
+
+np.savetxt('../data/cora/train_temp.txt', indices_train, fmt='%d')
+np.savetxt('../data/cora/dev_temp.txt', indices_valid, fmt='%d')
+np.savetxt('../data/cora/test_temp.txt', indices_test, fmt='%d')
+
+### data creation ended ####
+
+
 print('mixup_alpha_'+opt['mixup_alpha'])
 print('mixup_consistency_'+opt['mixup_consistency'])
 
