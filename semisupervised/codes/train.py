@@ -80,6 +80,7 @@ parser.add_argument('--mixup_consistency', default=1.0, type=float,
 args = parser.parse_args()
 
 def run(seed):
+    #import pdb; pdb.set_trace()
     args.seed = seed
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
@@ -126,7 +127,6 @@ def run(seed):
     graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
     label = loader.EntityLabel(file_name=label_file, entity=[vocab_node, 0], label=[vocab_label, 1])
     feature = loader.EntityFeature(file_name=feature_file, entity=[vocab_node, 0], feature=[vocab_feature, 1])
-    #import pdb; pdb.set_trace()
     graph.to_symmetric(opt['self_link_weight'])
     feature.to_one_hot(binary=True)
     adj = graph.get_sparse_adjacency(opt['cuda'])
@@ -390,14 +390,16 @@ def run(seed):
     print('Test acc{:.3f}'.format(acc_test * 100))
     return acc_test*100
 
-for i in np.arange(10):
-    acc_list =[]
+
+
+acc_list =[]
+for i in np.arange(5):
     acc_list.append(run(seed=i))
     
-    acc = np.asarray(acc_list)
-    acc_mean = acc.mean()
-    acc_std = acc.std()
-    print ("mix_alpha, consis_coeff_"+ str(args.mixup_alpha)+'_'+ str(args.mixup_consistency)+':'+str(acc_mean)+'_'+str(acc_std))
+acc = np.asarray(acc_list)
+acc_mean = acc.mean()
+acc_std = acc.std()
+print ("mix_alpha, consis_coeff_"+ str(args.mixup_alpha)+'_'+ str(args.mixup_consistency)+':'+str(acc_mean)+'_'+str(acc_std))
 
 #if opt['save'] != '/':
 #    trainer_q.save(opt['save'] + '/gnnq.pt')
