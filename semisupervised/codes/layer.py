@@ -176,5 +176,18 @@ class SpGraphAttentionLayer(nn.Module):
             # if this layer is last layer,
             return h_prime
 
+    def forward_aux(self, input, adj):
+        N = input.size()[0]
+        edge = adj.nonzero().t()
+
+        h_prime = torch.mm(input, self.W)
+
+        if self.concat:
+            # if this layer is not last layer,
+            return F.elu(h_prime)
+        else:
+            # if this layer is last layer,
+            return h_prime
+
     def __repr__(self):
         return self.__class__.__name__ + ' (' + str(self.in_features) + ' -> ' + str(self.out_features) + ')'

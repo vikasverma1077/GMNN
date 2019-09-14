@@ -275,7 +275,7 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
-        rand_index = 1# random.randint(0,1)
+        rand_index = random.randint(0,1)
         if rand_index == 0: ## do the augmented node training
             
             ## get the psudolabels for the unlabeled nodes ##
@@ -289,7 +289,7 @@ def pre_train(epoches):
             target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
             
             #target_predict = trainer_q.predict(inputs_q)
-            target_predict = sharpen(target_predict,0.1)
+            target_predict = sharpen(target_predict,opt['tau'])
             #if epoch == 500:
             #    print (target_predict)
             target_q[idx_unlabeled] = target_predict[idx_unlabeled]
@@ -305,6 +305,8 @@ def pre_train(epoches):
             trainer_q.optimizer.zero_grad()
             total_loss.backward()
             trainer_q.optimizer.step()
+
+            loss = total_loss.item()
 
         else:
             
@@ -347,18 +349,19 @@ def pre_train(epoches):
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         #_, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
-        if epoch%1 == 0:
-            if rand_index == 0:
+        #if epoch%1 == 0:
+        #    if rand_index == 0:
                 #print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
-                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss,loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
-            else : 
+        #        print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss,loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test))
+        #    else : 
                  #print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss.item(), accuracy_train, accuracy_dev, accuracy_test))
-                 print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss, accuracy_train, accuracy_dev, accuracy_test))
+        #         print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss, accuracy_train, accuracy_dev, accuracy_test))
         #if accuracy_dev > best:
         #    best = accuracy_dev
         #    state = dict([('model', copy.deepcopy(trainer_q.model.state_dict())), ('optim', copy.deepcopy(trainer_q.optimizer.state_dict()))])
     
         # For early stopping:
+        '''
         loss_values.append(loss)
 
         torch.save(gnnq.state_dict(), '{}.pkl'.format(epoch))
@@ -377,13 +380,15 @@ def pre_train(epoches):
             epoch_nb = int(file.split('.')[0])
             if epoch_nb < best_epoch:
                 os.remove(file)
+        '''
+        
 
     #trainer_q.model.load_state_dict(state['model'])
     #trainer_q.optimizer.load_state_dict(state['optim'])
         
         update_ema_variables(gnnq, gnnq_ema, opt['ema_decay'], epoch)
 
-
+    '''
     files = glob.glob('*.pkl')
     for file in files:
         epoch_nb = int(file.split('.')[0])
@@ -393,9 +398,9 @@ def pre_train(epoches):
     gnnq.load_state_dict(torch.load('{}.pkl'.format(best_epoch)))
 
     _, preds, accuracy_test = trainer_q.evaluate(inputs, target, idx_test)
-    
-        
-    return [(accuracy_test, accuracy_test)]
+    '''
+    #return [(accuracy_test, accuracy_test)]
+    return results
 
 def train_p(epoches):
     update_p_data()
@@ -433,7 +438,8 @@ def get_accuracy(results):
 
 acc_test = get_accuracy(base_results)
 
-print('Test acc{:.3f}'.format(acc_test * 100))
+print('input dropout: {}, dropout: {}, lr: {}, tau: {}, alpha: {}, consistency: {}'.format(opt['input_dropout'], opt['dropout'], opt['lr'], opt['tau'], opt['mixup_alpha'], opt['mixup_consistency']))
+print('Test acc {:.3f}\n'.format(acc_test * 100))
 
 #if opt['save'] != '/':
 #    trainer_q.save(opt['save'] + '/gnnq.pt')

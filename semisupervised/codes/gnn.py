@@ -471,20 +471,20 @@ class SpGAT(nn.Module):
 
             x = F.dropout(x, self.opt['input_dropout'], training=self.training)
     
-            x = torch.cat([att(x, self.adj) for att in self.attentions], dim=1)
+            x = torch.cat([att.forward_aux(x, self.adj) for att in self.attentions], dim=1)
             if layer_mix == 1:
                 x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
 
             x = F.dropout(x, self.opt['dropout'], training=self.training)
-            x = F.elu(self.out_att(x, self.adj))
+            x = F.elu(self.out_att.forward_aux(x, self.adj))
             
             return x, target_a, target_b, lam
         
         else:
         
             x = F.dropout(x, self.opt['input_dropout'], training=self.training)
-            x = self.m1.forward_aux(x)
+            x = torch.cat([att.forward_aux(x, self.adj) for att in self.attentions], dim=1)
             x = F.relu(x)
             x = F.dropout(x, self.opt['dropout'], training=self.training)
-            x = self.m2.forward_aux(x)
+            x = self.out_att.forward_aux(x, self.adj)
             return x
