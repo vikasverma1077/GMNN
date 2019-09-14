@@ -79,7 +79,8 @@ parser.add_argument('--mixup_consistency', default=1.0, type=float,
 
 args = parser.parse_args()
 
-def run(seed):
+def run(seed, test_acc = False):
+    # test_acc = True retuns acc on test set otherwise on val set
     #import pdb; pdb.set_trace()
     args.seed = seed
     torch.manual_seed(args.seed)
@@ -378,14 +379,17 @@ def run(seed):
     #    p_results += train_p(opt['epoch'])
     #    q_results += train_q(opt['epoch'])
     
-    def get_accuracy(results):
+    def get_accuracy(results, test_acc):
         best_dev, acc_test = 0.0, 0.0
         for d, t in results:
             if d >= best_dev:
                 best_dev, acc_test = d, t
-        return best_dev#acc_test
+        if test_acc == True:
+            return acc_test
+        else:
+            return best_dev
     
-    acc_test = get_accuracy(base_results)
+    acc_test = get_accuracy(base_results, test_acc)
     
     print('Test acc{:.3f}'.format(acc_test * 100))
     return acc_test*100
@@ -431,24 +435,55 @@ np.savetxt('../data/cora/test_temp.txt', indices_test, fmt='%d')
 
 
 ### do hyperparameter search #####
+results = []
+for do in [0.0, 0.2, 0.5]:
+    for mixup_alpha in [0.1, 1.0, 2.0]:
+        for mixup_consistency in [1.0, 10.0, 20.0]:
+            args.input_dropout = do
+            args.mixup_alpha = mixup_alpha
+            args.mixup_consistency = mixup_consistency
+            print('do_'+str(args.input_dropout))
+            print('mixup_alpha_'+str(args.mixup_alpha))
+            print('mixup_consistency_'+ str(args.mixup_consistency))
+    
+    
+            acc_list =[]
+            for i in np.arange(5):
+                acc_list.append(run(seed=i))
+                
+            acc = np.asarray(acc_list)
+            acc_mean = acc.mean()
+            acc_std = acc.std()
+            print ("do, mix_alpha, consis_coeff_"+str(args.input_dropout)+'_' +str(args.mixup_alpha)+'_'+ str(args.mixup_consistency)+':'+str(acc_mean)+'_'+str(acc_std))
+            results +=[(do, mixup_alpha,mixup_consistency,acc_mean)]
 
-for i in [0.1, 1.0, 2.0]:
-    for j in [1.0, 10.0, 20.0]:
+
+best_do, best_mixup_alpha, best_mixup_consistency, best_acc = 0.0, 0.0, 0.0, 0.0
+for do, alpha, cons, acc in results:
+    if acc >= best_acc:
+        best_do, best_mixup_alpha, best_mixup_consistency, best_acc = do,alpha, cons, acc
         
-        args.mixup_alpha = i
-        args.mixup_consistency = j
-        print('mixup_alpha_'+str(args.mixup_alpha))
-        print('mixup_consistency_'+ str(args.mixup_consistency))
+print ('best_val_acc:'+str(best_acc))
 
 
-        acc_list =[]
-        for i in np.arange(5):
-            acc_list.append(run(seed=i))
-            
-        acc = np.asarray(acc_list)
-        acc_mean = acc.mean()
-        acc_std = acc.std()
-        print ("mix_alpha, consis_coeff_"+ str(args.mixup_alpha)+'_'+ str(args.mixup_consistency)+':'+str(acc_mean)+'_'+str(acc_std))
+##### run the model for the best hyperparameters ####
+args.input_dropout = best_do
+args.mixup_alpha = best_mixup_alpha
+args.mixup_consistency = best_mixup_consistency
+print('do_'+str(args.input_dropout))
+print('mixup_alpha_'+str(args.mixup_alpha))
+print('mixup_consistency_'+ str(args.mixup_consistency))
+
+
+acc_list =[]
+for i in np.arange(5):
+    acc_list.append(run(seed=i, best_test=True))
+    
+acc = np.asarray(acc_list)
+acc_mean = acc.mean()
+acc_std = acc.std()
+print ("do, mix_alpha, consis_coeff_"+str(args.input_dropout)+'_' +str(args.mixup_alpha)+'_'+ str(args.mixup_consistency)+':'+str(acc_mean)+'_'+str(acc_std))
+
 
 #if opt['save'] != '/':
 #    trainer_q.save(opt['save'] + '/gnnq.pt')
