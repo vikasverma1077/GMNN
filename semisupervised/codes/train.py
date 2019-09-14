@@ -19,7 +19,7 @@ from losses import *
 import loader
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', type=str, default='data')
+parser.add_argument('--dataset', type=str, default='../data_subset/citeseer/n5v5/1')
 parser.add_argument('--save', type=str, default='exp', help = 'name of the folder where the results are saved')
 parser.add_argument('--hidden_dim', type=int, default=16, help='Hidden dimension.')
 parser.add_argument('--input_dropout', type=float, default=0.5, help='Input dropout rate.')
@@ -29,15 +29,23 @@ parser.add_argument('--lr', type=float, default=0.01, help='Learning rate.')
 parser.add_argument('--decay', type=float, default=5e-4, help='Weight decay for optimization')
 parser.add_argument('--mixup_alpha', type=float, default=1.0, help='alpha for mixing')
 parser.add_argument('--self_link_weight', type=float, default=1.0, help='Weight of self-links.')
-parser.add_argument('--pre_epoch', type=int, default=200, help='Number of pre-training epochs.')
+parser.add_argument('--pre_epoch', type=int, default=2000, help='Number of pre-training epochs.')
 parser.add_argument('--epoch', type=int, default=200, help='Number of training epochs per iteration.')
 parser.add_argument('--iter', type=int, default=10, help='Number of training iterations.')
 parser.add_argument('--use_gold', type=int, default=1, help='Whether using the ground-truth label of labeled objects, 1 for using, 0 for not using.')
-parser.add_argument('--tau', type=float, default=1.0, help='Annealing temperature in sampling.')
-parser.add_argument('--draw', type=str, default='max', help='Method for drawing object labels, max for max-pooling, smp for sampling.')
+parser.add_argument('--tau', type=float, default=0.0, help='Annealing temperature in sampling.')
+parser.add_argument('--draw', type=str, default='smp', help='Method for drawing object labels, max for max-pooling, smp for sampling.')
 parser.add_argument('--seed', type=int, default=1)
 parser.add_argument('--cuda', type=bool, default=torch.cuda.is_available())
 parser.add_argument('--cpu', action='store_true', help='Ignore CUDA.')
+
+
+parser.add_argument('--only_gnn', action='store_true', help='run vanilla gnn (without GraphMix)')
+parser.add_argument('--do_range', type=float, nargs='+', default=[0.0, 0.2, 0.5], help='values for dropout')
+parser.add_argument('--mixup_alpha_range', type=float, nargs='+', default=[0.0, 0.1, 0.5, 1.0], help='values for dropout')
+parser.add_argument('--consis_coeff_range', type=float, nargs='+', default=[0.0, 0.1, 1.0, 10.0], help='values for dropout')
+
+
 ### ict hyperparameters ###
 #parser.add_argument('--lr', '--learning-rate', default=0.1, type=float,
 #                    metavar='LR', help='max learning rate')
@@ -62,10 +70,10 @@ parser.add_argument('--ema_decay', default=0.999, type=float, metavar='ALPHA',
 parser.add_argument('--consistency_type', default="mse", type=str, metavar='TYPE',
                     choices=['mse', 'kl'],
                     help='consistency loss type to use')
-parser.add_argument('--consistency_rampup_starts', default=30, type=int, metavar='EPOCHS',
+parser.add_argument('--consistency_rampup_starts', default=500, type=int, metavar='EPOCHS',
                     help='epoch at which consistency loss ramp-up starts')
-parser.add_argument('--consistency_rampup_ends', default=30, type=int, metavar='EPOCHS',
-                    help='lepoch at which consistency loss ramp-up ends')
+parser.add_argument('--consistency_rampup_ends', default=1000, type=int, metavar='EPOCHS',
+                    help='epoch at which consistency loss ramp-up ends')
 #parser.add_argument('--mixup_sup_alpha', default=0.0, type=float,
 #                    help='for supervised loss, the alpha parameter for the beta distribution from where the mixing lambda is drawn')
 #parser.add_argument('--mixup_usup_alpha', default=0.0, type=float,
@@ -83,6 +91,7 @@ def run(seed, test_acc = False):
     # test_acc = True retuns acc on test set otherwise on val set
     #import pdb; pdb.set_trace()
     args.seed = seed
+    print(args.seed)
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
     random.seed(args.seed)
@@ -265,7 +274,10 @@ def run(seed, test_acc = False):
             #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
             #import pdb; pdb.set_trace()
             ### create mix of feature and labels
-            rand_index =  random.randint(0,1)
+            if opt['only_gnn']== True:
+                rand_index = 1
+            else:
+                rand_index =  random.randint(0,1)
             if rand_index == 0: ## do the augmented node training
                 
                 ## get the psudolabels for the unlabeled nodes ##
@@ -395,7 +407,7 @@ def run(seed, test_acc = False):
     return acc_test*100
 
 
-
+"""
 
 ### create subset data###
 import numpy as np
@@ -432,13 +444,15 @@ np.random.shuffle(indices_test)
 np.savetxt('../data/cora/train_temp.txt', indices_train, fmt='%d')
 np.savetxt('../data/cora/dev_temp.txt', indices_valid, fmt='%d')   
 np.savetxt('../data/cora/test_temp.txt', indices_test, fmt='%d')
-
+"""
 
 ### do hyperparameter search #####
+import time
+start_time = time.time()
 results = []
-for do in [0.0, 0.2, 0.5]:
-    for mixup_alpha in [0.1, 1.0, 2.0]:
-        for mixup_consistency in [1.0, 10.0, 20.0]:
+for do in args.do_range:
+    for mixup_alpha in args.mixup_alpha_range:
+        for mixup_consistency in args.consis_coeff_range:
             args.input_dropout = do
             args.mixup_alpha = mixup_alpha
             args.mixup_consistency = mixup_consistency
@@ -456,6 +470,8 @@ for do in [0.0, 0.2, 0.5]:
             acc_std = acc.std()
             print ("do, mix_alpha, consis_coeff_"+str(args.input_dropout)+'_' +str(args.mixup_alpha)+'_'+ str(args.mixup_consistency)+':'+str(acc_mean)+'_'+str(acc_std))
             results +=[(do, mixup_alpha,mixup_consistency,acc_mean)]
+            relapsed_time = time.time()-start_time
+            print ('time_'+str(relapsed_time))
 
 
 best_do, best_mixup_alpha, best_mixup_consistency, best_acc = 0.0, 0.0, 0.0, 0.0
@@ -467,23 +483,26 @@ print ('best_val_acc:'+str(best_acc))
 
 
 ##### run the model for the best hyperparameters ####
+print ("Running model using best hyperparameters")
 args.input_dropout = best_do
 args.mixup_alpha = best_mixup_alpha
 args.mixup_consistency = best_mixup_consistency
-print('do_'+str(args.input_dropout))
-print('mixup_alpha_'+str(args.mixup_alpha))
-print('mixup_consistency_'+ str(args.mixup_consistency))
+print('best_do_'+str(args.input_dropout))
+print('best_mixup_alpha_'+str(args.mixup_alpha))
+print('best_mixup_consistency_'+ str(args.mixup_consistency))
 
 
 acc_list =[]
 for i in np.arange(5):
-    acc_list.append(run(seed=i, best_test=True))
+    acc_list.append(run(seed=i, test_acc=True))
     
 acc = np.asarray(acc_list)
 acc_mean = acc.mean()
 acc_std = acc.std()
 print ("do, mix_alpha, consis_coeff_"+str(args.input_dropout)+'_' +str(args.mixup_alpha)+'_'+ str(args.mixup_consistency)+':'+str(acc_mean)+'_'+str(acc_std))
 
+elapsed_time = time.time()-start_time
+print ('time_'+str(elapsed_time))
 
 #if opt['save'] != '/':
 #    trainer_q.save(opt['save'] + '/gnnq.pt')

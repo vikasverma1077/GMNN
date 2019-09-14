@@ -1,0 +1,82 @@
+do_0.5
+mixup_alpha_0.0
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.9441591501, train_acc:0.114, dev_acc:0.171, test_acc:0.240
+epoch : 400,loss:0.1101348624, train_acc:1.000, dev_acc:0.686, test_acc:0.604
+epoch : 800,loss:0.0863411054, train_acc:1.000, dev_acc:0.686, test_acc:0.598
+epoch :1200,loss:0.0823007971, train_acc:1.000, dev_acc:0.686, test_acc:0.600
+epoch :1600,loss:0.0811508074, train_acc:1.000, dev_acc:0.686, test_acc:0.601
+Test acc68.571
+1
+epoch :   0,loss:1.9472250938, train_acc:0.200, dev_acc:0.200, test_acc:0.113
+epoch : 400,loss:0.1156738549, train_acc:1.000, dev_acc:0.686, test_acc:0.594
+epoch : 800,loss:0.0876234844, train_acc:1.000, dev_acc:0.686, test_acc:0.601
+epoch :1200,loss:0.0827718601, train_acc:1.000, dev_acc:0.686, test_acc:0.601
+epoch :1600,loss:0.0814317688, train_acc:1.000, dev_acc:0.686, test_acc:0.601
+Test acc77.143
+2
+epoch :   0,loss:1.9450970888, train_acc:0.257, dev_acc:0.171, test_acc:0.162
+epoch : 400,loss:0.1093961596, train_acc:1.000, dev_acc:0.686, test_acc:0.606
+epoch : 800,loss:0.0856123343, train_acc:1.000, dev_acc:0.686, test_acc:0.603
+epoch :1200,loss:0.0821872056, train_acc:1.000, dev_acc:0.686, test_acc:0.601
+epoch :1600,loss:0.0814617798, train_acc:1.000, dev_acc:0.686, test_acc:0.600
+Test acc71.429
+3
+epoch :   0,loss:1.9463226795, train_acc:0.171, dev_acc:0.114, test_acc:0.246
+epoch : 400,loss:0.1093532294, train_acc:1.000, dev_acc:0.686, test_acc:0.603
+epoch : 800,loss:0.0871659070, train_acc:1.000, dev_acc:0.714, test_acc:0.603
+epoch :1200,loss:0.0836399421, train_acc:1.000, dev_acc:0.686, test_acc:0.602
+epoch :1600,loss:0.0824649930, train_acc:1.000, dev_acc:0.686, test_acc:0.599
+Test acc71.429
+4
+epoch :   0,loss:1.9455308914, train_acc:0.143, dev_acc:0.086, test_acc:0.106
+epoch : 400,loss:0.1078757271, train_acc:1.000, dev_acc:0.686, test_acc:0.599
+epoch : 800,loss:0.0859749541, train_acc:1.000, dev_acc:0.657, test_acc:0.598
+epoch :1200,loss:0.0825518370, train_acc:1.000, dev_acc:0.686, test_acc:0.597
+epoch :1600,loss:0.0814375803, train_acc:1.000, dev_acc:0.686, test_acc:0.598
+Test acc68.571
+do, mix_alpha, consis_coeff_0.5_0.0_0.0:71.42857142857143_3.1298431857438054
+time_134.53182339668274
+best_val_acc:71.42857142857143
+Running model using best hyperparameters
+best_do_0.5
+best_mixup_alpha_0.0
+best_mixup_consistency_0.0
+0
+epoch :   0,loss:1.9441591501, train_acc:0.114, dev_acc:0.171, test_acc:0.240
+epoch : 400,loss:0.1101348624, train_acc:1.000, dev_acc:0.686, test_acc:0.604
+epoch : 800,loss:0.0863411054, train_acc:1.000, dev_acc:0.686, test_acc:0.598
+epoch :1200,loss:0.0823007971, train_acc:1.000, dev_acc:0.686, test_acc:0.600
+epoch :1600,loss:0.0811508074, train_acc:1.000, dev_acc:0.686, test_acc:0.601
+Test acc60.191
+1
+epoch :   0,loss:1.9472250938, train_acc:0.200, dev_acc:0.200, test_acc:0.113
+epoch : 400,loss:0.1156738549, train_acc:1.000, dev_acc:0.686, test_acc:0.594
+epoch : 800,loss:0.0876234844, train_acc:1.000, dev_acc:0.686, test_acc:0.601
+epoch :1200,loss:0.0827718601, train_acc:1.000, dev_acc:0.686, test_acc:0.601
+epoch :1600,loss:0.0814317688, train_acc:1.000, dev_acc:0.686, test_acc:0.601
+Test acc58.471
+2
+epoch :   0,loss:1.9450970888, train_acc:0.257, dev_acc:0.171, test_acc:0.162
+epoch : 400,loss:0.1093961596, train_acc:1.000, dev_acc:0.686, test_acc:0.606
+epoch : 800,loss:0.0856123343, train_acc:1.000, dev_acc:0.686, test_acc:0.603
+epoch :1200,loss:0.0821872056, train_acc:1.000, dev_acc:0.686, test_acc:0.601
+epoch :1600,loss:0.0814617798, train_acc:1.000, dev_acc:0.686, test_acc:0.600
+Test acc60.955
+3
+epoch :   0,loss:1.9463226795, train_acc:0.171, dev_acc:0.114, test_acc:0.246
+epoch : 400,loss:0.1093532294, train_acc:1.000, dev_acc:0.686, test_acc:0.603
+epoch : 800,loss:0.0871659070, train_acc:1.000, dev_acc:0.714, test_acc:0.603
+epoch :1200,loss:0.0836399421, train_acc:1.000, dev_acc:0.686, test_acc:0.602
+epoch :1600,loss:0.0824649930, train_acc:1.000, dev_acc:0.686, test_acc:0.599
+Test acc60.255
+4
+epoch :   0,loss:1.9455308914, train_acc:0.143, dev_acc:0.086, test_acc:0.106
+epoch : 400,loss:0.1078757271, train_acc:1.000, dev_acc:0.686, test_acc:0.599
+epoch : 800,loss:0.0859749541, train_acc:1.000, dev_acc:0.657, test_acc:0.598
+epoch :1200,loss:0.0825518370, train_acc:1.000, dev_acc:0.686, test_acc:0.597
+epoch :1600,loss:0.0814375803, train_acc:1.000, dev_acc:0.686, test_acc:0.598
+Test acc59.745
+do, mix_alpha, consis_coeff_0.5_0.0_0.0:59.923566878980886_0.8230127544057624
+time_263.0274534225464
