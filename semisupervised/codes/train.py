@@ -263,7 +263,7 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
-        rand_index = 0# random.randint(0,1)
+        rand_index = random.randint(0,1)
         if rand_index == 0: ## do the augmented node training
             
             ## get the psudolabels for the unlabeled nodes ##
