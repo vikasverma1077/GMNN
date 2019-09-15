@@ -179,7 +179,7 @@ gnnq = SpGAT(opt, adj.to_dense())
 trainer_q = Trainer(opt, gnnq)
 
 # Build the ema model
-gnnq_ema = GNNq(opt, adj)
+gnnq_ema = SpGAT(opt, adj.to_dense())
 
 for ema_param, param in zip(gnnq_ema.parameters(), gnnq.parameters()):
             ema_param.data= param.data
@@ -306,12 +306,12 @@ def pre_train(epoches):
             total_loss.backward()
             trainer_q.optimizer.step()
 
-            loss = total_loss.item()
+            #loss = total_loss.item()
 
         else:
             
-            #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
-            loss = trainer_q.update(inputs, target, idx_train)
+            loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+            #loss = trainer_q.update(inputs, target, idx_train)
             
             """
             k = 10
@@ -332,11 +332,11 @@ def pre_train(epoches):
             total_loss = loss + mixup_consistency*loss_usup
             """
             
-            #total_loss = loss
-            #trainer_q.model.train()
-            #trainer_q.optimizer.zero_grad()
-            #total_loss.backward()
-            #trainer_q.optimizer.step()
+            total_loss = loss
+            trainer_q.model.train()
+            trainer_q.optimizer.zero_grad()
+            total_loss.backward()
+            trainer_q.optimizer.step()
         #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
         #loss_aux = loss
         #loss, loss_aux = trainer_q.update_soft_aux(inputs_q, target_q, idx_train, epoch, opt)## for auxiliary net with shared parameters
@@ -347,15 +347,13 @@ def pre_train(epoches):
         _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) ## target_new : for augmented nodes
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
-        #_, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
+        _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
-        #if epoch%1 == 0:
-        #    if rand_index == 0:
-                #print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
-        #        print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss,loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test))
-        #    else : 
-                 #print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss.item(), accuracy_train, accuracy_dev, accuracy_test))
-        #         print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss, accuracy_train, accuracy_dev, accuracy_test))
+        if epoch%400 == 0:
+            if rand_index == 0:
+                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
+            else:
+                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss,loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test))
         #if accuracy_dev > best:
         #    best = accuracy_dev
         #    state = dict([('model', copy.deepcopy(trainer_q.model.state_dict())), ('optim', copy.deepcopy(trainer_q.optimizer.state_dict()))])
