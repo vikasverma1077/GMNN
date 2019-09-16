@@ -1,0 +1,1962 @@
+do_0.0
+mixup_alpha_0.0
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0081392461,loss_usup:0.5072894692, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+epoch : 800,loss:0.1189134642, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch :1200,loss:0.1068404317, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch :1600,loss:0.0960172713, train_acc:1.000, dev_acc:0.800, test_acc:0.687
+Test acc80.000
+1
+epoch :   0,loss:0.6374409795,loss_usup:0.6363187432, train_acc:0.333, dev_acc:0.467, test_acc:0.297, test_acc_ema:0.297
+epoch : 400,loss:0.0136022000,loss_usup:0.4035826921, train_acc:1.000, dev_acc:0.733, test_acc:0.689, test_acc_ema:0.689
+epoch : 800,loss:0.0152576938,loss_usup:0.4795143604, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch :1200,loss:0.1241004914, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+epoch :1600,loss:0.1030938923, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+Test acc80.000
+2
+epoch :   0,loss:0.6381461024,loss_usup:0.6356590390, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.0379938111,loss_usup:0.5787775517, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.0986868516,loss_usup:0.3612327874, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch :1200,loss:0.1098966151, train_acc:1.000, dev_acc:0.733, test_acc:0.684
+epoch :1600,loss:0.0314413123,loss_usup:0.3963237703, train_acc:1.000, dev_acc:0.733, test_acc:0.691, test_acc_ema:0.691
+Test acc80.000
+3
+epoch :   0,loss:0.6385995150,loss_usup:0.6360390782, train_acc:0.267, dev_acc:0.267, test_acc:0.408, test_acc_ema:0.408
+epoch : 400,loss:0.1286570877, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch : 800,loss:0.0246571917,loss_usup:0.3519476950, train_acc:1.000, dev_acc:0.733, test_acc:0.685, test_acc_ema:0.685
+epoch :1200,loss:0.0456744097,loss_usup:0.5577849150, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch :1600,loss:0.0939723849, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+Test acc80.000
+4
+epoch :   0,loss:0.6338484883,loss_usup:0.6362497807, train_acc:0.800, dev_acc:0.333, test_acc:0.465, test_acc_ema:0.465
+epoch : 400,loss:0.1284558773, train_acc:1.000, dev_acc:0.733, test_acc:0.684
+epoch : 800,loss:0.1183086634, train_acc:1.000, dev_acc:0.733, test_acc:0.675
+epoch :1200,loss:0.0181315392,loss_usup:0.3185044825, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1600,loss:0.0605364442,loss_usup:0.3497530520, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.0_0.0:80.0_0.0
+time_651.3978281021118
+do_0.0
+mixup_alpha_0.0
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0081408033,loss_usup:0.5029949546, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.1197784841, train_acc:1.000, dev_acc:0.733, test_acc:0.680
+epoch :1200,loss:0.1090987548, train_acc:1.000, dev_acc:0.800, test_acc:0.690
+epoch :1600,loss:0.0980095118, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+Test acc80.000
+1
+epoch :   0,loss:0.6374409795,loss_usup:0.6363187432, train_acc:0.333, dev_acc:0.467, test_acc:0.297, test_acc_ema:0.297
+epoch : 400,loss:0.0139594162,loss_usup:0.3987777829, train_acc:1.000, dev_acc:0.733, test_acc:0.691, test_acc_ema:0.691
+epoch : 800,loss:0.0157249663,loss_usup:0.4818300009, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch :1200,loss:0.1272497773, train_acc:1.000, dev_acc:0.733, test_acc:0.692
+epoch :1600,loss:0.1018943936, train_acc:1.000, dev_acc:0.800, test_acc:0.687
+Test acc80.000
+2
+epoch :   0,loss:0.6381461024,loss_usup:0.6356590390, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.0379653312,loss_usup:0.5777225494, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+epoch : 800,loss:0.0985436365,loss_usup:0.3423798382, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.1099124178, train_acc:1.000, dev_acc:0.667, test_acc:0.673
+epoch :1600,loss:0.0330403037,loss_usup:0.4044819772, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+Test acc80.000
+3
+epoch :   0,loss:0.6385995150,loss_usup:0.6360390782, train_acc:0.267, dev_acc:0.267, test_acc:0.408, test_acc_ema:0.408
+epoch : 400,loss:0.1286796182, train_acc:1.000, dev_acc:0.733, test_acc:0.689
+epoch : 800,loss:0.0247732848,loss_usup:0.3630920351, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch :1200,loss:0.0470875911,loss_usup:0.4972973764, train_acc:1.000, dev_acc:0.800, test_acc:0.688, test_acc_ema:0.688
+epoch :1600,loss:0.0967606604, train_acc:1.000, dev_acc:0.733, test_acc:0.695
+Test acc80.000
+4
+epoch :   0,loss:0.6338484883,loss_usup:0.6362497807, train_acc:0.800, dev_acc:0.333, test_acc:0.465, test_acc_ema:0.465
+epoch : 400,loss:0.1285948753, train_acc:1.000, dev_acc:0.733, test_acc:0.684
+epoch : 800,loss:0.1188229918, train_acc:1.000, dev_acc:0.733, test_acc:0.680
+epoch :1200,loss:0.0200086143,loss_usup:0.2829524875, train_acc:1.000, dev_acc:0.800, test_acc:0.675, test_acc_ema:0.675
+epoch :1600,loss:0.0590597205,loss_usup:0.2515880167, train_acc:1.000, dev_acc:0.800, test_acc:0.686, test_acc_ema:0.686
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.0_0.1:80.0_0.0
+time_1296.0645365715027
+do_0.0
+mixup_alpha_0.0
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0079614855,loss_usup:0.5004919171, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.1322905868, train_acc:1.000, dev_acc:0.800, test_acc:0.680
+epoch :1200,loss:0.1255551279, train_acc:1.000, dev_acc:0.667, test_acc:0.536
+epoch :1600,loss:0.1402101070, train_acc:1.000, dev_acc:0.667, test_acc:0.548
+Test acc80.000
+1
+epoch :   0,loss:0.6374409795,loss_usup:0.6363187432, train_acc:0.333, dev_acc:0.467, test_acc:0.297, test_acc_ema:0.297
+epoch : 400,loss:0.0129762674,loss_usup:0.4021845162, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch : 800,loss:0.0183908455,loss_usup:0.3061420023, train_acc:1.000, dev_acc:0.667, test_acc:0.614, test_acc_ema:0.614
+epoch :1200,loss:0.1813613027, train_acc:1.000, dev_acc:0.667, test_acc:0.535
+epoch :1600,loss:0.1356846541, train_acc:1.000, dev_acc:0.667, test_acc:0.538
+Test acc80.000
+2
+epoch :   0,loss:0.6381461024,loss_usup:0.6356590390, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.0380263366,loss_usup:0.5663167238, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch : 800,loss:0.0977233350,loss_usup:0.1607626379, train_acc:1.000, dev_acc:0.400, test_acc:0.560, test_acc_ema:0.560
+epoch :1200,loss:0.1525461227, train_acc:1.000, dev_acc:0.400, test_acc:0.450
+epoch :1600,loss:0.0390255712,loss_usup:0.5991635323, train_acc:1.000, dev_acc:0.400, test_acc:0.425, test_acc_ema:0.425
+Test acc80.000
+3
+epoch :   0,loss:0.6385995150,loss_usup:0.6360390782, train_acc:0.267, dev_acc:0.267, test_acc:0.408, test_acc_ema:0.408
+epoch : 400,loss:0.1286140829, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch : 800,loss:0.0246732999,loss_usup:0.3683587909, train_acc:1.000, dev_acc:0.733, test_acc:0.652, test_acc_ema:0.652
+epoch :1200,loss:0.0494375005,loss_usup:0.3311699033, train_acc:1.000, dev_acc:0.600, test_acc:0.541, test_acc_ema:0.541
+epoch :1600,loss:0.1424768865, train_acc:1.000, dev_acc:0.667, test_acc:0.527
+Test acc80.000
+4
+epoch :   0,loss:0.6338484883,loss_usup:0.6362497807, train_acc:0.800, dev_acc:0.333, test_acc:0.465, test_acc_ema:0.465
+epoch : 400,loss:0.1286195070, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch : 800,loss:0.1279264092, train_acc:1.000, dev_acc:0.667, test_acc:0.644
+epoch :1200,loss:0.0168000851,loss_usup:0.2190293223, train_acc:1.000, dev_acc:0.667, test_acc:0.556, test_acc_ema:0.556
+epoch :1600,loss:0.0591781102,loss_usup:0.2575456500, train_acc:1.000, dev_acc:0.667, test_acc:0.558, test_acc_ema:0.558
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.0_1.0:80.0_0.0
+time_1940.9654803276062
+do_0.0
+mixup_alpha_0.0
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0079273144,loss_usup:0.4817253053, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.1949330866, train_acc:0.933, dev_acc:0.667, test_acc:0.594
+epoch :1200,loss:0.2845000923, train_acc:0.933, dev_acc:0.667, test_acc:0.531
+epoch :1600,loss:0.2256748229, train_acc:0.933, dev_acc:0.667, test_acc:0.538
+Test acc80.000
+1
+epoch :   0,loss:0.6374409795,loss_usup:0.6363187432, train_acc:0.333, dev_acc:0.467, test_acc:0.297, test_acc_ema:0.297
+epoch : 400,loss:0.0136146490,loss_usup:0.3814540505, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.0208387282,loss_usup:0.2669095099, train_acc:1.000, dev_acc:0.667, test_acc:0.519, test_acc_ema:0.519
+epoch :1200,loss:0.2860180438, train_acc:0.933, dev_acc:0.667, test_acc:0.539
+epoch :1600,loss:0.2489596754, train_acc:0.933, dev_acc:0.667, test_acc:0.539
+Test acc80.000
+2
+epoch :   0,loss:0.6381461024,loss_usup:0.6356590390, train_acc:0.333, dev_acc:0.467, test_acc:0.446, test_acc_ema:0.446
+epoch : 400,loss:0.0698296204,loss_usup:0.5338520408, train_acc:1.000, dev_acc:0.733, test_acc:0.675, test_acc_ema:0.675
+epoch : 800,loss:0.0975157097,loss_usup:0.2549404204, train_acc:0.933, dev_acc:0.667, test_acc:0.510, test_acc_ema:0.510
+epoch :1200,loss:0.2466132045, train_acc:0.933, dev_acc:0.667, test_acc:0.527
+epoch :1600,loss:0.0207041316,loss_usup:0.1859373897, train_acc:0.933, dev_acc:0.667, test_acc:0.540, test_acc_ema:0.540
+Test acc80.000
+3
+epoch :   0,loss:0.6385995150,loss_usup:0.6360390782, train_acc:0.267, dev_acc:0.267, test_acc:0.408, test_acc_ema:0.408
+epoch : 400,loss:0.1297252774, train_acc:1.000, dev_acc:0.733, test_acc:0.698
+epoch : 800,loss:0.0229255911,loss_usup:0.1028233320, train_acc:1.000, dev_acc:0.667, test_acc:0.543, test_acc_ema:0.543
+epoch :1200,loss:0.0682878792,loss_usup:0.2223988920, train_acc:1.000, dev_acc:0.667, test_acc:0.524, test_acc_ema:0.524
+epoch :1600,loss:0.1784917861, train_acc:1.000, dev_acc:0.667, test_acc:0.545
+Test acc80.000
+4
+epoch :   0,loss:0.6338484883,loss_usup:0.6362497807, train_acc:0.800, dev_acc:0.333, test_acc:0.467, test_acc_ema:0.467
+epoch : 400,loss:0.1322755665, train_acc:1.000, dev_acc:0.733, test_acc:0.696
+epoch : 800,loss:0.1791651249, train_acc:1.000, dev_acc:0.600, test_acc:0.489
+epoch :1200,loss:0.0750469118,loss_usup:0.0530966669, train_acc:0.733, dev_acc:0.333, test_acc:0.190, test_acc_ema:0.190
+epoch :1600,loss:0.1087107658,loss_usup:0.0373366401, train_acc:1.000, dev_acc:0.333, test_acc:0.190, test_acc_ema:0.190
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.0_10.0:80.0_0.0
+time_2586.1236894130707
+do_0.0
+mixup_alpha_0.1
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0219908282,loss_usup:0.4574209750, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.1478856355, train_acc:1.000, dev_acc:0.733, test_acc:0.694
+epoch :1200,loss:0.1324815601, train_acc:1.000, dev_acc:0.733, test_acc:0.692
+epoch :1600,loss:0.1121148616, train_acc:1.000, dev_acc:0.800, test_acc:0.677
+Test acc80.000
+1
+epoch :   0,loss:0.6350510716,loss_usup:0.6363260150, train_acc:0.333, dev_acc:0.400, test_acc:0.282, test_acc_ema:0.282
+epoch : 400,loss:0.0520577542,loss_usup:0.3618431389, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.5956841111,loss_usup:0.5855991840, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.1549969763, train_acc:1.000, dev_acc:0.733, test_acc:0.669
+epoch :1600,loss:0.1242365316, train_acc:1.000, dev_acc:0.733, test_acc:0.681
+Test acc80.000
+2
+epoch :   0,loss:0.6381461024,loss_usup:0.6356725693, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.0706030130,loss_usup:0.4705956876, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.1118889153,loss_usup:0.3333268166, train_acc:1.000, dev_acc:0.733, test_acc:0.691, test_acc_ema:0.691
+epoch :1200,loss:0.1269209832, train_acc:1.000, dev_acc:0.733, test_acc:0.681
+epoch :1600,loss:0.0555700511,loss_usup:0.6366408467, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+Test acc80.000
+3
+epoch :   0,loss:0.6407104731,loss_usup:0.6359755397, train_acc:0.333, dev_acc:0.267, test_acc:0.407, test_acc_ema:0.407
+epoch : 400,loss:0.1520231664, train_acc:1.000, dev_acc:0.733, test_acc:0.695
+epoch : 800,loss:0.3086543083,loss_usup:0.4084393084, train_acc:1.000, dev_acc:0.733, test_acc:0.691, test_acc_ema:0.691
+epoch :1200,loss:0.3072718382,loss_usup:0.5353337526, train_acc:1.000, dev_acc:0.733, test_acc:0.689, test_acc_ema:0.689
+epoch :1600,loss:0.1103038415, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+Test acc80.000
+4
+epoch :   0,loss:0.6338682771,loss_usup:0.6362524033, train_acc:0.800, dev_acc:0.333, test_acc:0.465, test_acc_ema:0.465
+epoch : 400,loss:0.1501587629, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.1378206313, train_acc:1.000, dev_acc:0.733, test_acc:0.673
+epoch :1200,loss:0.0199106168,loss_usup:0.3434258699, train_acc:1.000, dev_acc:0.733, test_acc:0.676, test_acc_ema:0.676
+epoch :1600,loss:0.0667600632,loss_usup:0.3641318977, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.1_0.0:80.0_0.0
+time_3231.748883485794
+do_0.0
+mixup_alpha_0.1
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0217801705,loss_usup:0.4571692646, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+epoch : 800,loss:0.1488577276, train_acc:1.000, dev_acc:0.800, test_acc:0.685
+epoch :1200,loss:0.1330249608, train_acc:1.000, dev_acc:0.800, test_acc:0.686
+epoch :1600,loss:0.1136688218, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+Test acc80.000
+1
+epoch :   0,loss:0.6350510716,loss_usup:0.6363260150, train_acc:0.333, dev_acc:0.400, test_acc:0.282, test_acc_ema:0.282
+epoch : 400,loss:0.0527098551,loss_usup:0.3612830341, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.5934514403,loss_usup:0.5947571397, train_acc:1.000, dev_acc:0.733, test_acc:0.673, test_acc_ema:0.673
+epoch :1200,loss:0.1562818289, train_acc:1.000, dev_acc:0.800, test_acc:0.684
+epoch :1600,loss:0.1248602346, train_acc:1.000, dev_acc:0.733, test_acc:0.678
+Test acc80.000
+2
+epoch :   0,loss:0.6381461024,loss_usup:0.6356725693, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.0704959333,loss_usup:0.4687055051, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.1113353595,loss_usup:0.3544057608, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+epoch :1200,loss:0.1264979243, train_acc:1.000, dev_acc:0.733, test_acc:0.667
+epoch :1600,loss:0.0564977452,loss_usup:0.5932683945, train_acc:1.000, dev_acc:0.800, test_acc:0.686, test_acc_ema:0.686
+Test acc80.000
+3
+epoch :   0,loss:0.6407104731,loss_usup:0.6359755397, train_acc:0.333, dev_acc:0.267, test_acc:0.407, test_acc_ema:0.407
+epoch : 400,loss:0.1523647904, train_acc:1.000, dev_acc:0.733, test_acc:0.695
+epoch : 800,loss:0.3076696098,loss_usup:0.4116189778, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch :1200,loss:0.3050287962,loss_usup:0.4971244037, train_acc:1.000, dev_acc:0.800, test_acc:0.692, test_acc_ema:0.692
+epoch :1600,loss:0.1115630120, train_acc:1.000, dev_acc:0.800, test_acc:0.669
+Test acc80.000
+4
+epoch :   0,loss:0.6338682771,loss_usup:0.6362524033, train_acc:0.800, dev_acc:0.333, test_acc:0.465, test_acc_ema:0.465
+epoch : 400,loss:0.1499592960, train_acc:1.000, dev_acc:0.733, test_acc:0.683
+epoch : 800,loss:0.1389912963, train_acc:1.000, dev_acc:0.733, test_acc:0.671
+epoch :1200,loss:0.0214843452,loss_usup:0.2985440493, train_acc:1.000, dev_acc:0.733, test_acc:0.672, test_acc_ema:0.672
+epoch :1600,loss:0.0644774735,loss_usup:0.2927337885, train_acc:1.000, dev_acc:0.800, test_acc:0.678, test_acc_ema:0.678
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.1_0.1:80.0_0.0
+time_3876.97039270401
+do_0.0
+mixup_alpha_0.1
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0218561590,loss_usup:0.4544338286, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch : 800,loss:0.1748628914, train_acc:1.000, dev_acc:0.800, test_acc:0.650
+epoch :1200,loss:0.1449363828, train_acc:1.000, dev_acc:0.667, test_acc:0.552
+epoch :1600,loss:0.1494943351, train_acc:1.000, dev_acc:0.667, test_acc:0.555
+Test acc80.000
+1
+epoch :   0,loss:0.6350510716,loss_usup:0.6363260150, train_acc:0.333, dev_acc:0.400, test_acc:0.282, test_acc_ema:0.282
+epoch : 400,loss:0.0524962731,loss_usup:0.3619775474, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.5748718977,loss_usup:0.5473392010, train_acc:1.000, dev_acc:0.667, test_acc:0.627, test_acc_ema:0.627
+epoch :1200,loss:0.2010586858, train_acc:1.000, dev_acc:0.667, test_acc:0.578
+epoch :1600,loss:0.1476485580, train_acc:1.000, dev_acc:0.667, test_acc:0.543
+Test acc80.000
+2
+epoch :   0,loss:0.6381461024,loss_usup:0.6356725693, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.0703817233,loss_usup:0.4640752077, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.1122315750,loss_usup:0.1678605676, train_acc:1.000, dev_acc:0.467, test_acc:0.624, test_acc_ema:0.624
+epoch :1200,loss:0.1424467266, train_acc:1.000, dev_acc:0.667, test_acc:0.610
+epoch :1600,loss:0.0547875836,loss_usup:0.5689350367, train_acc:1.000, dev_acc:0.667, test_acc:0.544, test_acc_ema:0.544
+Test acc80.000
+3
+epoch :   0,loss:0.6407104731,loss_usup:0.6359755397, train_acc:0.333, dev_acc:0.267, test_acc:0.407, test_acc_ema:0.407
+epoch : 400,loss:0.1523075849, train_acc:1.000, dev_acc:0.733, test_acc:0.695
+epoch : 800,loss:0.3061059713,loss_usup:0.3717692792, train_acc:1.000, dev_acc:0.800, test_acc:0.671, test_acc_ema:0.671
+epoch :1200,loss:0.3044728935,loss_usup:0.3755175173, train_acc:1.000, dev_acc:0.667, test_acc:0.563, test_acc_ema:0.563
+epoch :1600,loss:0.1520050168, train_acc:1.000, dev_acc:0.667, test_acc:0.542
+Test acc80.000
+4
+epoch :   0,loss:0.6338682771,loss_usup:0.6362524033, train_acc:0.800, dev_acc:0.333, test_acc:0.466, test_acc_ema:0.466
+epoch : 400,loss:0.1501531750, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.1508457810, train_acc:1.000, dev_acc:0.667, test_acc:0.629
+epoch :1200,loss:0.0194472820,loss_usup:0.2702939212, train_acc:1.000, dev_acc:0.600, test_acc:0.548, test_acc_ema:0.548
+epoch :1600,loss:0.0601161160,loss_usup:0.1902169734, train_acc:1.000, dev_acc:0.667, test_acc:0.555, test_acc_ema:0.555
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.1_1.0:80.0_0.0
+time_4522.327496051788
+do_0.0
+mixup_alpha_0.1
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0219528470,loss_usup:0.5358661413, train_acc:1.000, dev_acc:0.733, test_acc:0.679, test_acc_ema:0.679
+epoch : 800,loss:0.2260925025, train_acc:0.933, dev_acc:0.667, test_acc:0.554
+epoch :1200,loss:0.2932677567, train_acc:0.933, dev_acc:0.667, test_acc:0.525
+epoch :1600,loss:0.2372880727, train_acc:1.000, dev_acc:0.667, test_acc:0.532
+Test acc80.000
+1
+epoch :   0,loss:0.6350510716,loss_usup:0.6363260150, train_acc:0.400, dev_acc:0.400, test_acc:0.281, test_acc_ema:0.281
+epoch : 400,loss:0.0525054149,loss_usup:0.3519941270, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.5705610514,loss_usup:0.4492524862, train_acc:1.000, dev_acc:0.600, test_acc:0.501, test_acc_ema:0.501
+epoch :1200,loss:0.2530537844, train_acc:0.933, dev_acc:0.667, test_acc:0.529
+epoch :1600,loss:0.2790491581, train_acc:1.000, dev_acc:0.533, test_acc:0.425
+Test acc80.000
+2
+epoch :   0,loss:0.6381461024,loss_usup:0.6356725693, train_acc:0.333, dev_acc:0.467, test_acc:0.446, test_acc_ema:0.446
+epoch : 400,loss:0.0658054575,loss_usup:0.4592279792, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.1042568609,loss_usup:0.2874070406, train_acc:0.933, dev_acc:0.667, test_acc:0.536, test_acc_ema:0.536
+epoch :1200,loss:0.2266748846, train_acc:0.933, dev_acc:0.667, test_acc:0.535
+epoch :1600,loss:0.0577264465,loss_usup:0.4001471698, train_acc:0.867, dev_acc:0.667, test_acc:0.547, test_acc_ema:0.547
+Test acc80.000
+3
+epoch :   0,loss:0.6407104731,loss_usup:0.6359755397, train_acc:0.333, dev_acc:0.267, test_acc:0.408, test_acc_ema:0.408
+epoch : 400,loss:0.1527924389, train_acc:1.000, dev_acc:0.733, test_acc:0.708
+epoch : 800,loss:0.3235393465,loss_usup:0.2613586783, train_acc:1.000, dev_acc:0.733, test_acc:0.629, test_acc_ema:0.629
+epoch :1200,loss:0.3178465664,loss_usup:0.2132914215, train_acc:0.933, dev_acc:0.667, test_acc:0.544, test_acc_ema:0.544
+epoch :1600,loss:0.2012207806, train_acc:1.000, dev_acc:0.667, test_acc:0.544
+Test acc80.000
+4
+epoch :   0,loss:0.6338682771,loss_usup:0.6362524033, train_acc:0.800, dev_acc:0.333, test_acc:0.466, test_acc_ema:0.466
+epoch : 400,loss:0.1525684148, train_acc:1.000, dev_acc:0.733, test_acc:0.690
+epoch : 800,loss:0.1733788699, train_acc:1.000, dev_acc:0.667, test_acc:0.530
+epoch :1200,loss:0.0672011301,loss_usup:0.0476681702, train_acc:0.867, dev_acc:0.333, test_acc:0.190, test_acc_ema:0.190
+epoch :1600,loss:0.0963247865,loss_usup:0.0429669917, train_acc:1.000, dev_acc:0.333, test_acc:0.191, test_acc_ema:0.191
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.1_10.0:80.0_0.0
+time_5166.940541744232
+do_0.0
+mixup_alpha_0.5
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0348997153,loss_usup:0.5805696249, train_acc:1.000, dev_acc:0.733, test_acc:0.678, test_acc_ema:0.678
+epoch : 800,loss:0.1944369376, train_acc:1.000, dev_acc:0.733, test_acc:0.698
+epoch :1200,loss:0.1715981215, train_acc:1.000, dev_acc:0.800, test_acc:0.683
+epoch :1600,loss:0.1557608545, train_acc:1.000, dev_acc:0.733, test_acc:0.676
+Test acc80.000
+1
+epoch :   0,loss:0.6353629827,loss_usup:0.6363260150, train_acc:0.333, dev_acc:0.267, test_acc:0.263, test_acc_ema:0.263
+epoch : 400,loss:0.3465619087,loss_usup:0.4020588398, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.3612853885,loss_usup:0.5558534265, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.1909466237, train_acc:1.000, dev_acc:0.733, test_acc:0.694
+epoch :1600,loss:0.1452266425, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+Test acc80.000
+2
+epoch :   0,loss:0.6381394267,loss_usup:0.6356449127, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.4236257374,loss_usup:0.4040390551, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch : 800,loss:0.3861114979,loss_usup:0.4264073670, train_acc:1.000, dev_acc:0.733, test_acc:0.702, test_acc_ema:0.702
+epoch :1200,loss:0.1564729512, train_acc:1.000, dev_acc:0.733, test_acc:0.675
+epoch :1600,loss:0.3002270758,loss_usup:0.5270478725, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+Test acc80.000
+3
+epoch :   0,loss:0.6388773322,loss_usup:0.6360615492, train_acc:0.267, dev_acc:0.267, test_acc:0.401, test_acc_ema:0.401
+epoch : 400,loss:0.1861992627, train_acc:1.000, dev_acc:0.733, test_acc:0.689
+epoch : 800,loss:0.2619946301,loss_usup:0.3696493506, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch :1200,loss:0.1633470356,loss_usup:0.6323441267, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch :1600,loss:0.1371128857, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+Test acc80.000
+4
+epoch :   0,loss:0.6343375444,loss_usup:0.6362498403, train_acc:0.800, dev_acc:0.267, test_acc:0.461, test_acc_ema:0.461
+epoch : 400,loss:0.1778735220, train_acc:1.000, dev_acc:0.733, test_acc:0.685
+epoch : 800,loss:0.1762477309, train_acc:1.000, dev_acc:0.733, test_acc:0.680
+epoch :1200,loss:0.2984837294,loss_usup:0.2937687039, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1600,loss:0.2472658008,loss_usup:0.5137962103, train_acc:1.000, dev_acc:0.733, test_acc:0.687, test_acc_ema:0.687
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.5_0.0:80.0_0.0
+time_5812.268878936768
+do_0.0
+mixup_alpha_0.5
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0348869823,loss_usup:0.5836217999, train_acc:1.000, dev_acc:0.733, test_acc:0.679, test_acc_ema:0.679
+epoch : 800,loss:0.1962572783, train_acc:1.000, dev_acc:0.800, test_acc:0.687
+epoch :1200,loss:0.1751759052, train_acc:1.000, dev_acc:0.733, test_acc:0.677
+epoch :1600,loss:0.1578878909, train_acc:1.000, dev_acc:0.733, test_acc:0.680
+Test acc80.000
+1
+epoch :   0,loss:0.6353629827,loss_usup:0.6363260150, train_acc:0.333, dev_acc:0.267, test_acc:0.263, test_acc_ema:0.263
+epoch : 400,loss:0.3464258313,loss_usup:0.4026152790, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+epoch : 800,loss:0.3608668149,loss_usup:0.5517185926, train_acc:1.000, dev_acc:0.733, test_acc:0.677, test_acc_ema:0.677
+epoch :1200,loss:0.1937911510, train_acc:1.000, dev_acc:0.800, test_acc:0.695
+epoch :1600,loss:0.1475426108, train_acc:1.000, dev_acc:0.800, test_acc:0.677
+Test acc80.000
+2
+epoch :   0,loss:0.6381394267,loss_usup:0.6356449127, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.4231970906,loss_usup:0.4025833905, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch : 800,loss:0.3860901296,loss_usup:0.4119205177, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+epoch :1200,loss:0.1576818377, train_acc:1.000, dev_acc:0.667, test_acc:0.667
+epoch :1600,loss:0.2991064191,loss_usup:0.5092759132, train_acc:1.000, dev_acc:0.800, test_acc:0.684, test_acc_ema:0.684
+Test acc80.000
+3
+epoch :   0,loss:0.6388773322,loss_usup:0.6360615492, train_acc:0.267, dev_acc:0.267, test_acc:0.401, test_acc_ema:0.401
+epoch : 400,loss:0.1863653213, train_acc:1.000, dev_acc:0.733, test_acc:0.689
+epoch : 800,loss:0.2624183595,loss_usup:0.3633694649, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.1617151499,loss_usup:0.6159510016, train_acc:1.000, dev_acc:0.800, test_acc:0.684, test_acc_ema:0.684
+epoch :1600,loss:0.1386185139, train_acc:1.000, dev_acc:0.800, test_acc:0.679
+Test acc80.000
+4
+epoch :   0,loss:0.6343375444,loss_usup:0.6362498403, train_acc:0.800, dev_acc:0.267, test_acc:0.461, test_acc_ema:0.461
+epoch : 400,loss:0.1777857244, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+epoch : 800,loss:0.1765768528, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+epoch :1200,loss:0.2979975343,loss_usup:0.2782292664, train_acc:1.000, dev_acc:0.733, test_acc:0.676, test_acc_ema:0.676
+epoch :1600,loss:0.2456095368,loss_usup:0.4765274823, train_acc:1.000, dev_acc:0.800, test_acc:0.678, test_acc_ema:0.678
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.5_0.1:80.0_0.0
+time_6458.31157374382
+do_0.0
+mixup_alpha_0.5
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0349591188,loss_usup:0.5798725486, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+epoch : 800,loss:0.2109203190, train_acc:1.000, dev_acc:0.733, test_acc:0.657
+epoch :1200,loss:0.2002422810, train_acc:1.000, dev_acc:0.667, test_acc:0.573
+epoch :1600,loss:0.1850653738, train_acc:1.000, dev_acc:0.667, test_acc:0.554
+Test acc80.000
+1
+epoch :   0,loss:0.6353629827,loss_usup:0.6363260150, train_acc:0.333, dev_acc:0.267, test_acc:0.263, test_acc_ema:0.263
+epoch : 400,loss:0.3461046517,loss_usup:0.4035354257, train_acc:1.000, dev_acc:0.733, test_acc:0.691, test_acc_ema:0.691
+epoch : 800,loss:0.3538300097,loss_usup:0.5328915119, train_acc:1.000, dev_acc:0.733, test_acc:0.622, test_acc_ema:0.622
+epoch :1200,loss:0.2062857598, train_acc:1.000, dev_acc:0.667, test_acc:0.616
+epoch :1600,loss:0.1683743000, train_acc:1.000, dev_acc:0.667, test_acc:0.559
+Test acc80.000
+2
+epoch :   0,loss:0.6381394267,loss_usup:0.6356449127, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.4235753715,loss_usup:0.4000317752, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+epoch : 800,loss:0.3873652220,loss_usup:0.2463654876, train_acc:1.000, dev_acc:0.400, test_acc:0.595, test_acc_ema:0.595
+epoch :1200,loss:0.1931451559, train_acc:1.000, dev_acc:0.400, test_acc:0.452
+epoch :1600,loss:0.2982138395,loss_usup:0.4605909586, train_acc:1.000, dev_acc:0.400, test_acc:0.459, test_acc_ema:0.459
+Test acc80.000
+3
+epoch :   0,loss:0.6388773322,loss_usup:0.6360615492, train_acc:0.267, dev_acc:0.267, test_acc:0.401, test_acc_ema:0.401
+epoch : 400,loss:0.1865171194, train_acc:1.000, dev_acc:0.733, test_acc:0.690
+epoch : 800,loss:0.2548882365,loss_usup:0.3079402447, train_acc:1.000, dev_acc:0.733, test_acc:0.650, test_acc_ema:0.650
+epoch :1200,loss:0.1600048542,loss_usup:0.5090606809, train_acc:1.000, dev_acc:0.667, test_acc:0.569, test_acc_ema:0.569
+epoch :1600,loss:0.1816197336, train_acc:1.000, dev_acc:0.667, test_acc:0.546
+Test acc80.000
+4
+epoch :   0,loss:0.6343375444,loss_usup:0.6362498403, train_acc:0.800, dev_acc:0.267, test_acc:0.462, test_acc_ema:0.462
+epoch : 400,loss:0.1779692918, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.1885876507, train_acc:1.000, dev_acc:0.667, test_acc:0.639
+epoch :1200,loss:0.3044026196,loss_usup:0.3034369946, train_acc:1.000, dev_acc:0.667, test_acc:0.558, test_acc_ema:0.558
+epoch :1600,loss:0.2399773896,loss_usup:0.4211430848, train_acc:1.000, dev_acc:0.667, test_acc:0.548, test_acc_ema:0.548
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.5_1.0:80.0_0.0
+time_7104.466978311539
+do_0.0
+mixup_alpha_0.5
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.0349606685,loss_usup:0.5740092993, train_acc:1.000, dev_acc:0.733, test_acc:0.676, test_acc_ema:0.676
+epoch : 800,loss:0.2798784375, train_acc:1.000, dev_acc:0.400, test_acc:0.358
+epoch :1200,loss:0.4829572439, train_acc:0.600, dev_acc:0.333, test_acc:0.190
+epoch :1600,loss:0.4354972541, train_acc:0.933, dev_acc:0.333, test_acc:0.190
+Test acc80.000
+1
+epoch :   0,loss:0.6353629827,loss_usup:0.6363260150, train_acc:0.333, dev_acc:0.267, test_acc:0.263, test_acc_ema:0.263
+epoch : 400,loss:0.3438105583,loss_usup:0.3944157064, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.3418222964,loss_usup:0.6022421718, train_acc:1.000, dev_acc:0.667, test_acc:0.513, test_acc_ema:0.513
+epoch :1200,loss:0.2515807748, train_acc:1.000, dev_acc:0.667, test_acc:0.545
+epoch :1600,loss:0.2651840746, train_acc:1.000, dev_acc:0.667, test_acc:0.540
+Test acc80.000
+2
+epoch :   0,loss:0.6381394267,loss_usup:0.6356449127, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.4223499298,loss_usup:0.4156507254, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.3753995597,loss_usup:0.4480125904, train_acc:0.933, dev_acc:0.667, test_acc:0.525, test_acc_ema:0.525
+epoch :1200,loss:0.2908532321, train_acc:0.933, dev_acc:0.667, test_acc:0.535
+epoch :1600,loss:0.2886098325,loss_usup:0.4004919827, train_acc:0.933, dev_acc:0.667, test_acc:0.533, test_acc_ema:0.533
+Test acc80.000
+3
+epoch :   0,loss:0.6388773322,loss_usup:0.6360615492, train_acc:0.267, dev_acc:0.267, test_acc:0.401, test_acc_ema:0.401
+epoch : 400,loss:0.1867424101, train_acc:1.000, dev_acc:0.733, test_acc:0.690
+epoch : 800,loss:0.2548597157,loss_usup:0.1423676014, train_acc:1.000, dev_acc:0.667, test_acc:0.549, test_acc_ema:0.549
+epoch :1200,loss:0.1729194820,loss_usup:0.4384875298, train_acc:1.000, dev_acc:0.667, test_acc:0.535, test_acc_ema:0.535
+epoch :1600,loss:0.2388878912, train_acc:1.000, dev_acc:0.667, test_acc:0.542
+Test acc80.000
+4
+epoch :   0,loss:0.6343375444,loss_usup:0.6362498403, train_acc:0.800, dev_acc:0.267, test_acc:0.461, test_acc_ema:0.461
+epoch : 400,loss:0.1793164909, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.2293373495, train_acc:0.933, dev_acc:0.667, test_acc:0.533
+epoch :1200,loss:0.3638765216,loss_usup:0.1700278968, train_acc:1.000, dev_acc:0.667, test_acc:0.516, test_acc_ema:0.516
+epoch :1600,loss:0.2394084483,loss_usup:0.3532789350, train_acc:1.000, dev_acc:0.667, test_acc:0.534, test_acc_ema:0.534
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_0.5_10.0:80.0_0.0
+time_7751.108780860901
+do_0.0
+mixup_alpha_1.0
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.2502373159,loss_usup:0.5678588152, train_acc:1.000, dev_acc:0.733, test_acc:0.678, test_acc_ema:0.678
+epoch : 800,loss:0.1933949292, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch :1200,loss:0.1804737449, train_acc:1.000, dev_acc:0.800, test_acc:0.698
+epoch :1600,loss:0.1630222797, train_acc:1.000, dev_acc:0.800, test_acc:0.680
+Test acc80.000
+1
+epoch :   0,loss:0.6350476742,loss_usup:0.6363618374, train_acc:0.333, dev_acc:0.400, test_acc:0.282, test_acc_ema:0.282
+epoch : 400,loss:0.5156748295,loss_usup:0.4406983554, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch : 800,loss:0.3240821958,loss_usup:0.6113000512, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.2143863589, train_acc:1.000, dev_acc:0.733, test_acc:0.706
+epoch :1600,loss:0.1519351155, train_acc:1.000, dev_acc:0.733, test_acc:0.677
+Test acc80.000
+2
+epoch :   0,loss:0.6380513310,loss_usup:0.6356269121, train_acc:0.333, dev_acc:0.467, test_acc:0.446, test_acc_ema:0.446
+epoch : 400,loss:0.4879068136,loss_usup:0.5895066857, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.4595986605,loss_usup:0.3675956726, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch :1200,loss:0.1820358187, train_acc:1.000, dev_acc:0.733, test_acc:0.673
+epoch :1600,loss:0.1139065400,loss_usup:0.5831965208, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+Test acc80.000
+3
+epoch :   0,loss:0.6389382482,loss_usup:0.6360895634, train_acc:0.267, dev_acc:0.267, test_acc:0.401, test_acc_ema:0.401
+epoch : 400,loss:0.1909557879, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.3499872983,loss_usup:0.5910184383, train_acc:1.000, dev_acc:0.800, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.3618432879,loss_usup:0.6009902954, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+epoch :1600,loss:0.1490066946, train_acc:1.000, dev_acc:0.733, test_acc:0.692
+Test acc80.000
+4
+epoch :   0,loss:0.6350424886,loss_usup:0.6362503767, train_acc:0.733, dev_acc:0.333, test_acc:0.454, test_acc_ema:0.454
+epoch : 400,loss:0.1907538325, train_acc:1.000, dev_acc:0.733, test_acc:0.678
+epoch : 800,loss:0.1830670387, train_acc:1.000, dev_acc:0.733, test_acc:0.677
+epoch :1200,loss:0.4633710980,loss_usup:0.4028411806, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+epoch :1600,loss:0.1850883514,loss_usup:0.4824581444, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_1.0_0.0:80.0_0.0
+time_8397.117816925049
+do_0.0
+mixup_alpha_1.0
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.2490733415,loss_usup:0.5709139705, train_acc:1.000, dev_acc:0.733, test_acc:0.677, test_acc_ema:0.677
+epoch : 800,loss:0.1949433684, train_acc:1.000, dev_acc:0.733, test_acc:0.678
+epoch :1200,loss:0.1812528670, train_acc:1.000, dev_acc:0.800, test_acc:0.688
+epoch :1600,loss:0.1650054753, train_acc:1.000, dev_acc:0.733, test_acc:0.680
+Test acc80.000
+1
+epoch :   0,loss:0.6350476742,loss_usup:0.6363618374, train_acc:0.333, dev_acc:0.400, test_acc:0.282, test_acc_ema:0.282
+epoch : 400,loss:0.5164015293,loss_usup:0.4404895306, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.3270457685,loss_usup:0.6063808203, train_acc:1.000, dev_acc:0.733, test_acc:0.674, test_acc_ema:0.674
+epoch :1200,loss:0.2185958326, train_acc:1.000, dev_acc:0.733, test_acc:0.699
+epoch :1600,loss:0.1542052329, train_acc:1.000, dev_acc:0.733, test_acc:0.669
+Test acc80.000
+2
+epoch :   0,loss:0.6380513310,loss_usup:0.6356269121, train_acc:0.333, dev_acc:0.467, test_acc:0.446, test_acc_ema:0.446
+epoch : 400,loss:0.4866359234,loss_usup:0.5883145928, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.4566054344,loss_usup:0.3513255119, train_acc:1.000, dev_acc:0.733, test_acc:0.678, test_acc_ema:0.678
+epoch :1200,loss:0.1844751239, train_acc:1.000, dev_acc:0.667, test_acc:0.652
+epoch :1600,loss:0.1147020012,loss_usup:0.5995882154, train_acc:1.000, dev_acc:0.600, test_acc:0.665, test_acc_ema:0.665
+Test acc80.000
+3
+epoch :   0,loss:0.6389382482,loss_usup:0.6360895634, train_acc:0.267, dev_acc:0.267, test_acc:0.401, test_acc_ema:0.401
+epoch : 400,loss:0.1916242987, train_acc:1.000, dev_acc:0.733, test_acc:0.689
+epoch : 800,loss:0.3493470550,loss_usup:0.5921353102, train_acc:1.000, dev_acc:0.733, test_acc:0.675, test_acc_ema:0.675
+epoch :1200,loss:0.3603966534,loss_usup:0.6024073958, train_acc:1.000, dev_acc:0.800, test_acc:0.671, test_acc_ema:0.671
+epoch :1600,loss:0.1508113295, train_acc:1.000, dev_acc:0.800, test_acc:0.675
+Test acc80.000
+4
+epoch :   0,loss:0.6350424886,loss_usup:0.6362503767, train_acc:0.733, dev_acc:0.333, test_acc:0.454, test_acc_ema:0.454
+epoch : 400,loss:0.1907686740, train_acc:1.000, dev_acc:0.733, test_acc:0.677
+epoch : 800,loss:0.1846148968, train_acc:1.000, dev_acc:0.733, test_acc:0.673
+epoch :1200,loss:0.4637466371,loss_usup:0.3352080286, train_acc:1.000, dev_acc:0.733, test_acc:0.667, test_acc_ema:0.667
+epoch :1600,loss:0.1849474311,loss_usup:0.4434459805, train_acc:1.000, dev_acc:0.733, test_acc:0.677, test_acc_ema:0.677
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_1.0_0.1:80.0_0.0
+time_9042.790450572968
+do_0.0
+mixup_alpha_1.0
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.2511322498,loss_usup:0.5729331970, train_acc:1.000, dev_acc:0.733, test_acc:0.677, test_acc_ema:0.677
+epoch : 800,loss:0.2002117336, train_acc:1.000, dev_acc:0.800, test_acc:0.685
+epoch :1200,loss:0.1979501545, train_acc:1.000, dev_acc:0.667, test_acc:0.556
+epoch :1600,loss:0.2002793252, train_acc:1.000, dev_acc:0.667, test_acc:0.571
+Test acc80.000
+1
+epoch :   0,loss:0.6350476742,loss_usup:0.6363618374, train_acc:0.333, dev_acc:0.400, test_acc:0.282, test_acc_ema:0.282
+epoch : 400,loss:0.5144190192,loss_usup:0.4425083697, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.3215762377,loss_usup:0.5665199161, train_acc:1.000, dev_acc:0.667, test_acc:0.635, test_acc_ema:0.635
+epoch :1200,loss:0.2438865155, train_acc:1.000, dev_acc:0.667, test_acc:0.588
+epoch :1600,loss:0.1798275560, train_acc:1.000, dev_acc:0.667, test_acc:0.552
+Test acc80.000
+2
+epoch :   0,loss:0.6380513310,loss_usup:0.6356269121, train_acc:0.333, dev_acc:0.467, test_acc:0.446, test_acc_ema:0.446
+epoch : 400,loss:0.4867903888,loss_usup:0.5845384598, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.4595032036,loss_usup:0.2461935282, train_acc:1.000, dev_acc:0.467, test_acc:0.528, test_acc_ema:0.528
+epoch :1200,loss:0.2219524235, train_acc:1.000, dev_acc:0.400, test_acc:0.451
+epoch :1600,loss:0.1125645339,loss_usup:0.5087850690, train_acc:1.000, dev_acc:0.400, test_acc:0.456, test_acc_ema:0.456
+Test acc80.000
+3
+epoch :   0,loss:0.6389382482,loss_usup:0.6360895634, train_acc:0.267, dev_acc:0.267, test_acc:0.401, test_acc_ema:0.401
+epoch : 400,loss:0.1908176988, train_acc:1.000, dev_acc:0.733, test_acc:0.690
+epoch : 800,loss:0.3450895846,loss_usup:0.4903566241, train_acc:1.000, dev_acc:0.733, test_acc:0.646, test_acc_ema:0.646
+epoch :1200,loss:0.3600263894,loss_usup:0.4579726756, train_acc:1.000, dev_acc:0.667, test_acc:0.573, test_acc_ema:0.573
+epoch :1600,loss:0.1896984130, train_acc:1.000, dev_acc:0.667, test_acc:0.554
+Test acc80.000
+4
+epoch :   0,loss:0.6350424886,loss_usup:0.6362503767, train_acc:0.733, dev_acc:0.333, test_acc:0.454, test_acc_ema:0.454
+epoch : 400,loss:0.1910088956, train_acc:1.000, dev_acc:0.733, test_acc:0.678
+epoch : 800,loss:0.1962322742, train_acc:1.000, dev_acc:0.667, test_acc:0.637
+epoch :1200,loss:0.4669849873,loss_usup:0.1635226756, train_acc:1.000, dev_acc:0.667, test_acc:0.580, test_acc_ema:0.580
+epoch :1600,loss:0.1833261698,loss_usup:0.3309572041, train_acc:1.000, dev_acc:0.667, test_acc:0.559, test_acc_ema:0.559
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_1.0_1.0:80.0_0.0
+time_9687.85367846489
+do_0.0
+mixup_alpha_1.0
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.0997470617, train_acc:0.533, dev_acc:0.267, test_acc:0.391
+epoch : 400,loss:0.2494414002,loss_usup:0.5703780055, train_acc:1.000, dev_acc:0.733, test_acc:0.671, test_acc_ema:0.671
+epoch : 800,loss:0.2235415876, train_acc:1.000, dev_acc:0.667, test_acc:0.616
+epoch :1200,loss:0.3490320146, train_acc:0.933, dev_acc:0.600, test_acc:0.518
+epoch :1600,loss:0.2892094553, train_acc:1.000, dev_acc:0.667, test_acc:0.527
+Test acc80.000
+1
+epoch :   0,loss:0.6350476742,loss_usup:0.6363618374, train_acc:0.333, dev_acc:0.400, test_acc:0.281, test_acc_ema:0.281
+epoch : 400,loss:0.5124444962,loss_usup:0.4404193759, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch : 800,loss:0.2977149487,loss_usup:0.5310343504, train_acc:1.000, dev_acc:0.667, test_acc:0.510, test_acc_ema:0.510
+epoch :1200,loss:0.3066025376, train_acc:0.933, dev_acc:0.667, test_acc:0.542
+epoch :1600,loss:0.2923328876, train_acc:0.933, dev_acc:0.667, test_acc:0.537
+Test acc80.000
+2
+epoch :   0,loss:0.6380513310,loss_usup:0.6356269121, train_acc:0.333, dev_acc:0.467, test_acc:0.446, test_acc_ema:0.446
+epoch : 400,loss:0.4086618125,loss_usup:0.5178416371, train_acc:1.000, dev_acc:0.733, test_acc:0.676, test_acc_ema:0.676
+epoch : 800,loss:0.4289711714,loss_usup:0.4030851722, train_acc:0.933, dev_acc:0.667, test_acc:0.518, test_acc_ema:0.518
+epoch :1200,loss:0.3127628863, train_acc:1.000, dev_acc:0.600, test_acc:0.485
+epoch :1600,loss:0.0914751291,loss_usup:0.3334571421, train_acc:0.867, dev_acc:0.467, test_acc:0.346, test_acc_ema:0.346
+Test acc80.000
+3
+epoch :   0,loss:0.6389382482,loss_usup:0.6360895634, train_acc:0.267, dev_acc:0.267, test_acc:0.401, test_acc_ema:0.401
+epoch : 400,loss:0.1932205260, train_acc:1.000, dev_acc:0.733, test_acc:0.695
+epoch : 800,loss:0.3458711803,loss_usup:0.3326801360, train_acc:1.000, dev_acc:0.667, test_acc:0.552, test_acc_ema:0.552
+epoch :1200,loss:0.4022105038,loss_usup:0.3921174407, train_acc:1.000, dev_acc:0.667, test_acc:0.537, test_acc_ema:0.537
+epoch :1600,loss:0.2478703558, train_acc:1.000, dev_acc:0.667, test_acc:0.543
+Test acc80.000
+4
+epoch :   0,loss:0.6350424886,loss_usup:0.6362503767, train_acc:0.733, dev_acc:0.333, test_acc:0.452, test_acc_ema:0.452
+epoch : 400,loss:0.1944177151, train_acc:1.000, dev_acc:0.733, test_acc:0.677
+epoch : 800,loss:0.2434528470, train_acc:0.933, dev_acc:0.667, test_acc:0.559
+epoch :1200,loss:0.5175869465,loss_usup:0.1028108895, train_acc:0.933, dev_acc:0.667, test_acc:0.528, test_acc_ema:0.528
+epoch :1600,loss:0.1862786561,loss_usup:0.3233514428, train_acc:1.000, dev_acc:0.667, test_acc:0.537, test_acc_ema:0.537
+Test acc80.000
+do, mix_alpha, consis_coeff_0.0_1.0_10.0:80.0_0.0
+time_10333.164995908737
+do_0.2
+mixup_alpha_0.0
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.0554248542,loss_usup:0.4849324524, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch : 800,loss:0.1224001572, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch :1200,loss:0.1108982712, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch :1600,loss:0.0997611880, train_acc:1.000, dev_acc:0.733, test_acc:0.681
+Test acc80.000
+1
+epoch :   0,loss:0.6351141334,loss_usup:0.6365013123, train_acc:0.333, dev_acc:0.467, test_acc:0.328, test_acc_ema:0.328
+epoch : 400,loss:0.0720446780,loss_usup:0.3614547253, train_acc:1.000, dev_acc:0.733, test_acc:0.696, test_acc_ema:0.696
+epoch : 800,loss:0.0742020682,loss_usup:0.3060916364, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch :1200,loss:0.1239605993, train_acc:1.000, dev_acc:0.800, test_acc:0.687
+epoch :1600,loss:0.0999742523, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+Test acc80.000
+2
+epoch :   0,loss:0.6338840723,loss_usup:0.6352629066, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.0933076963,loss_usup:0.5203563571, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+epoch : 800,loss:0.1605962813,loss_usup:0.3875570595, train_acc:1.000, dev_acc:0.733, test_acc:0.689, test_acc_ema:0.689
+epoch :1200,loss:0.1087422222, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch :1600,loss:0.0497652590,loss_usup:0.5249099731, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+Test acc80.000
+3
+epoch :   0,loss:0.6414120793,loss_usup:0.6359650493, train_acc:0.400, dev_acc:0.333, test_acc:0.416, test_acc_ema:0.416
+epoch : 400,loss:0.1333893538, train_acc:1.000, dev_acc:0.733, test_acc:0.692
+epoch : 800,loss:0.0459173582,loss_usup:0.3682567179, train_acc:1.000, dev_acc:0.733, test_acc:0.685, test_acc_ema:0.685
+epoch :1200,loss:0.0673725531,loss_usup:0.7495374084, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch :1600,loss:0.0932681784, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+Test acc80.000
+4
+epoch :   0,loss:0.6345740557,loss_usup:0.6360871196, train_acc:0.600, dev_acc:0.267, test_acc:0.405, test_acc_ema:0.405
+epoch : 400,loss:0.1238156781, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.1133510917, train_acc:1.000, dev_acc:0.733, test_acc:0.684
+epoch :1200,loss:0.0643524379,loss_usup:0.3377540112, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch :1600,loss:0.0542024709,loss_usup:0.3188625872, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.0_0.0:80.0_0.0
+time_10979.503383636475
+do_0.2
+mixup_alpha_0.0
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.0413499288,loss_usup:0.4917660654, train_acc:1.000, dev_acc:0.733, test_acc:0.689, test_acc_ema:0.689
+epoch : 800,loss:0.1243522316, train_acc:1.000, dev_acc:0.733, test_acc:0.690
+epoch :1200,loss:0.1170397550, train_acc:1.000, dev_acc:0.800, test_acc:0.686
+epoch :1600,loss:0.1048038751, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+Test acc80.000
+1
+epoch :   0,loss:0.6351141334,loss_usup:0.6365013123, train_acc:0.333, dev_acc:0.467, test_acc:0.328, test_acc_ema:0.328
+epoch : 400,loss:0.0720927864,loss_usup:0.3617806733, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.0750076622,loss_usup:0.3225367963, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch :1200,loss:0.1273361146, train_acc:1.000, dev_acc:0.800, test_acc:0.680
+epoch :1600,loss:0.1026740670, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+Test acc80.000
+2
+epoch :   0,loss:0.6338840723,loss_usup:0.6352629066, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.0937977284,loss_usup:0.5207058787, train_acc:1.000, dev_acc:0.733, test_acc:0.691, test_acc_ema:0.691
+epoch : 800,loss:0.1604617238,loss_usup:0.3873313963, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch :1200,loss:0.1077441648, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+epoch :1600,loss:0.0558094457,loss_usup:0.5557263494, train_acc:1.000, dev_acc:0.733, test_acc:0.679, test_acc_ema:0.679
+Test acc80.000
+3
+epoch :   0,loss:0.6414120793,loss_usup:0.6359650493, train_acc:0.400, dev_acc:0.333, test_acc:0.416, test_acc_ema:0.416
+epoch : 400,loss:0.1334377378, train_acc:1.000, dev_acc:0.733, test_acc:0.691
+epoch : 800,loss:0.0462852418,loss_usup:0.3520141244, train_acc:1.000, dev_acc:0.733, test_acc:0.676, test_acc_ema:0.676
+epoch :1200,loss:0.0703543425,loss_usup:0.6865999103, train_acc:1.000, dev_acc:0.800, test_acc:0.682, test_acc_ema:0.682
+epoch :1600,loss:0.0966536924, train_acc:1.000, dev_acc:0.800, test_acc:0.673
+Test acc80.000
+4
+epoch :   0,loss:0.6345740557,loss_usup:0.6360871196, train_acc:0.600, dev_acc:0.267, test_acc:0.405, test_acc_ema:0.405
+epoch : 400,loss:0.1237762123, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.1142855361, train_acc:1.000, dev_acc:0.733, test_acc:0.680
+epoch :1200,loss:0.0635643676,loss_usup:0.2422199249, train_acc:1.000, dev_acc:0.800, test_acc:0.685, test_acc_ema:0.685
+epoch :1600,loss:0.0545612983,loss_usup:0.3101339340, train_acc:1.000, dev_acc:0.800, test_acc:0.686, test_acc_ema:0.686
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.0_0.1:80.0_0.0
+time_11625.974074840546
+do_0.2
+mixup_alpha_0.0
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.0408947989,loss_usup:0.4873310626, train_acc:1.000, dev_acc:0.733, test_acc:0.691, test_acc_ema:0.691
+epoch : 800,loss:0.1347411275, train_acc:1.000, dev_acc:0.733, test_acc:0.673
+epoch :1200,loss:0.1584496945, train_acc:1.000, dev_acc:0.533, test_acc:0.524
+epoch :1600,loss:0.1324877143, train_acc:1.000, dev_acc:0.667, test_acc:0.528
+Test acc80.000
+1
+epoch :   0,loss:0.6351141334,loss_usup:0.6365013123, train_acc:0.333, dev_acc:0.467, test_acc:0.328, test_acc_ema:0.328
+epoch : 400,loss:0.0717258900,loss_usup:0.3616586328, train_acc:1.000, dev_acc:0.733, test_acc:0.694, test_acc_ema:0.694
+epoch : 800,loss:0.0801866576,loss_usup:0.2891716063, train_acc:1.000, dev_acc:0.733, test_acc:0.623, test_acc_ema:0.623
+epoch :1200,loss:0.1582579762, train_acc:1.000, dev_acc:0.667, test_acc:0.574
+epoch :1600,loss:0.1303471029, train_acc:1.000, dev_acc:0.600, test_acc:0.574
+Test acc80.000
+2
+epoch :   0,loss:0.6338840723,loss_usup:0.6352629066, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.0934639648,loss_usup:0.5114901066, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.1608389467,loss_usup:0.2814800441, train_acc:1.000, dev_acc:0.600, test_acc:0.641, test_acc_ema:0.641
+epoch :1200,loss:0.1551982909, train_acc:1.000, dev_acc:0.400, test_acc:0.458
+epoch :1600,loss:0.0653455183,loss_usup:0.4198200703, train_acc:1.000, dev_acc:0.400, test_acc:0.459, test_acc_ema:0.459
+Test acc80.000
+3
+epoch :   0,loss:0.6414120793,loss_usup:0.6359650493, train_acc:0.400, dev_acc:0.333, test_acc:0.416, test_acc_ema:0.416
+epoch : 400,loss:0.1336725056, train_acc:1.000, dev_acc:0.733, test_acc:0.692
+epoch : 800,loss:0.0500053763,loss_usup:0.4112120867, train_acc:1.000, dev_acc:0.733, test_acc:0.657, test_acc_ema:0.657
+epoch :1200,loss:0.0595994405,loss_usup:0.2462787628, train_acc:1.000, dev_acc:0.600, test_acc:0.532, test_acc_ema:0.532
+epoch :1600,loss:0.1285645962, train_acc:1.000, dev_acc:0.667, test_acc:0.523
+Test acc80.000
+4
+epoch :   0,loss:0.6345740557,loss_usup:0.6360871196, train_acc:0.600, dev_acc:0.267, test_acc:0.405, test_acc_ema:0.405
+epoch : 400,loss:0.1237851903, train_acc:1.000, dev_acc:0.733, test_acc:0.694
+epoch : 800,loss:0.1319215894, train_acc:1.000, dev_acc:0.667, test_acc:0.654
+epoch :1200,loss:0.0781171769,loss_usup:0.2445288748, train_acc:1.000, dev_acc:0.667, test_acc:0.542, test_acc_ema:0.542
+epoch :1600,loss:0.0587759428,loss_usup:0.3294602633, train_acc:1.000, dev_acc:0.667, test_acc:0.577, test_acc_ema:0.577
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.0_1.0:80.0_0.0
+time_12272.494740247726
+do_0.2
+mixup_alpha_0.0
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.0710351914,loss_usup:0.4842505455, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.2609456778, train_acc:0.867, dev_acc:0.667, test_acc:0.520
+epoch :1200,loss:0.3497996926, train_acc:0.933, dev_acc:0.667, test_acc:0.514
+epoch :1600,loss:0.2350677401, train_acc:0.933, dev_acc:0.667, test_acc:0.524
+Test acc80.000
+1
+epoch :   0,loss:0.6351141334,loss_usup:0.6365013123, train_acc:0.333, dev_acc:0.467, test_acc:0.325, test_acc_ema:0.325
+epoch : 400,loss:0.0711756051,loss_usup:0.3499188423, train_acc:1.000, dev_acc:0.733, test_acc:0.694, test_acc_ema:0.694
+epoch : 800,loss:0.1126725748,loss_usup:0.2978095710, train_acc:1.000, dev_acc:0.533, test_acc:0.494, test_acc_ema:0.494
+epoch :1200,loss:0.5967617631, train_acc:0.600, dev_acc:0.333, test_acc:0.189
+epoch :1600,loss:0.4832755923, train_acc:0.800, dev_acc:0.333, test_acc:0.189
+Test acc80.000
+2
+epoch :   0,loss:0.6338840723,loss_usup:0.6352629066, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.0928534269,loss_usup:0.4918077290, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.1622491628,loss_usup:0.2718179524, train_acc:0.867, dev_acc:0.667, test_acc:0.537, test_acc_ema:0.537
+epoch :1200,loss:0.3185870945, train_acc:0.933, dev_acc:0.667, test_acc:0.526
+epoch :1600,loss:0.0832035616,loss_usup:0.2543589771, train_acc:0.867, dev_acc:0.667, test_acc:0.530, test_acc_ema:0.530
+Test acc80.000
+3
+epoch :   0,loss:0.6414120793,loss_usup:0.6359650493, train_acc:0.400, dev_acc:0.333, test_acc:0.416, test_acc_ema:0.416
+epoch : 400,loss:0.1365769506, train_acc:1.000, dev_acc:0.733, test_acc:0.691
+epoch : 800,loss:0.0755867139,loss_usup:0.1542347223, train_acc:0.933, dev_acc:0.667, test_acc:0.593, test_acc_ema:0.593
+epoch :1200,loss:0.0844722465,loss_usup:0.4122383893, train_acc:1.000, dev_acc:0.667, test_acc:0.528, test_acc_ema:0.528
+epoch :1600,loss:0.1911952794, train_acc:1.000, dev_acc:0.667, test_acc:0.535
+Test acc80.000
+4
+epoch :   0,loss:0.6345740557,loss_usup:0.6360871196, train_acc:0.600, dev_acc:0.267, test_acc:0.403, test_acc_ema:0.403
+epoch : 400,loss:0.1258740276, train_acc:1.000, dev_acc:0.733, test_acc:0.698
+epoch : 800,loss:0.2382463515, train_acc:0.867, dev_acc:0.667, test_acc:0.545
+epoch :1200,loss:0.1418112963,loss_usup:0.1017002761, train_acc:0.600, dev_acc:0.333, test_acc:0.189, test_acc_ema:0.189
+epoch :1600,loss:0.0832255930,loss_usup:0.1149535179, train_acc:0.733, dev_acc:0.333, test_acc:0.190, test_acc_ema:0.190
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.0_10.0:80.0_0.0
+time_12918.547889709473
+do_0.2
+mixup_alpha_0.1
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.0806162506,loss_usup:0.8030861616, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch : 800,loss:0.1477805376, train_acc:1.000, dev_acc:0.733, test_acc:0.691
+epoch :1200,loss:0.1291822791, train_acc:1.000, dev_acc:0.733, test_acc:0.676
+epoch :1600,loss:0.1159711257, train_acc:1.000, dev_acc:0.733, test_acc:0.684
+Test acc80.000
+1
+epoch :   0,loss:0.6341035366,loss_usup:0.6364987493, train_acc:0.533, dev_acc:0.533, test_acc:0.352, test_acc_ema:0.352
+epoch : 400,loss:0.0284884032,loss_usup:0.6994811296, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+epoch : 800,loss:0.4817708731,loss_usup:0.5193174481, train_acc:1.000, dev_acc:0.733, test_acc:0.689, test_acc_ema:0.689
+epoch :1200,loss:0.1535859853, train_acc:1.000, dev_acc:0.800, test_acc:0.682
+epoch :1600,loss:0.1216437221, train_acc:1.000, dev_acc:0.733, test_acc:0.671
+Test acc80.000
+2
+epoch :   0,loss:0.6338840723,loss_usup:0.6353615522, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.1234794483,loss_usup:0.3784375489, train_acc:1.000, dev_acc:0.733, test_acc:0.696, test_acc_ema:0.696
+epoch : 800,loss:0.1562084407,loss_usup:0.3590634763, train_acc:1.000, dev_acc:0.733, test_acc:0.677, test_acc_ema:0.677
+epoch :1200,loss:0.1337816268, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+epoch :1600,loss:0.0411123000,loss_usup:0.7249878049, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+Test acc80.000
+3
+epoch :   0,loss:0.6424974203,loss_usup:0.6358106136, train_acc:0.533, dev_acc:0.267, test_acc:0.420, test_acc_ema:0.420
+epoch : 400,loss:0.1474634856, train_acc:1.000, dev_acc:0.733, test_acc:0.690
+epoch : 800,loss:0.3934716880,loss_usup:0.3636083305, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+epoch :1200,loss:0.2534315884,loss_usup:0.6626812220, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch :1600,loss:0.1084088311, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+Test acc80.000
+4
+epoch :   0,loss:0.6345771551,loss_usup:0.6360971332, train_acc:0.600, dev_acc:0.267, test_acc:0.403, test_acc_ema:0.403
+epoch : 400,loss:0.1505729556, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.1427904814, train_acc:1.000, dev_acc:0.800, test_acc:0.701
+epoch :1200,loss:0.0691126585,loss_usup:0.2842292786, train_acc:1.000, dev_acc:0.800, test_acc:0.694, test_acc_ema:0.694
+epoch :1600,loss:0.0669379607,loss_usup:0.4760989845, train_acc:1.000, dev_acc:0.800, test_acc:0.696, test_acc_ema:0.696
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.1_0.0:80.0_0.0
+time_13564.548049926758
+do_0.2
+mixup_alpha_0.1
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.0805375278,loss_usup:0.8024746180, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch : 800,loss:0.1499898732, train_acc:1.000, dev_acc:0.800, test_acc:0.687
+epoch :1200,loss:0.1336235404, train_acc:1.000, dev_acc:0.733, test_acc:0.678
+epoch :1600,loss:0.1202610508, train_acc:1.000, dev_acc:0.733, test_acc:0.679
+Test acc80.000
+1
+epoch :   0,loss:0.6341035366,loss_usup:0.6364987493, train_acc:0.533, dev_acc:0.533, test_acc:0.352, test_acc_ema:0.352
+epoch : 400,loss:0.0281728823,loss_usup:0.7270369530, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+epoch : 800,loss:0.4837335348,loss_usup:0.4882643819, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch :1200,loss:0.1581260115, train_acc:1.000, dev_acc:0.800, test_acc:0.676
+epoch :1600,loss:0.1235577390, train_acc:1.000, dev_acc:0.733, test_acc:0.665
+Test acc80.000
+2
+epoch :   0,loss:0.6338840723,loss_usup:0.6353615522, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.1233349666,loss_usup:0.3768175840, train_acc:1.000, dev_acc:0.733, test_acc:0.697, test_acc_ema:0.697
+epoch : 800,loss:0.1579046249,loss_usup:0.3743930757, train_acc:1.000, dev_acc:0.733, test_acc:0.667, test_acc_ema:0.667
+epoch :1200,loss:0.1334945410, train_acc:1.000, dev_acc:0.733, test_acc:0.673
+epoch :1600,loss:0.0434952974,loss_usup:0.7289753556, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+Test acc80.000
+3
+epoch :   0,loss:0.6424974203,loss_usup:0.6358106136, train_acc:0.533, dev_acc:0.267, test_acc:0.420, test_acc_ema:0.420
+epoch : 400,loss:0.1488159597, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.3946785927,loss_usup:0.3572442830, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch :1200,loss:0.2499082386,loss_usup:0.6480954289, train_acc:1.000, dev_acc:0.800, test_acc:0.683, test_acc_ema:0.683
+epoch :1600,loss:0.1111132428, train_acc:1.000, dev_acc:0.800, test_acc:0.675
+Test acc80.000
+4
+epoch :   0,loss:0.6345771551,loss_usup:0.6360971332, train_acc:0.600, dev_acc:0.267, test_acc:0.403, test_acc_ema:0.403
+epoch : 400,loss:0.1505146921, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.1442357749, train_acc:1.000, dev_acc:0.800, test_acc:0.692
+epoch :1200,loss:0.0678757951,loss_usup:0.2405101210, train_acc:1.000, dev_acc:0.800, test_acc:0.676, test_acc_ema:0.676
+epoch :1600,loss:0.0661953315,loss_usup:0.4344311655, train_acc:1.000, dev_acc:0.800, test_acc:0.685, test_acc_ema:0.685
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.1_0.1:80.0_0.0
+time_14211.235008716583
+do_0.2
+mixup_alpha_0.1
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.0670524836,loss_usup:0.7815219164, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.1703825444, train_acc:1.000, dev_acc:0.800, test_acc:0.675
+epoch :1200,loss:0.1707463712, train_acc:1.000, dev_acc:0.533, test_acc:0.539
+epoch :1600,loss:0.1503553838, train_acc:1.000, dev_acc:0.667, test_acc:0.542
+Test acc80.000
+1
+epoch :   0,loss:0.6341035366,loss_usup:0.6364987493, train_acc:0.533, dev_acc:0.533, test_acc:0.352, test_acc_ema:0.352
+epoch : 400,loss:0.0289019905,loss_usup:0.7296683192, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.4879164696,loss_usup:0.4331977963, train_acc:1.000, dev_acc:0.667, test_acc:0.629, test_acc_ema:0.629
+epoch :1200,loss:0.2094302177, train_acc:1.000, dev_acc:0.667, test_acc:0.581
+epoch :1600,loss:0.1475358456, train_acc:1.000, dev_acc:0.667, test_acc:0.583
+Test acc80.000
+2
+epoch :   0,loss:0.6338840723,loss_usup:0.6353615522, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.1240170822,loss_usup:0.3788088858, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.1616422385,loss_usup:0.3303843439, train_acc:1.000, dev_acc:0.533, test_acc:0.625, test_acc_ema:0.625
+epoch :1200,loss:0.1687544733, train_acc:1.000, dev_acc:0.667, test_acc:0.563
+epoch :1600,loss:0.0564060844,loss_usup:0.4922702312, train_acc:1.000, dev_acc:0.667, test_acc:0.540, test_acc_ema:0.540
+Test acc80.000
+3
+epoch :   0,loss:0.6424974203,loss_usup:0.6358106136, train_acc:0.533, dev_acc:0.267, test_acc:0.420, test_acc_ema:0.420
+epoch : 400,loss:0.1487161368, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.3917609453,loss_usup:0.3483867645, train_acc:1.000, dev_acc:0.733, test_acc:0.678, test_acc_ema:0.678
+epoch :1200,loss:0.2385021895,loss_usup:0.4679772556, train_acc:1.000, dev_acc:0.667, test_acc:0.553, test_acc_ema:0.553
+epoch :1600,loss:0.1395970732, train_acc:1.000, dev_acc:0.667, test_acc:0.538
+Test acc80.000
+4
+epoch :   0,loss:0.6345771551,loss_usup:0.6360971332, train_acc:0.600, dev_acc:0.267, test_acc:0.403, test_acc_ema:0.403
+epoch : 400,loss:0.1503065377, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.1541167945, train_acc:1.000, dev_acc:0.667, test_acc:0.665
+epoch :1200,loss:0.0867512375,loss_usup:0.3149673045, train_acc:1.000, dev_acc:0.600, test_acc:0.539, test_acc_ema:0.539
+epoch :1600,loss:0.0675142109,loss_usup:0.2576301694, train_acc:1.000, dev_acc:0.667, test_acc:0.543, test_acc_ema:0.543
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.1_1.0:80.0_0.0
+time_14857.422694683075
+do_0.2
+mixup_alpha_0.1
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.0649433210,loss_usup:0.7515618801, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.2621479928, train_acc:0.933, dev_acc:0.667, test_acc:0.538
+epoch :1200,loss:0.3144402206, train_acc:0.933, dev_acc:0.667, test_acc:0.520
+epoch :1600,loss:0.2978094220, train_acc:0.933, dev_acc:0.667, test_acc:0.540
+Test acc80.000
+1
+epoch :   0,loss:0.6341035366,loss_usup:0.6364987493, train_acc:0.533, dev_acc:0.533, test_acc:0.352, test_acc_ema:0.352
+epoch : 400,loss:0.0277055446,loss_usup:0.7124173641, train_acc:1.000, dev_acc:0.733, test_acc:0.701, test_acc_ema:0.701
+epoch : 800,loss:0.5245630741,loss_usup:0.3679637611, train_acc:1.000, dev_acc:0.533, test_acc:0.485, test_acc_ema:0.485
+epoch :1200,loss:0.3391449153, train_acc:0.867, dev_acc:0.667, test_acc:0.526
+epoch :1600,loss:0.2815135121, train_acc:0.933, dev_acc:0.600, test_acc:0.508
+Test acc80.000
+2
+epoch :   0,loss:0.6338840723,loss_usup:0.6353615522, train_acc:0.333, dev_acc:0.467, test_acc:0.457, test_acc_ema:0.457
+epoch : 400,loss:0.1236078441,loss_usup:0.3745685220, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+epoch : 800,loss:0.1544436216,loss_usup:0.2632237375, train_acc:0.867, dev_acc:0.667, test_acc:0.527, test_acc_ema:0.527
+epoch :1200,loss:0.3538105190, train_acc:0.933, dev_acc:0.667, test_acc:0.531
+epoch :1600,loss:0.0651815757,loss_usup:0.5991195440, train_acc:0.867, dev_acc:0.667, test_acc:0.535, test_acc_ema:0.535
+Test acc80.000
+3
+epoch :   0,loss:0.6424974203,loss_usup:0.6358106136, train_acc:0.533, dev_acc:0.267, test_acc:0.419, test_acc_ema:0.419
+epoch : 400,loss:0.1491048485, train_acc:1.000, dev_acc:0.733, test_acc:0.696
+epoch : 800,loss:0.4196296334,loss_usup:0.1661112607, train_acc:0.933, dev_acc:0.667, test_acc:0.549, test_acc_ema:0.549
+epoch :1200,loss:0.2469508648,loss_usup:0.2624996901, train_acc:0.933, dev_acc:0.667, test_acc:0.534, test_acc_ema:0.534
+epoch :1600,loss:0.1815675646, train_acc:1.000, dev_acc:0.667, test_acc:0.535
+Test acc80.000
+4
+epoch :   0,loss:0.6345771551,loss_usup:0.6360971332, train_acc:0.600, dev_acc:0.267, test_acc:0.401, test_acc_ema:0.401
+epoch : 400,loss:0.1528646797, train_acc:1.000, dev_acc:0.800, test_acc:0.681
+epoch : 800,loss:0.2455787808, train_acc:0.933, dev_acc:0.667, test_acc:0.552
+epoch :1200,loss:0.1528071761,loss_usup:0.1245713159, train_acc:0.933, dev_acc:0.600, test_acc:0.508, test_acc_ema:0.508
+epoch :1600,loss:0.0709241107,loss_usup:0.2890704572, train_acc:0.933, dev_acc:0.667, test_acc:0.521, test_acc_ema:0.521
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.1_10.0:80.0_0.0
+time_15504.015460729599
+do_0.2
+mixup_alpha_0.5
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.1202705801,loss_usup:0.6093253493, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.1853243709, train_acc:1.000, dev_acc:0.733, test_acc:0.690
+epoch :1200,loss:0.1681125313, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch :1600,loss:0.1625178158, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+Test acc80.000
+1
+epoch :   0,loss:0.6341542006,loss_usup:0.6364988089, train_acc:0.533, dev_acc:0.467, test_acc:0.346, test_acc_ema:0.346
+epoch : 400,loss:0.4073246121,loss_usup:0.6315944195, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch : 800,loss:0.4424127936,loss_usup:0.6644856930, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch :1200,loss:0.1834424138, train_acc:1.000, dev_acc:0.733, test_acc:0.689
+epoch :1600,loss:0.1509464681, train_acc:1.000, dev_acc:0.733, test_acc:0.681
+Test acc80.000
+2
+epoch :   0,loss:0.6338796020,loss_usup:0.6355666518, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.5578932166,loss_usup:0.5813053846, train_acc:1.000, dev_acc:0.733, test_acc:0.706, test_acc_ema:0.706
+epoch : 800,loss:0.4261488914,loss_usup:0.3162901402, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch :1200,loss:0.1567974240, train_acc:1.000, dev_acc:0.800, test_acc:0.691
+epoch :1600,loss:0.3289636374,loss_usup:0.6184602380, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+Test acc80.000
+3
+epoch :   0,loss:0.6416708827,loss_usup:0.6358965635, train_acc:0.400, dev_acc:0.267, test_acc:0.415, test_acc_ema:0.415
+epoch : 400,loss:0.1859352589, train_acc:1.000, dev_acc:0.733, test_acc:0.685
+epoch : 800,loss:0.3326156139,loss_usup:0.3374398053, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch :1200,loss:0.1985798031,loss_usup:0.6534122229, train_acc:1.000, dev_acc:0.733, test_acc:0.678, test_acc_ema:0.678
+epoch :1600,loss:0.1429962814, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+Test acc80.000
+4
+epoch :   0,loss:0.6346201301,loss_usup:0.6360871196, train_acc:0.600, dev_acc:0.267, test_acc:0.403, test_acc_ema:0.403
+epoch : 400,loss:0.1728414297, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.1736883372, train_acc:1.000, dev_acc:0.733, test_acc:0.696
+epoch :1200,loss:0.2456609458,loss_usup:0.2799816430, train_acc:1.000, dev_acc:0.733, test_acc:0.685, test_acc_ema:0.685
+epoch :1600,loss:0.2221494913,loss_usup:0.5643035173, train_acc:1.000, dev_acc:0.733, test_acc:0.687, test_acc_ema:0.687
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.5_0.0:80.0_0.0
+time_16150.401113033295
+do_0.2
+mixup_alpha_0.5
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.1203928813,loss_usup:0.6086839437, train_acc:1.000, dev_acc:0.733, test_acc:0.687, test_acc_ema:0.687
+epoch : 800,loss:0.1870054305, train_acc:1.000, dev_acc:0.800, test_acc:0.683
+epoch :1200,loss:0.1725179553, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+epoch :1600,loss:0.1663925350, train_acc:1.000, dev_acc:0.667, test_acc:0.668
+Test acc80.000
+1
+epoch :   0,loss:0.6341542006,loss_usup:0.6364988089, train_acc:0.533, dev_acc:0.467, test_acc:0.346, test_acc_ema:0.346
+epoch : 400,loss:0.4074475169,loss_usup:0.6288366318, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.4405683875,loss_usup:0.6678327918, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.1867090613, train_acc:1.000, dev_acc:0.800, test_acc:0.675
+epoch :1600,loss:0.1544357091, train_acc:1.000, dev_acc:0.733, test_acc:0.673
+Test acc80.000
+2
+epoch :   0,loss:0.6338796020,loss_usup:0.6355666518, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.5578815937,loss_usup:0.5811926723, train_acc:1.000, dev_acc:0.733, test_acc:0.707, test_acc_ema:0.707
+epoch : 800,loss:0.4252533019,loss_usup:0.3035386205, train_acc:1.000, dev_acc:0.733, test_acc:0.677, test_acc_ema:0.677
+epoch :1200,loss:0.1594286114, train_acc:1.000, dev_acc:0.733, test_acc:0.671
+epoch :1600,loss:0.3265608847,loss_usup:0.6215636730, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+Test acc80.000
+3
+epoch :   0,loss:0.6416708827,loss_usup:0.6358965635, train_acc:0.400, dev_acc:0.267, test_acc:0.415, test_acc_ema:0.415
+epoch : 400,loss:0.1857773215, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch : 800,loss:0.3328492343,loss_usup:0.3396568596, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch :1200,loss:0.1980575323,loss_usup:0.6552653313, train_acc:1.000, dev_acc:0.733, test_acc:0.669, test_acc_ema:0.669
+epoch :1600,loss:0.1469033211, train_acc:1.000, dev_acc:0.800, test_acc:0.673
+Test acc80.000
+4
+epoch :   0,loss:0.6346201301,loss_usup:0.6360871196, train_acc:0.600, dev_acc:0.267, test_acc:0.403, test_acc_ema:0.403
+epoch : 400,loss:0.1726384908, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.1743392199, train_acc:1.000, dev_acc:0.733, test_acc:0.694
+epoch :1200,loss:0.2438210845,loss_usup:0.2402369976, train_acc:1.000, dev_acc:0.800, test_acc:0.688, test_acc_ema:0.688
+epoch :1600,loss:0.2206589133,loss_usup:0.5459383130, train_acc:1.000, dev_acc:0.800, test_acc:0.684, test_acc_ema:0.684
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.5_0.1:80.0_0.0
+time_16797.04568338394
+do_0.2
+mixup_alpha_0.5
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.1204335243,loss_usup:0.6081882119, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.2007561326, train_acc:1.000, dev_acc:0.733, test_acc:0.676
+epoch :1200,loss:0.2133570313, train_acc:1.000, dev_acc:0.533, test_acc:0.546
+epoch :1600,loss:0.1917260736, train_acc:1.000, dev_acc:0.667, test_acc:0.542
+Test acc80.000
+1
+epoch :   0,loss:0.6341542006,loss_usup:0.6364988089, train_acc:0.533, dev_acc:0.467, test_acc:0.346, test_acc_ema:0.346
+epoch : 400,loss:0.4073701203,loss_usup:0.6235262752, train_acc:1.000, dev_acc:0.733, test_acc:0.685, test_acc_ema:0.685
+epoch : 800,loss:0.4329138994,loss_usup:0.5541310906, train_acc:1.000, dev_acc:0.667, test_acc:0.627, test_acc_ema:0.627
+epoch :1200,loss:0.2396727055, train_acc:1.000, dev_acc:0.667, test_acc:0.592
+epoch :1600,loss:0.1904097050, train_acc:1.000, dev_acc:0.667, test_acc:0.573
+Test acc80.000
+2
+epoch :   0,loss:0.6338796020,loss_usup:0.6355666518, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.5569249392,loss_usup:0.5779852867, train_acc:1.000, dev_acc:0.733, test_acc:0.706, test_acc_ema:0.706
+epoch : 800,loss:0.4181445539,loss_usup:0.2785389721, train_acc:1.000, dev_acc:0.667, test_acc:0.637, test_acc_ema:0.637
+epoch :1200,loss:0.1894546896, train_acc:1.000, dev_acc:0.667, test_acc:0.576
+epoch :1600,loss:0.3262712955,loss_usup:0.4555013478, train_acc:1.000, dev_acc:0.667, test_acc:0.554, test_acc_ema:0.554
+Test acc80.000
+3
+epoch :   0,loss:0.6416708827,loss_usup:0.6358965635, train_acc:0.400, dev_acc:0.267, test_acc:0.414, test_acc_ema:0.414
+epoch : 400,loss:0.1859381944, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch : 800,loss:0.3276503384,loss_usup:0.3556274474, train_acc:1.000, dev_acc:0.733, test_acc:0.669, test_acc_ema:0.669
+epoch :1200,loss:0.1830695719,loss_usup:0.4272054434, train_acc:1.000, dev_acc:0.667, test_acc:0.590, test_acc_ema:0.590
+epoch :1600,loss:0.1890387535, train_acc:1.000, dev_acc:0.667, test_acc:0.542
+Test acc80.000
+4
+epoch :   0,loss:0.6346201301,loss_usup:0.6360871196, train_acc:0.600, dev_acc:0.267, test_acc:0.402, test_acc_ema:0.402
+epoch : 400,loss:0.1729088873, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch : 800,loss:0.1896650791, train_acc:1.000, dev_acc:0.667, test_acc:0.655
+epoch :1200,loss:0.2370648533,loss_usup:0.3067411780, train_acc:1.000, dev_acc:0.600, test_acc:0.612, test_acc_ema:0.612
+epoch :1600,loss:0.2196850628,loss_usup:0.4322330952, train_acc:1.000, dev_acc:0.667, test_acc:0.579, test_acc_ema:0.579
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.5_1.0:80.0_0.0
+time_17443.470266103745
+do_0.2
+mixup_alpha_0.5
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.0835262984,loss_usup:0.5945445299, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.2980361581, train_acc:0.867, dev_acc:0.667, test_acc:0.537
+epoch :1200,loss:0.3420048356, train_acc:0.933, dev_acc:0.600, test_acc:0.510
+epoch :1600,loss:0.2932057679, train_acc:0.933, dev_acc:0.667, test_acc:0.524
+Test acc80.000
+1
+epoch :   0,loss:0.6341542006,loss_usup:0.6364988089, train_acc:0.533, dev_acc:0.467, test_acc:0.345, test_acc_ema:0.345
+epoch : 400,loss:0.4050938189,loss_usup:0.6146647334, train_acc:1.000, dev_acc:0.800, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.4159663618,loss_usup:0.4821986258, train_acc:0.933, dev_acc:0.600, test_acc:0.503, test_acc_ema:0.503
+epoch :1200,loss:0.3751195669, train_acc:0.867, dev_acc:0.667, test_acc:0.539
+epoch :1600,loss:0.2916287780, train_acc:0.933, dev_acc:0.667, test_acc:0.535
+Test acc80.000
+2
+epoch :   0,loss:0.6338796020,loss_usup:0.6355666518, train_acc:0.333, dev_acc:0.467, test_acc:0.458, test_acc_ema:0.458
+epoch : 400,loss:0.5564566255,loss_usup:0.5714296699, train_acc:1.000, dev_acc:0.733, test_acc:0.709, test_acc_ema:0.709
+epoch : 800,loss:0.4365306497,loss_usup:0.1792952865, train_acc:0.933, dev_acc:0.667, test_acc:0.544, test_acc_ema:0.544
+epoch :1200,loss:0.3281762898, train_acc:0.933, dev_acc:0.667, test_acc:0.534
+epoch :1600,loss:0.3384734690,loss_usup:0.4741466045, train_acc:0.933, dev_acc:0.667, test_acc:0.533, test_acc_ema:0.533
+Test acc80.000
+3
+epoch :   0,loss:0.6416708827,loss_usup:0.6358965635, train_acc:0.400, dev_acc:0.267, test_acc:0.416, test_acc_ema:0.416
+epoch : 400,loss:0.1878986806, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch : 800,loss:0.3325127959,loss_usup:0.2630555928, train_acc:1.000, dev_acc:0.667, test_acc:0.558, test_acc_ema:0.558
+epoch :1200,loss:0.1824780405,loss_usup:0.2608861923, train_acc:0.933, dev_acc:0.667, test_acc:0.536, test_acc_ema:0.536
+epoch :1600,loss:0.2779767215, train_acc:0.933, dev_acc:0.667, test_acc:0.537
+Test acc80.000
+4
+epoch :   0,loss:0.6346201301,loss_usup:0.6360871196, train_acc:0.600, dev_acc:0.267, test_acc:0.401, test_acc_ema:0.401
+epoch : 400,loss:0.1745578200, train_acc:1.000, dev_acc:0.800, test_acc:0.684
+epoch : 800,loss:0.2281558812, train_acc:1.000, dev_acc:0.667, test_acc:0.585
+epoch :1200,loss:0.2581496537,loss_usup:0.1897062659, train_acc:0.933, dev_acc:0.667, test_acc:0.527, test_acc_ema:0.527
+epoch :1600,loss:0.2118316889,loss_usup:0.3958109617, train_acc:1.000, dev_acc:0.667, test_acc:0.536, test_acc_ema:0.536
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_0.5_10.0:80.0_0.0
+time_18089.798736333847
+do_0.2
+mixup_alpha_1.0
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.2908161879,loss_usup:0.6027671099, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.2019963562, train_acc:1.000, dev_acc:0.800, test_acc:0.695
+epoch :1200,loss:0.1823479980, train_acc:1.000, dev_acc:0.733, test_acc:0.679
+epoch :1600,loss:0.1705239117, train_acc:1.000, dev_acc:0.733, test_acc:0.671
+Test acc80.000
+1
+epoch :   0,loss:0.6341038346,loss_usup:0.6364907026, train_acc:0.533, dev_acc:0.533, test_acc:0.354, test_acc_ema:0.354
+epoch : 400,loss:0.5490992069,loss_usup:0.6460148096, train_acc:1.000, dev_acc:0.733, test_acc:0.675, test_acc_ema:0.675
+epoch : 800,loss:0.2808922529,loss_usup:0.6256808639, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+epoch :1200,loss:0.2026031315, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+epoch :1600,loss:0.1581669599, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+Test acc80.000
+2
+epoch :   0,loss:0.6338129044,loss_usup:0.6355836391, train_acc:0.333, dev_acc:0.467, test_acc:0.446, test_acc_ema:0.446
+epoch : 400,loss:0.4456974864,loss_usup:0.5666443706, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.3915535808,loss_usup:0.3555321991, train_acc:1.000, dev_acc:0.733, test_acc:0.672, test_acc_ema:0.672
+epoch :1200,loss:0.1636298746, train_acc:1.000, dev_acc:0.733, test_acc:0.683
+epoch :1600,loss:0.0907080993,loss_usup:0.6233410239, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+Test acc80.000
+3
+epoch :   0,loss:0.6416993141,loss_usup:0.6359305978, train_acc:0.467, dev_acc:0.267, test_acc:0.416, test_acc_ema:0.416
+epoch : 400,loss:0.1976151317, train_acc:1.000, dev_acc:0.733, test_acc:0.695
+epoch : 800,loss:0.3723447919,loss_usup:0.5721175075, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch :1200,loss:0.4256556928,loss_usup:0.6565033793, train_acc:1.000, dev_acc:0.733, test_acc:0.676, test_acc_ema:0.676
+epoch :1600,loss:0.1572552323, train_acc:1.000, dev_acc:0.733, test_acc:0.690
+Test acc80.000
+4
+epoch :   0,loss:0.6345367432,loss_usup:0.6360887289, train_acc:0.667, dev_acc:0.267, test_acc:0.391, test_acc_ema:0.391
+epoch : 400,loss:0.1920093894, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.1835111827, train_acc:1.000, dev_acc:0.733, test_acc:0.683
+epoch :1200,loss:0.3562189639,loss_usup:0.3290957510, train_acc:1.000, dev_acc:0.733, test_acc:0.673, test_acc_ema:0.673
+epoch :1600,loss:0.2618716061,loss_usup:0.5254762769, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_1.0_0.0:80.0_0.0
+time_18735.721401691437
+do_0.2
+mixup_alpha_1.0
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.2918896079,loss_usup:0.5998778939, train_acc:1.000, dev_acc:0.733, test_acc:0.696, test_acc_ema:0.696
+epoch : 800,loss:0.2037159652, train_acc:1.000, dev_acc:0.800, test_acc:0.688
+epoch :1200,loss:0.1870049536, train_acc:1.000, dev_acc:0.667, test_acc:0.676
+epoch :1600,loss:0.1754504293, train_acc:1.000, dev_acc:0.667, test_acc:0.665
+Test acc80.000
+1
+epoch :   0,loss:0.6341038346,loss_usup:0.6364907026, train_acc:0.533, dev_acc:0.533, test_acc:0.353, test_acc_ema:0.353
+epoch : 400,loss:0.5507315993,loss_usup:0.6496267319, train_acc:1.000, dev_acc:0.733, test_acc:0.675, test_acc_ema:0.675
+epoch : 800,loss:0.2782376707,loss_usup:0.6187575459, train_acc:1.000, dev_acc:0.733, test_acc:0.672, test_acc_ema:0.672
+epoch :1200,loss:0.2085735798, train_acc:1.000, dev_acc:0.733, test_acc:0.675
+epoch :1600,loss:0.1607740968, train_acc:1.000, dev_acc:0.667, test_acc:0.669
+Test acc80.000
+2
+epoch :   0,loss:0.6338129044,loss_usup:0.6355836391, train_acc:0.333, dev_acc:0.467, test_acc:0.446, test_acc_ema:0.446
+epoch : 400,loss:0.4464491606,loss_usup:0.5676642060, train_acc:1.000, dev_acc:0.733, test_acc:0.697, test_acc_ema:0.697
+epoch : 800,loss:0.3904001117,loss_usup:0.3505444825, train_acc:1.000, dev_acc:0.733, test_acc:0.670, test_acc_ema:0.670
+epoch :1200,loss:0.1665003896, train_acc:1.000, dev_acc:0.733, test_acc:0.667
+epoch :1600,loss:0.0926545262,loss_usup:0.6178420186, train_acc:1.000, dev_acc:0.800, test_acc:0.686, test_acc_ema:0.686
+Test acc80.000
+3
+epoch :   0,loss:0.6416993141,loss_usup:0.6359305978, train_acc:0.467, dev_acc:0.267, test_acc:0.416, test_acc_ema:0.416
+epoch : 400,loss:0.1970075667, train_acc:1.000, dev_acc:0.733, test_acc:0.695
+epoch : 800,loss:0.3721919954,loss_usup:0.5702120662, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.4214143455,loss_usup:0.6517601013, train_acc:1.000, dev_acc:0.733, test_acc:0.669, test_acc_ema:0.669
+epoch :1600,loss:0.1608024538, train_acc:1.000, dev_acc:0.733, test_acc:0.673
+Test acc80.000
+4
+epoch :   0,loss:0.6345367432,loss_usup:0.6360887289, train_acc:0.667, dev_acc:0.267, test_acc:0.391, test_acc_ema:0.391
+epoch : 400,loss:0.1922729015, train_acc:1.000, dev_acc:0.733, test_acc:0.692
+epoch : 800,loss:0.1847943366, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch :1200,loss:0.3547219932,loss_usup:0.2927711904, train_acc:1.000, dev_acc:0.800, test_acc:0.671, test_acc_ema:0.671
+epoch :1600,loss:0.2612109184,loss_usup:0.5049275756, train_acc:1.000, dev_acc:0.733, test_acc:0.676, test_acc_ema:0.676
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_1.0_0.1:80.0_0.0
+time_19381.936958551407
+do_0.2
+mixup_alpha_1.0
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.2960150540,loss_usup:0.6033471823, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+epoch : 800,loss:0.2175759077, train_acc:1.000, dev_acc:0.733, test_acc:0.665
+epoch :1200,loss:0.2258859724, train_acc:1.000, dev_acc:0.533, test_acc:0.535
+epoch :1600,loss:0.2071458250, train_acc:1.000, dev_acc:0.667, test_acc:0.546
+Test acc80.000
+1
+epoch :   0,loss:0.6341038346,loss_usup:0.6364907026, train_acc:0.533, dev_acc:0.533, test_acc:0.353, test_acc_ema:0.353
+epoch : 400,loss:0.5506514907,loss_usup:0.6496337652, train_acc:1.000, dev_acc:0.733, test_acc:0.676, test_acc_ema:0.676
+epoch : 800,loss:0.2732798755,loss_usup:0.5833569765, train_acc:1.000, dev_acc:0.600, test_acc:0.626, test_acc_ema:0.626
+epoch :1200,loss:0.2296614200, train_acc:1.000, dev_acc:0.667, test_acc:0.639
+epoch :1600,loss:0.1964247227, train_acc:1.000, dev_acc:0.667, test_acc:0.571
+Test acc80.000
+2
+epoch :   0,loss:0.6338129044,loss_usup:0.6355836391, train_acc:0.333, dev_acc:0.467, test_acc:0.446, test_acc_ema:0.446
+epoch : 400,loss:0.4455537200,loss_usup:0.5635823607, train_acc:1.000, dev_acc:0.733, test_acc:0.699, test_acc_ema:0.699
+epoch : 800,loss:0.3857896626,loss_usup:0.3346992433, train_acc:1.000, dev_acc:0.667, test_acc:0.650, test_acc_ema:0.650
+epoch :1200,loss:0.1869885325, train_acc:1.000, dev_acc:0.667, test_acc:0.629
+epoch :1600,loss:0.0901190564,loss_usup:0.4638571739, train_acc:1.000, dev_acc:0.667, test_acc:0.552, test_acc_ema:0.552
+Test acc80.000
+3
+epoch :   0,loss:0.6416993141,loss_usup:0.6359305978, train_acc:0.467, dev_acc:0.267, test_acc:0.417, test_acc_ema:0.417
+epoch : 400,loss:0.1968043596, train_acc:1.000, dev_acc:0.733, test_acc:0.697
+epoch : 800,loss:0.3713928163,loss_usup:0.5003335476, train_acc:1.000, dev_acc:0.733, test_acc:0.663, test_acc_ema:0.663
+epoch :1200,loss:0.4179436564,loss_usup:0.4306493998, train_acc:1.000, dev_acc:0.667, test_acc:0.586, test_acc_ema:0.586
+epoch :1600,loss:0.1933322400, train_acc:1.000, dev_acc:0.667, test_acc:0.556
+Test acc80.000
+4
+epoch :   0,loss:0.6345367432,loss_usup:0.6360887289, train_acc:0.667, dev_acc:0.267, test_acc:0.391, test_acc_ema:0.391
+epoch : 400,loss:0.1924280226, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.1992976964, train_acc:1.000, dev_acc:0.667, test_acc:0.658
+epoch :1200,loss:0.3554732502,loss_usup:0.3236817122, train_acc:1.000, dev_acc:0.600, test_acc:0.573, test_acc_ema:0.573
+epoch :1600,loss:0.2691099048,loss_usup:0.3880028725, train_acc:1.000, dev_acc:0.667, test_acc:0.571, test_acc_ema:0.571
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_1.0_1.0:80.0_0.0
+time_20028.224721193314
+do_0.2
+mixup_alpha_1.0
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.1003131866, train_acc:0.533, dev_acc:0.200, test_acc:0.384
+epoch : 400,loss:0.3124726117,loss_usup:0.5918250084, train_acc:1.000, dev_acc:0.733, test_acc:0.696, test_acc_ema:0.696
+epoch : 800,loss:0.3252409697, train_acc:0.867, dev_acc:0.667, test_acc:0.529
+epoch :1200,loss:0.3863909543, train_acc:1.000, dev_acc:0.533, test_acc:0.420
+epoch :1600,loss:0.3471511304, train_acc:0.933, dev_acc:0.533, test_acc:0.373
+Test acc80.000
+1
+epoch :   0,loss:0.6341038346,loss_usup:0.6364907026, train_acc:0.533, dev_acc:0.533, test_acc:0.350, test_acc_ema:0.350
+epoch : 400,loss:0.5416155457,loss_usup:0.6436504722, train_acc:1.000, dev_acc:0.733, test_acc:0.678, test_acc_ema:0.678
+epoch : 800,loss:0.2709460258,loss_usup:0.4481749535, train_acc:1.000, dev_acc:0.600, test_acc:0.490, test_acc_ema:0.490
+epoch :1200,loss:0.3376916349, train_acc:0.933, dev_acc:0.667, test_acc:0.541
+epoch :1600,loss:0.3421414196, train_acc:0.933, dev_acc:0.667, test_acc:0.541
+Test acc80.000
+2
+epoch :   0,loss:0.6338129044,loss_usup:0.6355836391, train_acc:0.333, dev_acc:0.467, test_acc:0.450, test_acc_ema:0.450
+epoch : 400,loss:0.4451591969,loss_usup:0.5558716059, train_acc:1.000, dev_acc:0.733, test_acc:0.701, test_acc_ema:0.701
+epoch : 800,loss:0.4360866845,loss_usup:0.2431605905, train_acc:0.867, dev_acc:0.667, test_acc:0.543, test_acc_ema:0.543
+epoch :1200,loss:0.3540759385, train_acc:0.933, dev_acc:0.667, test_acc:0.533
+epoch :1600,loss:0.0965500101,loss_usup:0.4270002544, train_acc:0.933, dev_acc:0.667, test_acc:0.537, test_acc_ema:0.537
+Test acc80.000
+3
+epoch :   0,loss:0.6416993141,loss_usup:0.6359305978, train_acc:0.400, dev_acc:0.267, test_acc:0.417, test_acc_ema:0.417
+epoch : 400,loss:0.2056168467, train_acc:1.000, dev_acc:0.800, test_acc:0.697
+epoch : 800,loss:0.3703057170,loss_usup:0.2514846623, train_acc:0.933, dev_acc:0.667, test_acc:0.552, test_acc_ema:0.552
+epoch :1200,loss:0.4161907732,loss_usup:0.3392067254, train_acc:1.000, dev_acc:0.667, test_acc:0.533, test_acc_ema:0.533
+epoch :1600,loss:0.2760614455, train_acc:1.000, dev_acc:0.667, test_acc:0.527
+Test acc80.000
+4
+epoch :   0,loss:0.6345367432,loss_usup:0.6360887289, train_acc:0.667, dev_acc:0.267, test_acc:0.391, test_acc_ema:0.391
+epoch : 400,loss:0.1954796612, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.2492891103, train_acc:1.000, dev_acc:0.667, test_acc:0.571
+epoch :1200,loss:0.4291497469,loss_usup:0.2602216005, train_acc:1.000, dev_acc:0.667, test_acc:0.514, test_acc_ema:0.514
+epoch :1600,loss:0.3132996261,loss_usup:0.3600465655, train_acc:1.000, dev_acc:0.667, test_acc:0.521, test_acc_ema:0.521
+Test acc80.000
+do, mix_alpha, consis_coeff_0.2_1.0_10.0:80.0_0.0
+time_20673.864366531372
+do_0.5
+mixup_alpha_0.0
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0250148587,loss_usup:0.5644441247, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+epoch : 800,loss:0.1224957854, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch :1200,loss:0.1122717932, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch :1600,loss:0.1039710939, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+Test acc80.000
+1
+epoch :   0,loss:0.6354017258,loss_usup:0.6363198757, train_acc:0.467, dev_acc:0.533, test_acc:0.339, test_acc_ema:0.339
+epoch : 400,loss:0.1007914096,loss_usup:0.3499706388, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch : 800,loss:0.1285461336,loss_usup:0.2715017200, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch :1200,loss:0.1189598590, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+epoch :1600,loss:0.0994255543, train_acc:1.000, dev_acc:0.733, test_acc:0.684
+Test acc80.000
+2
+epoch :   0,loss:0.6315333843,loss_usup:0.6352025270, train_acc:0.333, dev_acc:0.467, test_acc:0.441, test_acc_ema:0.441
+epoch : 400,loss:0.0410377458,loss_usup:0.5280693173, train_acc:1.000, dev_acc:0.733, test_acc:0.699, test_acc_ema:0.699
+epoch : 800,loss:0.0739016607,loss_usup:0.7195010781, train_acc:1.000, dev_acc:0.733, test_acc:0.703, test_acc_ema:0.703
+epoch :1200,loss:0.1111106202, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch :1600,loss:0.0553655662,loss_usup:0.6506223083, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+Test acc80.000
+3
+epoch :   0,loss:0.6415377855,loss_usup:0.6360589862, train_acc:0.400, dev_acc:0.333, test_acc:0.411, test_acc_ema:0.411
+epoch : 400,loss:0.1472905278, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch : 800,loss:0.1374557465,loss_usup:0.6176032424, train_acc:1.000, dev_acc:0.733, test_acc:0.675, test_acc_ema:0.675
+epoch :1200,loss:0.0917842314,loss_usup:0.7367650270, train_acc:1.000, dev_acc:0.800, test_acc:0.682, test_acc_ema:0.682
+epoch :1600,loss:0.1044567749, train_acc:1.000, dev_acc:0.733, test_acc:0.696
+Test acc80.000
+4
+epoch :   0,loss:0.6333154440,loss_usup:0.6359738708, train_acc:0.533, dev_acc:0.267, test_acc:0.397, test_acc_ema:0.397
+epoch : 400,loss:0.1292718500, train_acc:1.000, dev_acc:0.733, test_acc:0.689
+epoch : 800,loss:0.1151257902, train_acc:1.000, dev_acc:0.733, test_acc:0.673
+epoch :1200,loss:0.0281675719,loss_usup:0.2699959874, train_acc:1.000, dev_acc:0.733, test_acc:0.679, test_acc_ema:0.679
+epoch :1600,loss:0.0217876267,loss_usup:0.6458692551, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.0_0.0:80.0_0.0
+time_21320.150097608566
+do_0.5
+mixup_alpha_0.0
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0249048993,loss_usup:0.5644538999, train_acc:1.000, dev_acc:0.733, test_acc:0.687, test_acc_ema:0.687
+epoch : 800,loss:0.1255842000, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch :1200,loss:0.1218428910, train_acc:1.000, dev_acc:0.733, test_acc:0.681
+epoch :1600,loss:0.1117521152, train_acc:1.000, dev_acc:0.667, test_acc:0.673
+Test acc80.000
+1
+epoch :   0,loss:0.6354017258,loss_usup:0.6363198757, train_acc:0.467, dev_acc:0.533, test_acc:0.339, test_acc_ema:0.339
+epoch : 400,loss:0.1007786840,loss_usup:0.3511682451, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch : 800,loss:0.1278259307,loss_usup:0.2806588113, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.1255945116, train_acc:1.000, dev_acc:0.800, test_acc:0.676
+epoch :1600,loss:0.1044664085, train_acc:1.000, dev_acc:0.800, test_acc:0.675
+Test acc80.000
+2
+epoch :   0,loss:0.6315333843,loss_usup:0.6352025270, train_acc:0.333, dev_acc:0.467, test_acc:0.441, test_acc_ema:0.441
+epoch : 400,loss:0.0408839062,loss_usup:0.5274863839, train_acc:1.000, dev_acc:0.733, test_acc:0.699, test_acc_ema:0.699
+epoch : 800,loss:0.0748646632,loss_usup:0.7351080775, train_acc:1.000, dev_acc:0.800, test_acc:0.688, test_acc_ema:0.688
+epoch :1200,loss:0.1161581650, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+epoch :1600,loss:0.0585492887,loss_usup:0.6794045568, train_acc:1.000, dev_acc:0.667, test_acc:0.657, test_acc_ema:0.657
+Test acc80.000
+3
+epoch :   0,loss:0.6415377855,loss_usup:0.6360589862, train_acc:0.400, dev_acc:0.333, test_acc:0.411, test_acc_ema:0.411
+epoch : 400,loss:0.1472689807, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch : 800,loss:0.1357293576,loss_usup:0.5957105160, train_acc:1.000, dev_acc:0.733, test_acc:0.673, test_acc_ema:0.673
+epoch :1200,loss:0.0943882391,loss_usup:0.6646772623, train_acc:1.000, dev_acc:0.800, test_acc:0.688, test_acc_ema:0.688
+epoch :1600,loss:0.1129862145, train_acc:1.000, dev_acc:0.800, test_acc:0.684
+Test acc80.000
+4
+epoch :   0,loss:0.6333154440,loss_usup:0.6359738708, train_acc:0.533, dev_acc:0.267, test_acc:0.397, test_acc_ema:0.397
+epoch : 400,loss:0.1292546391, train_acc:1.000, dev_acc:0.733, test_acc:0.690
+epoch : 800,loss:0.1169126108, train_acc:1.000, dev_acc:0.733, test_acc:0.670
+epoch :1200,loss:0.0296294130,loss_usup:0.2467998564, train_acc:1.000, dev_acc:0.733, test_acc:0.669, test_acc_ema:0.669
+epoch :1600,loss:0.0191876590,loss_usup:0.6182255149, train_acc:1.000, dev_acc:0.800, test_acc:0.680, test_acc_ema:0.680
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.0_0.1:80.0_0.0
+time_21966.408143043518
+do_0.5
+mixup_alpha_0.0
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0251453780,loss_usup:0.5630505085, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.1466380507, train_acc:1.000, dev_acc:0.667, test_acc:0.672
+epoch :1200,loss:0.1830051690, train_acc:1.000, dev_acc:0.533, test_acc:0.513
+epoch :1600,loss:0.1648802161, train_acc:1.000, dev_acc:0.533, test_acc:0.506
+Test acc80.000
+1
+epoch :   0,loss:0.6354017258,loss_usup:0.6363198757, train_acc:0.467, dev_acc:0.533, test_acc:0.339, test_acc_ema:0.339
+epoch : 400,loss:0.1009476036,loss_usup:0.3490173817, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.1342247874,loss_usup:0.2523475289, train_acc:1.000, dev_acc:0.667, test_acc:0.608, test_acc_ema:0.608
+epoch :1200,loss:0.1775787771, train_acc:1.000, dev_acc:0.667, test_acc:0.552
+epoch :1600,loss:0.1556667238, train_acc:1.000, dev_acc:0.667, test_acc:0.535
+Test acc80.000
+2
+epoch :   0,loss:0.6315333843,loss_usup:0.6352025270, train_acc:0.333, dev_acc:0.467, test_acc:0.441, test_acc_ema:0.441
+epoch : 400,loss:0.0394326262,loss_usup:0.5149852037, train_acc:1.000, dev_acc:0.733, test_acc:0.694, test_acc_ema:0.694
+epoch : 800,loss:0.0818960592,loss_usup:0.5139405131, train_acc:1.000, dev_acc:0.600, test_acc:0.632, test_acc_ema:0.632
+epoch :1200,loss:0.1698648334, train_acc:1.000, dev_acc:0.533, test_acc:0.579
+epoch :1600,loss:0.0863523409,loss_usup:0.6460997462, train_acc:1.000, dev_acc:0.533, test_acc:0.561, test_acc_ema:0.561
+Test acc80.000
+3
+epoch :   0,loss:0.6415377855,loss_usup:0.6360589862, train_acc:0.400, dev_acc:0.333, test_acc:0.411, test_acc_ema:0.411
+epoch : 400,loss:0.1477484405, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch : 800,loss:0.1386888027,loss_usup:0.5375428200, train_acc:1.000, dev_acc:0.667, test_acc:0.652, test_acc_ema:0.652
+epoch :1200,loss:0.1052570567,loss_usup:0.2671265304, train_acc:1.000, dev_acc:0.600, test_acc:0.544, test_acc_ema:0.544
+epoch :1600,loss:0.1566848159, train_acc:1.000, dev_acc:0.533, test_acc:0.527
+Test acc80.000
+4
+epoch :   0,loss:0.6333154440,loss_usup:0.6359738708, train_acc:0.533, dev_acc:0.267, test_acc:0.397, test_acc_ema:0.397
+epoch : 400,loss:0.1295158863, train_acc:1.000, dev_acc:0.733, test_acc:0.689
+epoch : 800,loss:0.1310968846, train_acc:1.000, dev_acc:0.733, test_acc:0.665
+epoch :1200,loss:0.0472859554,loss_usup:0.3727094531, train_acc:1.000, dev_acc:0.600, test_acc:0.537, test_acc_ema:0.537
+epoch :1600,loss:0.0177324060,loss_usup:0.4141281843, train_acc:1.000, dev_acc:0.667, test_acc:0.568, test_acc_ema:0.568
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.0_1.0:80.0_0.0
+time_22613.300792217255
+do_0.5
+mixup_alpha_0.0
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0275160596,loss_usup:0.5480499864, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.3684599102, train_acc:0.867, dev_acc:0.667, test_acc:0.531
+epoch :1200,loss:0.4104692638, train_acc:0.867, dev_acc:0.533, test_acc:0.476
+epoch :1600,loss:0.3644656837, train_acc:0.933, dev_acc:0.533, test_acc:0.456
+Test acc80.000
+1
+epoch :   0,loss:0.6354017258,loss_usup:0.6363198757, train_acc:0.467, dev_acc:0.533, test_acc:0.338, test_acc_ema:0.338
+epoch : 400,loss:0.1142293736,loss_usup:0.3233056664, train_acc:1.000, dev_acc:0.733, test_acc:0.694, test_acc_ema:0.694
+epoch : 800,loss:0.1382442415,loss_usup:0.2738296390, train_acc:1.000, dev_acc:0.533, test_acc:0.503, test_acc_ema:0.503
+epoch :1200,loss:0.4645900726, train_acc:0.733, dev_acc:0.667, test_acc:0.537
+epoch :1600,loss:0.3411804438, train_acc:0.867, dev_acc:0.667, test_acc:0.534
+Test acc80.000
+2
+epoch :   0,loss:0.6315333843,loss_usup:0.6352025270, train_acc:0.333, dev_acc:0.467, test_acc:0.445, test_acc_ema:0.445
+epoch : 400,loss:0.0420905352,loss_usup:0.4626035094, train_acc:1.000, dev_acc:0.733, test_acc:0.671, test_acc_ema:0.671
+epoch : 800,loss:0.1517736912,loss_usup:0.1402898878, train_acc:0.667, dev_acc:0.333, test_acc:0.224, test_acc_ema:0.224
+epoch :1200,loss:0.6420391202, train_acc:0.533, dev_acc:0.333, test_acc:0.189
+epoch :1600,loss:0.2131337225,loss_usup:0.0101258745, train_acc:0.467, dev_acc:0.333, test_acc:0.188, test_acc_ema:0.188
+Test acc80.000
+3
+epoch :   0,loss:0.6415377855,loss_usup:0.6360589862, train_acc:0.400, dev_acc:0.333, test_acc:0.412, test_acc_ema:0.412
+epoch : 400,loss:0.1533426940, train_acc:1.000, dev_acc:0.800, test_acc:0.681
+epoch : 800,loss:0.1512498260,loss_usup:0.4858229756, train_acc:0.933, dev_acc:0.667, test_acc:0.575, test_acc_ema:0.575
+epoch :1200,loss:0.1223149970,loss_usup:0.4174234569, train_acc:0.933, dev_acc:0.667, test_acc:0.523, test_acc_ema:0.523
+epoch :1600,loss:0.3409010470, train_acc:0.867, dev_acc:0.667, test_acc:0.513
+Test acc80.000
+4
+epoch :   0,loss:0.6333154440,loss_usup:0.6359738708, train_acc:0.533, dev_acc:0.267, test_acc:0.395, test_acc_ema:0.395
+epoch : 400,loss:0.1335533261, train_acc:1.000, dev_acc:0.800, test_acc:0.697
+epoch : 800,loss:0.2646278143, train_acc:0.867, dev_acc:0.667, test_acc:0.542
+epoch :1200,loss:0.0712355599,loss_usup:0.4115740359, train_acc:0.933, dev_acc:0.533, test_acc:0.490, test_acc_ema:0.490
+epoch :1600,loss:0.0369727686,loss_usup:0.3464605212, train_acc:0.933, dev_acc:0.533, test_acc:0.463, test_acc_ema:0.463
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.0_10.0:80.0_0.0
+time_23259.2696788311
+do_0.5
+mixup_alpha_0.1
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0479874834,loss_usup:0.6359196901, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.1498157233, train_acc:1.000, dev_acc:0.733, test_acc:0.694
+epoch :1200,loss:0.1322259009, train_acc:1.000, dev_acc:0.733, test_acc:0.680
+epoch :1600,loss:0.1234696358, train_acc:1.000, dev_acc:0.733, test_acc:0.675
+Test acc80.000
+1
+epoch :   0,loss:0.6327314377,loss_usup:0.6364222765, train_acc:0.467, dev_acc:0.533, test_acc:0.353, test_acc_ema:0.353
+epoch : 400,loss:0.1025028005,loss_usup:0.5011184812, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.5740022659,loss_usup:0.6009296179, train_acc:1.000, dev_acc:0.733, test_acc:0.697, test_acc_ema:0.697
+epoch :1200,loss:0.1547136903, train_acc:1.000, dev_acc:0.733, test_acc:0.677
+epoch :1600,loss:0.1237547621, train_acc:1.000, dev_acc:0.733, test_acc:0.685
+Test acc80.000
+2
+epoch :   0,loss:0.6315333843,loss_usup:0.6352661848, train_acc:0.333, dev_acc:0.467, test_acc:0.441, test_acc_ema:0.441
+epoch : 400,loss:0.0716950670,loss_usup:0.5329159498, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+epoch : 800,loss:0.0762026832,loss_usup:0.6245410442, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch :1200,loss:0.1299773008, train_acc:1.000, dev_acc:0.733, test_acc:0.689
+epoch :1600,loss:0.0509381816,loss_usup:0.8087641597, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+Test acc80.000
+3
+epoch :   0,loss:0.6430960298,loss_usup:0.6358518600, train_acc:0.400, dev_acc:0.333, test_acc:0.416, test_acc_ema:0.416
+epoch : 400,loss:0.1512048692, train_acc:1.000, dev_acc:0.733, test_acc:0.700
+epoch : 800,loss:0.3701729178,loss_usup:0.5566490889, train_acc:1.000, dev_acc:0.800, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.2369832844,loss_usup:0.5790551901, train_acc:1.000, dev_acc:0.733, test_acc:0.675, test_acc_ema:0.675
+epoch :1600,loss:0.1138772517, train_acc:1.000, dev_acc:0.733, test_acc:0.680
+Test acc80.000
+4
+epoch :   0,loss:0.6333335042,loss_usup:0.6359843612, train_acc:0.533, dev_acc:0.267, test_acc:0.396, test_acc_ema:0.396
+epoch : 400,loss:0.1523740143, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch : 800,loss:0.1478079557, train_acc:1.000, dev_acc:0.733, test_acc:0.669
+epoch :1200,loss:0.0183583554,loss_usup:0.3426980376, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1600,loss:0.0485943221,loss_usup:0.6833674312, train_acc:1.000, dev_acc:0.800, test_acc:0.687, test_acc_ema:0.687
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.1_0.0:80.0_0.0
+time_23905.249863147736
+do_0.5
+mixup_alpha_0.1
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0479438454,loss_usup:0.6368820071, train_acc:1.000, dev_acc:0.733, test_acc:0.693, test_acc_ema:0.693
+epoch : 800,loss:0.1521191746, train_acc:1.000, dev_acc:0.733, test_acc:0.697
+epoch :1200,loss:0.1427453756, train_acc:1.000, dev_acc:0.667, test_acc:0.665
+epoch :1600,loss:0.1311584413, train_acc:1.000, dev_acc:0.667, test_acc:0.667
+Test acc80.000
+1
+epoch :   0,loss:0.6327314377,loss_usup:0.6364222765, train_acc:0.467, dev_acc:0.533, test_acc:0.353, test_acc_ema:0.353
+epoch : 400,loss:0.1025947481,loss_usup:0.4997814894, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.5707622170,loss_usup:0.6277102828, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch :1200,loss:0.1610187292, train_acc:1.000, dev_acc:0.733, test_acc:0.671
+epoch :1600,loss:0.1298626214, train_acc:1.000, dev_acc:0.800, test_acc:0.673
+Test acc80.000
+2
+epoch :   0,loss:0.6315333843,loss_usup:0.6352661848, train_acc:0.333, dev_acc:0.467, test_acc:0.441, test_acc_ema:0.441
+epoch : 400,loss:0.0721246302,loss_usup:0.5334675908, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.0764977634,loss_usup:0.6285248995, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch :1200,loss:0.1351285279, train_acc:1.000, dev_acc:0.733, test_acc:0.678
+epoch :1600,loss:0.0500046238,loss_usup:0.8278144598, train_acc:1.000, dev_acc:0.667, test_acc:0.673, test_acc_ema:0.673
+Test acc80.000
+3
+epoch :   0,loss:0.6430960298,loss_usup:0.6358518600, train_acc:0.400, dev_acc:0.333, test_acc:0.415, test_acc_ema:0.415
+epoch : 400,loss:0.1512311995, train_acc:1.000, dev_acc:0.733, test_acc:0.703
+epoch : 800,loss:0.3679002523,loss_usup:0.5547204614, train_acc:1.000, dev_acc:0.800, test_acc:0.665, test_acc_ema:0.665
+epoch :1200,loss:0.2341783792,loss_usup:0.5595579147, train_acc:1.000, dev_acc:0.800, test_acc:0.676, test_acc_ema:0.676
+epoch :1600,loss:0.1208554283, train_acc:1.000, dev_acc:0.800, test_acc:0.669
+Test acc80.000
+4
+epoch :   0,loss:0.6333335042,loss_usup:0.6359843612, train_acc:0.533, dev_acc:0.267, test_acc:0.396, test_acc_ema:0.396
+epoch : 400,loss:0.1524459422, train_acc:1.000, dev_acc:0.733, test_acc:0.686
+epoch : 800,loss:0.1502718627, train_acc:1.000, dev_acc:0.733, test_acc:0.660
+epoch :1200,loss:0.0194221511,loss_usup:0.2535839081, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1600,loss:0.0328444466,loss_usup:0.7155268192, train_acc:1.000, dev_acc:0.800, test_acc:0.681, test_acc_ema:0.681
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.1_0.1:80.0_0.0
+time_24551.28828907013
+do_0.5
+mixup_alpha_0.1
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0481199324,loss_usup:0.6342610717, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.1676604301, train_acc:1.000, dev_acc:0.800, test_acc:0.681
+epoch :1200,loss:0.1975572109, train_acc:1.000, dev_acc:0.533, test_acc:0.528
+epoch :1600,loss:0.1751492620, train_acc:1.000, dev_acc:0.533, test_acc:0.514
+Test acc80.000
+1
+epoch :   0,loss:0.6327314377,loss_usup:0.6364222765, train_acc:0.467, dev_acc:0.533, test_acc:0.353, test_acc_ema:0.353
+epoch : 400,loss:0.1020894870,loss_usup:0.4996624887, train_acc:1.000, dev_acc:0.733, test_acc:0.695, test_acc_ema:0.695
+epoch : 800,loss:0.5573419333,loss_usup:0.5330345631, train_acc:1.000, dev_acc:0.667, test_acc:0.618, test_acc_ema:0.618
+epoch :1200,loss:0.2135107517, train_acc:1.000, dev_acc:0.667, test_acc:0.550
+epoch :1600,loss:0.1759032458, train_acc:1.000, dev_acc:0.667, test_acc:0.535
+Test acc80.000
+2
+epoch :   0,loss:0.6315333843,loss_usup:0.6352661848, train_acc:0.333, dev_acc:0.467, test_acc:0.441, test_acc_ema:0.441
+epoch : 400,loss:0.0726882592,loss_usup:0.5349667072, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.0801388770,loss_usup:0.4721249044, train_acc:1.000, dev_acc:0.600, test_acc:0.639, test_acc_ema:0.639
+epoch :1200,loss:0.1902654171, train_acc:1.000, dev_acc:0.667, test_acc:0.600
+epoch :1600,loss:0.0652946457,loss_usup:0.7878233194, train_acc:1.000, dev_acc:0.667, test_acc:0.565, test_acc_ema:0.565
+Test acc80.000
+3
+epoch :   0,loss:0.6430960298,loss_usup:0.6358518600, train_acc:0.400, dev_acc:0.333, test_acc:0.415, test_acc_ema:0.415
+epoch : 400,loss:0.1515305340, train_acc:1.000, dev_acc:0.733, test_acc:0.701
+epoch : 800,loss:0.3679783344,loss_usup:0.5121789575, train_acc:1.000, dev_acc:0.733, test_acc:0.646, test_acc_ema:0.646
+epoch :1200,loss:0.2357291728,loss_usup:0.2748154104, train_acc:1.000, dev_acc:0.667, test_acc:0.559, test_acc_ema:0.559
+epoch :1600,loss:0.1652086973, train_acc:1.000, dev_acc:0.533, test_acc:0.530
+Test acc80.000
+4
+epoch :   0,loss:0.6333335042,loss_usup:0.6359843612, train_acc:0.533, dev_acc:0.267, test_acc:0.395, test_acc_ema:0.395
+epoch : 400,loss:0.1593815088, train_acc:1.000, dev_acc:0.733, test_acc:0.681
+epoch : 800,loss:0.1662666202, train_acc:1.000, dev_acc:0.667, test_acc:0.675
+epoch :1200,loss:0.0732619092,loss_usup:0.3161882162, train_acc:1.000, dev_acc:0.533, test_acc:0.496, test_acc_ema:0.496
+epoch :1600,loss:0.0300797857,loss_usup:0.4129056633, train_acc:1.000, dev_acc:0.533, test_acc:0.495, test_acc_ema:0.495
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.1_1.0:80.0_0.0
+time_25193.990525007248
+do_0.5
+mixup_alpha_0.1
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0489476509,loss_usup:0.6278724670, train_acc:1.000, dev_acc:0.800, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.3595540822, train_acc:0.867, dev_acc:0.667, test_acc:0.533
+epoch :1200,loss:0.4283968210, train_acc:0.933, dev_acc:0.533, test_acc:0.436
+epoch :1600,loss:0.4491404593, train_acc:0.867, dev_acc:0.533, test_acc:0.399
+Test acc80.000
+1
+epoch :   0,loss:0.6327314377,loss_usup:0.6364222765, train_acc:0.467, dev_acc:0.533, test_acc:0.354, test_acc_ema:0.354
+epoch : 400,loss:0.1027394831,loss_usup:0.4726774991, train_acc:1.000, dev_acc:0.800, test_acc:0.699, test_acc_ema:0.699
+epoch : 800,loss:0.5446614027,loss_usup:0.4252748191, train_acc:0.933, dev_acc:0.600, test_acc:0.499, test_acc_ema:0.499
+epoch :1200,loss:0.4349517226, train_acc:0.800, dev_acc:0.667, test_acc:0.532
+epoch :1600,loss:0.3352695704, train_acc:0.867, dev_acc:0.667, test_acc:0.523
+Test acc80.000
+2
+epoch :   0,loss:0.6315333843,loss_usup:0.6352661848, train_acc:0.333, dev_acc:0.467, test_acc:0.444, test_acc_ema:0.444
+epoch : 400,loss:0.0740078315,loss_usup:0.5288437605, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.1762465537,loss_usup:0.1172468066, train_acc:0.600, dev_acc:0.333, test_acc:0.200, test_acc_ema:0.200
+epoch :1200,loss:0.6688549519, train_acc:0.533, dev_acc:0.333, test_acc:0.188
+epoch :1600,loss:0.1291886717,loss_usup:0.0050540525, train_acc:0.467, dev_acc:0.333, test_acc:0.188, test_acc_ema:0.188
+Test acc80.000
+3
+epoch :   0,loss:0.6430960298,loss_usup:0.6358518600, train_acc:0.400, dev_acc:0.333, test_acc:0.414, test_acc_ema:0.414
+epoch : 400,loss:0.1543717235, train_acc:1.000, dev_acc:0.733, test_acc:0.692
+epoch : 800,loss:0.3463054001,loss_usup:0.3188732266, train_acc:1.000, dev_acc:0.667, test_acc:0.542, test_acc_ema:0.542
+epoch :1200,loss:0.2349924743,loss_usup:0.1301806271, train_acc:0.933, dev_acc:0.667, test_acc:0.527, test_acc_ema:0.527
+epoch :1600,loss:0.3434989452, train_acc:0.933, dev_acc:0.600, test_acc:0.509
+Test acc80.000
+4
+epoch :   0,loss:0.6333335042,loss_usup:0.6359843612, train_acc:0.533, dev_acc:0.267, test_acc:0.394, test_acc_ema:0.394
+epoch : 400,loss:0.1614225507, train_acc:1.000, dev_acc:0.800, test_acc:0.687
+epoch : 800,loss:0.2565332055, train_acc:1.000, dev_acc:0.667, test_acc:0.570
+epoch :1200,loss:0.1077943370,loss_usup:0.1658613980, train_acc:0.867, dev_acc:0.533, test_acc:0.383, test_acc_ema:0.383
+epoch :1600,loss:0.0446360596,loss_usup:0.1819724590, train_acc:0.933, dev_acc:0.533, test_acc:0.358, test_acc_ema:0.358
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.1_10.0:80.0_0.0
+time_25837.567890644073
+do_0.5
+mixup_alpha_0.5
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0584010221,loss_usup:0.6588655114, train_acc:1.000, dev_acc:0.733, test_acc:0.690, test_acc_ema:0.690
+epoch : 800,loss:0.1883117706, train_acc:1.000, dev_acc:0.733, test_acc:0.697
+epoch :1200,loss:0.1788009256, train_acc:1.000, dev_acc:0.733, test_acc:0.678
+epoch :1600,loss:0.1761631221, train_acc:1.000, dev_acc:0.733, test_acc:0.673
+Test acc80.000
+1
+epoch :   0,loss:0.6328165531,loss_usup:0.6364222765, train_acc:0.533, dev_acc:0.467, test_acc:0.334, test_acc_ema:0.334
+epoch : 400,loss:0.3252865970,loss_usup:0.4931466877, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.3738085330,loss_usup:0.6108095050, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+epoch :1200,loss:0.1832132787, train_acc:1.000, dev_acc:0.733, test_acc:0.685
+epoch :1600,loss:0.1507954299, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+Test acc80.000
+2
+epoch :   0,loss:0.6315371394,loss_usup:0.6353967190, train_acc:0.333, dev_acc:0.467, test_acc:0.441, test_acc_ema:0.441
+epoch : 400,loss:0.5036609769,loss_usup:0.5533149242, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.3878350258,loss_usup:0.4176892936, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch :1200,loss:0.1605972350, train_acc:1.000, dev_acc:0.800, test_acc:0.689
+epoch :1600,loss:0.3144971728,loss_usup:0.7071815133, train_acc:1.000, dev_acc:0.733, test_acc:0.677, test_acc_ema:0.677
+Test acc80.000
+3
+epoch :   0,loss:0.6423339844,loss_usup:0.6359070539, train_acc:0.400, dev_acc:0.267, test_acc:0.413, test_acc_ema:0.413
+epoch : 400,loss:0.1834152639, train_acc:1.000, dev_acc:0.733, test_acc:0.693
+epoch : 800,loss:0.3138732910,loss_usup:0.7043761611, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+epoch :1200,loss:0.2130114734,loss_usup:0.7924919724, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch :1600,loss:0.1484404951, train_acc:1.000, dev_acc:0.733, test_acc:0.674
+Test acc80.000
+4
+epoch :   0,loss:0.6337094903,loss_usup:0.6359739304, train_acc:0.533, dev_acc:0.267, test_acc:0.392, test_acc_ema:0.392
+epoch : 400,loss:0.1983522028, train_acc:1.000, dev_acc:0.800, test_acc:0.682
+epoch : 800,loss:0.1901766062, train_acc:1.000, dev_acc:0.733, test_acc:0.676
+epoch :1200,loss:0.3264748752,loss_usup:0.3321128786, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+epoch :1600,loss:0.2049703598,loss_usup:0.7364210486, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.5_0.0:80.0_0.0
+time_26481.511199235916
+do_0.5
+mixup_alpha_0.5
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0585932359,loss_usup:0.6592352390, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+epoch : 800,loss:0.1911261380, train_acc:1.000, dev_acc:0.733, test_acc:0.692
+epoch :1200,loss:0.1865821928, train_acc:1.000, dev_acc:0.733, test_acc:0.671
+epoch :1600,loss:0.1823937446, train_acc:1.000, dev_acc:0.733, test_acc:0.675
+Test acc80.000
+1
+epoch :   0,loss:0.6328165531,loss_usup:0.6364222765, train_acc:0.533, dev_acc:0.467, test_acc:0.334, test_acc_ema:0.334
+epoch : 400,loss:0.3249270916,loss_usup:0.4933579862, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.3739697039,loss_usup:0.6222889423, train_acc:1.000, dev_acc:0.733, test_acc:0.673, test_acc_ema:0.673
+epoch :1200,loss:0.1883749366, train_acc:1.000, dev_acc:0.800, test_acc:0.672
+epoch :1600,loss:0.1565920562, train_acc:1.000, dev_acc:0.800, test_acc:0.693
+Test acc80.000
+2
+epoch :   0,loss:0.6315371394,loss_usup:0.6353967190, train_acc:0.333, dev_acc:0.467, test_acc:0.441, test_acc_ema:0.441
+epoch : 400,loss:0.5030773878,loss_usup:0.5528082848, train_acc:1.000, dev_acc:0.733, test_acc:0.686, test_acc_ema:0.686
+epoch : 800,loss:0.3855127990,loss_usup:0.4170308113, train_acc:1.000, dev_acc:0.733, test_acc:0.679, test_acc_ema:0.679
+epoch :1200,loss:0.1679671854, train_acc:1.000, dev_acc:0.800, test_acc:0.666
+epoch :1600,loss:0.3150337338,loss_usup:0.7475399375, train_acc:1.000, dev_acc:0.667, test_acc:0.648, test_acc_ema:0.648
+Test acc80.000
+3
+epoch :   0,loss:0.6423339844,loss_usup:0.6359070539, train_acc:0.400, dev_acc:0.267, test_acc:0.413, test_acc_ema:0.413
+epoch : 400,loss:0.1834872216, train_acc:1.000, dev_acc:0.733, test_acc:0.692
+epoch : 800,loss:0.3143519163,loss_usup:0.6673313379, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.2114105225,loss_usup:0.7655912638, train_acc:1.000, dev_acc:0.800, test_acc:0.676, test_acc_ema:0.676
+epoch :1600,loss:0.1570172757, train_acc:1.000, dev_acc:0.800, test_acc:0.661
+Test acc80.000
+4
+epoch :   0,loss:0.6337094903,loss_usup:0.6359739304, train_acc:0.533, dev_acc:0.267, test_acc:0.392, test_acc_ema:0.392
+epoch : 400,loss:0.1984083205, train_acc:1.000, dev_acc:0.800, test_acc:0.682
+epoch : 800,loss:0.1924529076, train_acc:1.000, dev_acc:0.733, test_acc:0.669
+epoch :1200,loss:0.3215990663,loss_usup:0.2910476327, train_acc:1.000, dev_acc:0.733, test_acc:0.672, test_acc_ema:0.672
+epoch :1600,loss:0.2036761194,loss_usup:0.7249669433, train_acc:1.000, dev_acc:0.733, test_acc:0.675, test_acc_ema:0.675
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.5_0.1:80.0_0.0
+time_27124.117110729218
+do_0.5
+mixup_alpha_0.5
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0589546412,loss_usup:0.6571526527, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+epoch : 800,loss:0.2114072293, train_acc:1.000, dev_acc:0.800, test_acc:0.675
+epoch :1200,loss:0.2379616648, train_acc:1.000, dev_acc:0.533, test_acc:0.559
+epoch :1600,loss:0.2129953355, train_acc:1.000, dev_acc:0.600, test_acc:0.533
+Test acc80.000
+1
+epoch :   0,loss:0.6328165531,loss_usup:0.6364222765, train_acc:0.533, dev_acc:0.467, test_acc:0.334, test_acc_ema:0.334
+epoch : 400,loss:0.3242820501,loss_usup:0.4930815101, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.3793623149,loss_usup:0.5734011531, train_acc:1.000, dev_acc:0.667, test_acc:0.627, test_acc_ema:0.627
+epoch :1200,loss:0.2486981153, train_acc:1.000, dev_acc:0.667, test_acc:0.558
+epoch :1600,loss:0.2117545307, train_acc:1.000, dev_acc:0.667, test_acc:0.541
+Test acc80.000
+2
+epoch :   0,loss:0.6315371394,loss_usup:0.6353967190, train_acc:0.333, dev_acc:0.467, test_acc:0.441, test_acc_ema:0.441
+epoch : 400,loss:0.5028343797,loss_usup:0.5513885617, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.3819873035,loss_usup:0.3015591204, train_acc:1.000, dev_acc:0.600, test_acc:0.611, test_acc_ema:0.611
+epoch :1200,loss:0.2184015960, train_acc:1.000, dev_acc:0.400, test_acc:0.433
+epoch :1600,loss:0.3161967397,loss_usup:0.5131113529, train_acc:1.000, dev_acc:0.400, test_acc:0.453, test_acc_ema:0.453
+Test acc80.000
+3
+epoch :   0,loss:0.6423339844,loss_usup:0.6359070539, train_acc:0.400, dev_acc:0.267, test_acc:0.413, test_acc_ema:0.413
+epoch : 400,loss:0.1835411489, train_acc:1.000, dev_acc:0.733, test_acc:0.691
+epoch : 800,loss:0.3186219633,loss_usup:0.5744672418, train_acc:1.000, dev_acc:0.733, test_acc:0.661, test_acc_ema:0.661
+epoch :1200,loss:0.1917781681,loss_usup:0.4685603380, train_acc:1.000, dev_acc:0.667, test_acc:0.574, test_acc_ema:0.574
+epoch :1600,loss:0.2120469660, train_acc:1.000, dev_acc:0.667, test_acc:0.550
+Test acc80.000
+4
+epoch :   0,loss:0.6337094903,loss_usup:0.6359739304, train_acc:0.533, dev_acc:0.267, test_acc:0.392, test_acc_ema:0.392
+epoch : 400,loss:0.1985186934, train_acc:1.000, dev_acc:0.800, test_acc:0.682
+epoch : 800,loss:0.2106114477, train_acc:1.000, dev_acc:0.733, test_acc:0.654
+epoch :1200,loss:0.3149406910,loss_usup:0.3272951245, train_acc:1.000, dev_acc:0.600, test_acc:0.526, test_acc_ema:0.526
+epoch :1600,loss:0.2062681764,loss_usup:0.5750388503, train_acc:1.000, dev_acc:0.667, test_acc:0.566, test_acc_ema:0.566
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.5_1.0:80.0_0.0
+time_27767.09209060669
+do_0.5
+mixup_alpha_0.5
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.0605513714,loss_usup:0.6448481083, train_acc:1.000, dev_acc:0.733, test_acc:0.688, test_acc_ema:0.688
+epoch : 800,loss:0.3965059817, train_acc:1.000, dev_acc:0.400, test_acc:0.286
+epoch :1200,loss:0.5598244071, train_acc:0.667, dev_acc:0.333, test_acc:0.189
+epoch :1600,loss:0.5502855182, train_acc:0.600, dev_acc:0.333, test_acc:0.188
+Test acc80.000
+1
+epoch :   0,loss:0.6328165531,loss_usup:0.6364222765, train_acc:0.467, dev_acc:0.467, test_acc:0.335, test_acc_ema:0.335
+epoch : 400,loss:0.3214578331,loss_usup:0.4798344076, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch : 800,loss:0.4306331277,loss_usup:0.5159512162, train_acc:1.000, dev_acc:0.533, test_acc:0.497, test_acc_ema:0.497
+epoch :1200,loss:0.4449241757, train_acc:0.800, dev_acc:0.667, test_acc:0.541
+epoch :1600,loss:0.3488576710, train_acc:0.933, dev_acc:0.667, test_acc:0.520
+Test acc80.000
+2
+epoch :   0,loss:0.6315371394,loss_usup:0.6353967190, train_acc:0.333, dev_acc:0.467, test_acc:0.442, test_acc_ema:0.442
+epoch : 400,loss:0.5016151667,loss_usup:0.5190329552, train_acc:1.000, dev_acc:0.733, test_acc:0.674, test_acc_ema:0.674
+epoch : 800,loss:0.4263091683,loss_usup:0.2560524344, train_acc:0.867, dev_acc:0.400, test_acc:0.433, test_acc_ema:0.433
+epoch :1200,loss:0.3478832543, train_acc:0.933, dev_acc:0.400, test_acc:0.409
+epoch :1600,loss:0.3861656189,loss_usup:0.5404374003, train_acc:0.867, dev_acc:0.400, test_acc:0.419, test_acc_ema:0.419
+Test acc80.000
+3
+epoch :   0,loss:0.6423339844,loss_usup:0.6359070539, train_acc:0.400, dev_acc:0.267, test_acc:0.413, test_acc_ema:0.413
+epoch : 400,loss:0.1877419502, train_acc:1.000, dev_acc:0.733, test_acc:0.691
+epoch : 800,loss:0.3497576118,loss_usup:0.3780235648, train_acc:1.000, dev_acc:0.667, test_acc:0.588, test_acc_ema:0.588
+epoch :1200,loss:0.1807557195,loss_usup:0.3315901160, train_acc:0.933, dev_acc:0.667, test_acc:0.537, test_acc_ema:0.537
+epoch :1600,loss:0.3619171679, train_acc:0.933, dev_acc:0.667, test_acc:0.537
+Test acc80.000
+4
+epoch :   0,loss:0.6337094903,loss_usup:0.6359739304, train_acc:0.533, dev_acc:0.267, test_acc:0.392, test_acc_ema:0.392
+epoch : 400,loss:0.2013207078, train_acc:1.000, dev_acc:0.800, test_acc:0.677
+epoch : 800,loss:0.2986854315, train_acc:1.000, dev_acc:0.667, test_acc:0.586
+epoch :1200,loss:0.5324183702,loss_usup:0.1364862174, train_acc:0.533, dev_acc:0.333, test_acc:0.192, test_acc_ema:0.192
+epoch :1600,loss:0.2153039277,loss_usup:0.0879644901, train_acc:0.733, dev_acc:0.333, test_acc:0.190, test_acc_ema:0.190
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_0.5_10.0:80.0_0.0
+time_28410.53329515457
+do_0.5
+mixup_alpha_1.0
+mixup_consistency_0.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.2510560751,loss_usup:0.6388456821, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch : 800,loss:0.2020600736, train_acc:1.000, dev_acc:0.733, test_acc:0.697
+epoch :1200,loss:0.1962822825, train_acc:1.000, dev_acc:0.733, test_acc:0.680
+epoch :1600,loss:0.1808020025, train_acc:1.000, dev_acc:0.800, test_acc:0.676
+Test acc80.000
+1
+epoch :   0,loss:0.6327331662,loss_usup:0.6364076138, train_acc:0.467, dev_acc:0.533, test_acc:0.352, test_acc_ema:0.352
+epoch : 400,loss:0.5583684444,loss_usup:0.5582764745, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.3054903746,loss_usup:0.5824519396, train_acc:1.000, dev_acc:0.733, test_acc:0.689, test_acc_ema:0.689
+epoch :1200,loss:0.2073298395, train_acc:1.000, dev_acc:0.733, test_acc:0.669
+epoch :1600,loss:0.1528245658, train_acc:1.000, dev_acc:0.733, test_acc:0.684
+Test acc80.000
+2
+epoch :   0,loss:0.6315795183,loss_usup:0.6354069710, train_acc:0.400, dev_acc:0.400, test_acc:0.435, test_acc_ema:0.435
+epoch : 400,loss:0.4741703570,loss_usup:0.6505132318, train_acc:1.000, dev_acc:0.733, test_acc:0.678, test_acc_ema:0.678
+epoch : 800,loss:0.4694725573,loss_usup:0.5051831603, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.1842177808, train_acc:1.000, dev_acc:0.733, test_acc:0.679
+epoch :1600,loss:0.0989605784,loss_usup:0.6514674425, train_acc:1.000, dev_acc:0.733, test_acc:0.692, test_acc_ema:0.692
+Test acc80.000
+3
+epoch :   0,loss:0.6423639655,loss_usup:0.6359361410, train_acc:0.400, dev_acc:0.267, test_acc:0.412, test_acc_ema:0.412
+epoch : 400,loss:0.2040419430, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.4504195452,loss_usup:0.6101274490, train_acc:1.000, dev_acc:0.733, test_acc:0.680, test_acc_ema:0.680
+epoch :1200,loss:0.4543601871,loss_usup:0.8067759871, train_acc:1.000, dev_acc:0.733, test_acc:0.675, test_acc_ema:0.675
+epoch :1600,loss:0.1717923880, train_acc:1.000, dev_acc:0.733, test_acc:0.669
+Test acc80.000
+4
+epoch :   0,loss:0.6340147853,loss_usup:0.6359755397, train_acc:0.600, dev_acc:0.267, test_acc:0.384, test_acc_ema:0.384
+epoch : 400,loss:0.2122955471, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch : 800,loss:0.2041078061, train_acc:1.000, dev_acc:0.733, test_acc:0.677
+epoch :1200,loss:0.4738971293,loss_usup:0.2904000282, train_acc:1.000, dev_acc:0.733, test_acc:0.667, test_acc_ema:0.667
+epoch :1600,loss:0.2946709096,loss_usup:0.7391542792, train_acc:1.000, dev_acc:0.800, test_acc:0.676, test_acc_ema:0.676
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_1.0_0.0:80.0_0.0
+time_29050.156512498856
+do_0.5
+mixup_alpha_1.0
+mixup_consistency_0.1
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.2509554029,loss_usup:0.6375815868, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch : 800,loss:0.2041815221, train_acc:1.000, dev_acc:0.733, test_acc:0.695
+epoch :1200,loss:0.2031469196, train_acc:1.000, dev_acc:0.667, test_acc:0.669
+epoch :1600,loss:0.1876756698, train_acc:1.000, dev_acc:0.733, test_acc:0.673
+Test acc80.000
+1
+epoch :   0,loss:0.6327331662,loss_usup:0.6364076138, train_acc:0.467, dev_acc:0.533, test_acc:0.352, test_acc_ema:0.352
+epoch : 400,loss:0.5581276417,loss_usup:0.5577188730, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch : 800,loss:0.3047774136,loss_usup:0.5896702409, train_acc:1.000, dev_acc:0.733, test_acc:0.683, test_acc_ema:0.683
+epoch :1200,loss:0.2116331160, train_acc:1.000, dev_acc:0.667, test_acc:0.669
+epoch :1600,loss:0.1573315710, train_acc:1.000, dev_acc:0.800, test_acc:0.684
+Test acc80.000
+2
+epoch :   0,loss:0.6315795183,loss_usup:0.6354069710, train_acc:0.400, dev_acc:0.400, test_acc:0.435, test_acc_ema:0.435
+epoch : 400,loss:0.4740940630,loss_usup:0.6488298178, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+epoch : 800,loss:0.4676806927,loss_usup:0.4959726036, train_acc:1.000, dev_acc:0.800, test_acc:0.669, test_acc_ema:0.669
+epoch :1200,loss:0.1900278777, train_acc:1.000, dev_acc:0.667, test_acc:0.661
+epoch :1600,loss:0.0988405049,loss_usup:0.6819186211, train_acc:1.000, dev_acc:0.733, test_acc:0.657, test_acc_ema:0.657
+Test acc80.000
+3
+epoch :   0,loss:0.6423639655,loss_usup:0.6359361410, train_acc:0.400, dev_acc:0.267, test_acc:0.412, test_acc_ema:0.412
+epoch : 400,loss:0.2040536404, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.4500053525,loss_usup:0.6139737964, train_acc:1.000, dev_acc:0.733, test_acc:0.674, test_acc_ema:0.674
+epoch :1200,loss:0.4483892322,loss_usup:0.7875647545, train_acc:1.000, dev_acc:0.733, test_acc:0.673, test_acc_ema:0.673
+epoch :1600,loss:0.1767295599, train_acc:1.000, dev_acc:0.733, test_acc:0.669
+Test acc80.000
+4
+epoch :   0,loss:0.6340147853,loss_usup:0.6359755397, train_acc:0.600, dev_acc:0.267, test_acc:0.384, test_acc_ema:0.384
+epoch : 400,loss:0.2122386098, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch : 800,loss:0.2063434720, train_acc:1.000, dev_acc:0.733, test_acc:0.669
+epoch :1200,loss:0.4691271186,loss_usup:0.2642088532, train_acc:1.000, dev_acc:0.667, test_acc:0.663, test_acc_ema:0.663
+epoch :1600,loss:0.2930601239,loss_usup:0.7287029624, train_acc:1.000, dev_acc:0.733, test_acc:0.673, test_acc_ema:0.673
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_1.0_0.1:80.0_0.0
+time_29684.94836950302
+do_0.5
+mixup_alpha_1.0
+mixup_consistency_1.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.2511545122,loss_usup:0.6365756989, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.2204247713, train_acc:1.000, dev_acc:0.800, test_acc:0.688
+epoch :1200,loss:0.2514269948, train_acc:1.000, dev_acc:0.600, test_acc:0.549
+epoch :1600,loss:0.2267234772, train_acc:1.000, dev_acc:0.667, test_acc:0.532
+Test acc80.000
+1
+epoch :   0,loss:0.6327331662,loss_usup:0.6364076138, train_acc:0.467, dev_acc:0.533, test_acc:0.352, test_acc_ema:0.352
+epoch : 400,loss:0.5577443242,loss_usup:0.5555399656, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.3058335185,loss_usup:0.6015245318, train_acc:1.000, dev_acc:0.667, test_acc:0.626, test_acc_ema:0.626
+epoch :1200,loss:0.2542899847, train_acc:1.000, dev_acc:0.667, test_acc:0.574
+epoch :1600,loss:0.2080515027, train_acc:1.000, dev_acc:0.667, test_acc:0.541
+Test acc80.000
+2
+epoch :   0,loss:0.6315795183,loss_usup:0.6354069710, train_acc:0.400, dev_acc:0.400, test_acc:0.435, test_acc_ema:0.435
+epoch : 400,loss:0.4739947915,loss_usup:0.6472104788, train_acc:1.000, dev_acc:0.733, test_acc:0.678, test_acc_ema:0.678
+epoch : 800,loss:0.4659698904,loss_usup:0.3673964739, train_acc:1.000, dev_acc:0.467, test_acc:0.599, test_acc_ema:0.599
+epoch :1200,loss:0.2426538318, train_acc:1.000, dev_acc:0.400, test_acc:0.442
+epoch :1600,loss:0.1069542542,loss_usup:0.5546633005, train_acc:1.000, dev_acc:0.400, test_acc:0.457, test_acc_ema:0.457
+Test acc80.000
+3
+epoch :   0,loss:0.6423639655,loss_usup:0.6359361410, train_acc:0.400, dev_acc:0.267, test_acc:0.412, test_acc_ema:0.412
+epoch : 400,loss:0.2045088857, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.4475396872,loss_usup:0.6319638491, train_acc:1.000, dev_acc:0.667, test_acc:0.646, test_acc_ema:0.646
+epoch :1200,loss:0.4286276102,loss_usup:0.5212279558, train_acc:1.000, dev_acc:0.667, test_acc:0.593, test_acc_ema:0.593
+epoch :1600,loss:0.2278627157, train_acc:1.000, dev_acc:0.667, test_acc:0.554
+Test acc80.000
+4
+epoch :   0,loss:0.6340147853,loss_usup:0.6359755397, train_acc:0.600, dev_acc:0.267, test_acc:0.384, test_acc_ema:0.384
+epoch : 400,loss:0.2125396580, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch : 800,loss:0.2188084424, train_acc:1.000, dev_acc:0.733, test_acc:0.654
+epoch :1200,loss:0.4565095603,loss_usup:0.4092586040, train_acc:1.000, dev_acc:0.533, test_acc:0.544, test_acc_ema:0.544
+epoch :1600,loss:0.2902279198,loss_usup:0.5544315577, train_acc:1.000, dev_acc:0.667, test_acc:0.564, test_acc_ema:0.564
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_1.0_1.0:80.0_0.0
+time_30319.912318229675
+do_0.5
+mixup_alpha_1.0
+mixup_consistency_10.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.2528384030,loss_usup:0.6246684790, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.5131852031, train_acc:0.733, dev_acc:0.333, test_acc:0.201
+epoch :1200,loss:0.5259885192, train_acc:0.667, dev_acc:0.333, test_acc:0.190
+epoch :1600,loss:0.4579861462, train_acc:0.800, dev_acc:0.333, test_acc:0.189
+Test acc80.000
+1
+epoch :   0,loss:0.6327331662,loss_usup:0.6364076138, train_acc:0.467, dev_acc:0.533, test_acc:0.349, test_acc_ema:0.349
+epoch : 400,loss:0.5564225316,loss_usup:0.5424667597, train_acc:1.000, dev_acc:0.733, test_acc:0.681, test_acc_ema:0.681
+epoch : 800,loss:0.3204026520,loss_usup:0.5957747698, train_acc:0.933, dev_acc:0.600, test_acc:0.507, test_acc_ema:0.507
+epoch :1200,loss:0.3882170022, train_acc:0.867, dev_acc:0.667, test_acc:0.527
+epoch :1600,loss:0.3901085854, train_acc:0.933, dev_acc:0.533, test_acc:0.486
+Test acc80.000
+2
+epoch :   0,loss:0.6315795183,loss_usup:0.6354069710, train_acc:0.400, dev_acc:0.400, test_acc:0.437, test_acc_ema:0.437
+epoch : 400,loss:0.4724030495,loss_usup:0.6198236942, train_acc:1.000, dev_acc:0.667, test_acc:0.665, test_acc_ema:0.665
+epoch : 800,loss:0.4932904541,loss_usup:0.3371771276, train_acc:0.933, dev_acc:0.400, test_acc:0.388, test_acc_ema:0.388
+epoch :1200,loss:0.4213654995, train_acc:0.867, dev_acc:0.400, test_acc:0.329
+epoch :1600,loss:0.1447521150,loss_usup:0.0384831540, train_acc:0.400, dev_acc:0.333, test_acc:0.188, test_acc_ema:0.188
+Test acc73.333
+3
+epoch :   0,loss:0.6423639655,loss_usup:0.6359361410, train_acc:0.400, dev_acc:0.267, test_acc:0.414, test_acc_ema:0.414
+epoch : 400,loss:0.2078295499, train_acc:1.000, dev_acc:0.733, test_acc:0.682
+epoch : 800,loss:0.4519681633,loss_usup:0.4450653791, train_acc:1.000, dev_acc:0.667, test_acc:0.572, test_acc_ema:0.572
+epoch :1200,loss:0.4347935617,loss_usup:0.3504386842, train_acc:0.933, dev_acc:0.667, test_acc:0.536, test_acc_ema:0.536
+epoch :1600,loss:0.3426102400, train_acc:0.933, dev_acc:0.667, test_acc:0.523
+Test acc80.000
+4
+epoch :   0,loss:0.6340147853,loss_usup:0.6359755397, train_acc:0.600, dev_acc:0.267, test_acc:0.383, test_acc_ema:0.383
+epoch : 400,loss:0.2155512571, train_acc:1.000, dev_acc:0.800, test_acc:0.684
+epoch : 800,loss:0.3649783432, train_acc:1.000, dev_acc:0.400, test_acc:0.356
+epoch :1200,loss:0.5581566691,loss_usup:0.1295673996, train_acc:0.667, dev_acc:0.333, test_acc:0.190, test_acc_ema:0.190
+epoch :1600,loss:0.2967888117,loss_usup:0.0673426688, train_acc:0.933, dev_acc:0.333, test_acc:0.191, test_acc_ema:0.191
+Test acc80.000
+do, mix_alpha, consis_coeff_0.5_1.0_10.0:78.66666666666666_2.6666666666666683
+time_30954.485553503036
+best_val_acc:80.0
+Running model using best hyperparameters
+best_do_0.5
+best_mixup_alpha_1.0
+best_mixup_consistency_1.0
+0
+epoch :   0,loss:1.1016780138, train_acc:0.533, dev_acc:0.133, test_acc:0.396
+epoch : 400,loss:0.2511541545,loss_usup:0.6365708113, train_acc:1.000, dev_acc:0.733, test_acc:0.684, test_acc_ema:0.684
+epoch : 800,loss:0.2206307203, train_acc:1.000, dev_acc:0.800, test_acc:0.687
+epoch :1200,loss:0.2525958419, train_acc:1.000, dev_acc:0.600, test_acc:0.551
+epoch :1600,loss:0.2269225568, train_acc:1.000, dev_acc:0.667, test_acc:0.536
+Test acc65.556
+1
+epoch :   0,loss:0.6327331662,loss_usup:0.6364076138, train_acc:0.467, dev_acc:0.533, test_acc:0.352, test_acc_ema:0.352
+epoch : 400,loss:0.5577443242,loss_usup:0.5555399656, train_acc:1.000, dev_acc:0.733, test_acc:0.682, test_acc_ema:0.682
+epoch : 800,loss:0.3058335185,loss_usup:0.6015245318, train_acc:1.000, dev_acc:0.667, test_acc:0.626, test_acc_ema:0.626
+epoch :1200,loss:0.2542899847, train_acc:1.000, dev_acc:0.667, test_acc:0.574
+epoch :1600,loss:0.2080506384, train_acc:1.000, dev_acc:0.667, test_acc:0.541
+Test acc68.235
+2
+epoch :   0,loss:0.6315795183,loss_usup:0.6354069710, train_acc:0.400, dev_acc:0.400, test_acc:0.435, test_acc_ema:0.435
+epoch : 400,loss:0.4739947915,loss_usup:0.6472104788, train_acc:1.000, dev_acc:0.733, test_acc:0.678, test_acc_ema:0.678
+epoch : 800,loss:0.4657959938,loss_usup:0.3648356199, train_acc:1.000, dev_acc:0.467, test_acc:0.595, test_acc_ema:0.595
+epoch :1200,loss:0.2428551465, train_acc:1.000, dev_acc:0.400, test_acc:0.442
+epoch :1600,loss:0.1056309417,loss_usup:0.5535947084, train_acc:1.000, dev_acc:0.400, test_acc:0.459, test_acc_ema:0.459
+Test acc65.948
+3
+epoch :   0,loss:0.6423639655,loss_usup:0.6359361410, train_acc:0.400, dev_acc:0.267, test_acc:0.412, test_acc_ema:0.412
+epoch : 400,loss:0.2045088857, train_acc:1.000, dev_acc:0.733, test_acc:0.687
+epoch : 800,loss:0.4475396872,loss_usup:0.6319638491, train_acc:1.000, dev_acc:0.667, test_acc:0.646, test_acc_ema:0.646
+epoch :1200,loss:0.4286276102,loss_usup:0.5212279558, train_acc:1.000, dev_acc:0.667, test_acc:0.593, test_acc_ema:0.593
+epoch :1600,loss:0.2278627157, train_acc:1.000, dev_acc:0.667, test_acc:0.554
+Test acc65.686
+4
+epoch :   0,loss:0.6340147853,loss_usup:0.6359755397, train_acc:0.600, dev_acc:0.267, test_acc:0.384, test_acc_ema:0.384
+epoch : 400,loss:0.2125396580, train_acc:1.000, dev_acc:0.733, test_acc:0.688
+epoch : 800,loss:0.2188977301, train_acc:1.000, dev_acc:0.733, test_acc:0.654
+epoch :1200,loss:0.4558725953,loss_usup:0.4056145847, train_acc:1.000, dev_acc:0.533, test_acc:0.539, test_acc_ema:0.539
+epoch :1600,loss:0.2916849852,loss_usup:0.5169515610, train_acc:1.000, dev_acc:0.667, test_acc:0.558, test_acc_ema:0.558
+Test acc64.902
+do, mix_alpha, consis_coeff_0.5_1.0_1.0:66.06535947712419_1.138381231742597
+time_31589.667641878128

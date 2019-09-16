@@ -51,7 +51,7 @@ fo.close()
 
 fo = open('feature.txt', 'w')
 for e, f in e2f.items():
-	fo.write(str(e) + '\t' + str(f[0]) + ' ' + str(f[1]) + '\n')
+    fo.write(str(e) + '\t' + str(f[0])+str(':')+str(1) + ' ' + str(f[1])+str(':')+str(1) + '\n')
 fo.close()
 
 fo = open('label.txt', 'w')
