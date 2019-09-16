@@ -63,9 +63,48 @@ class Trainer(object):
         logits = torch.log_softmax(logits, dim=-1)
         loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
         
-        loss.backward()
-        self.optimizer.step()
+        #loss.backward()
+        #self.optimizer.step()
         return loss.item()
+    
+    
+    def update_soft_aux(self, inputs, target,target_discrete, idx, idx_unlabeled, opt, mixup_layer):
+        """uses the auxiliary loss as well, which does not use the adjacency information"""
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+            target = target.cuda()
+            idx = idx.cuda()
+            idx_unlabeled = idx_unlabeled.cuda()
+
+        self.model.train()
+        self.optimizer.zero_grad()
+
+        #import pdb ;pdb.set_trace()
+        mixup = True
+        if mixup == True:
+            # get the supervised mixup loss #
+            logits, target_a, target_b, lam = self.model.forward_aux(inputs, target=target, train_idx= idx, mixup_input=False, mixup_hidden = True, mixup_alpha = opt['mixup_alpha'],layer_mix=mixup_layer)
+            #import pdb; pdb.set_trace()
+            mixed_target = lam*target_a + (1-lam)*target_b
+            #logits = torch.log_softmax(logits, dim=-1)
+            #loss_aux = -(torch.mean(lam*torch.sum(target_a * logits[idx], dim=-1, keepdim= True))+ torch.mean((1-lam)*torch.sum(target_b * logits[idx], dim=-1, keepdim =True)))
+            loss = bce_loss(softmax(logits[idx]), mixed_target)
+
+            # get the unsupervised mixup loss #
+            logits, target_a, target_b, lam = self.model.forward_aux(inputs, target=target, train_idx= idx_unlabeled, mixup_input=False, mixup_hidden = True, mixup_alpha = opt['mixup_alpha'],layer_mix= mixup_layer)
+            mixed_target = lam*target_a + (1-lam)*target_b
+            loss_usup = bce_loss(softmax(logits[idx_unlabeled]), mixed_target)
+        else:
+            logits = self.model.forward_aux(inputs, target=None, train_idx= idx, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
+            logits = torch.log_softmax(logits, dim=-1)
+            loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
+
+
+            logits = self.model.forward_aux(inputs, target=None, train_idx= idx_unlabeled, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
+            logits = torch.log_softmax(logits, dim=-1)
+            loss_usup = -torch.mean(torch.sum(target[idx_unlabeled] * logits[idx_unlabeled], dim=-1))
+
+        return loss, loss_usup
     
     def evaluate(self, inputs, target, idx):
         """ Run a step of forward and backward model update. """
@@ -92,6 +131,18 @@ class Trainer(object):
         self.model.eval()
 
         logits = self.model(inputs) * gamma
+
+        logits = torch.softmax(logits, dim=-1).detach()
+
+        return logits
+    
+    
+    def predict_noisy(self, inputs, tau=1):
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+
+        #self.model.eval()
+        logits = self.model(inputs) / tau
 
         logits = torch.softmax(logits, dim=-1).detach()
 

@@ -16,6 +16,9 @@ from trainer import Trainer
 from gcn import GCN
 import loader
 
+from ramps import *
+from losses import *
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='data')
 parser.add_argument('--save', type=str, default='/')
@@ -37,6 +40,31 @@ parser.add_argument('--info', type=str, default='', help='Optional info for the 
 parser.add_argument('--seed', type=int, default=1234)
 parser.add_argument('--cuda', type=bool, default=torch.cuda.is_available())
 parser.add_argument('--cpu', action='store_true', help='Ignore CUDA.')
+
+parser.add_argument('--ema_decay', default=0.999, type=float, metavar='ALPHA',
+                    help='ema variable decay rate (default: 0.999)')
+#parser.add_argument('--consistency', default=None, type=float, metavar='WEIGHT',
+#                    help='use consistency loss with given weight (default: None)')
+parser.add_argument('--consistency_type', default="mse", type=str, metavar='TYPE',
+                     choices=['mse', 'kl'],
+                     help='consistency loss type to use')
+parser.add_argument('--consistency_rampup_starts', default=30, type=int, metavar='EPOCHS',
+                     help='epoch at which consistency loss ramp-up starts')
+parser.add_argument('--consistency_rampup_ends', default=30, type=int, metavar='EPOCHS',
+                     help='lepoch at which consistency loss ramp-up ends')
+#parser.add_argument('--mixup_sup_alpha', default=0.0, type=float,
+#                    help='for supervised loss, the alpha parameter for the beta distribution from where the mixing lambda is drawn')
+#parser.add_argument('--mixup_usup_alpha', default=0.0, type=float,
+#                    help='for unsupervised loss, the alpha parameter for the beta distribution from where the mixing lambda is drawn')
+#parser.add_argument('--mixup_hidden', action='store_true',
+#                    help='apply mixup in hidden layers')
+#parser.add_argument('--num_mix_layer', default=3, type=int,
+#                    help='number of hidden layers on which mixup is applied in addition to input layer')
+parser.add_argument('--mixup_consistency', default=1.0, type=float,
+                     help='max consistency coeff for mixup usup loss')
+
+
+
 args = parser.parse_args()
 
 torch.manual_seed(args.seed)
@@ -57,6 +85,18 @@ feature_file = opt['dataset'] + '/feature.txt'
 train_file = opt['dataset'] + '/train.txt'
 dev_file = opt['dataset'] + '/dev.txt'
 test_file = opt['dataset'] + '/test.txt'
+
+
+exp_dir = os.path.join(os.getcwd(),args.save)
+if not os.path.exists(exp_dir):
+    os.makedirs(exp_dir)
+net_temp_file = os.path.join(exp_dir,'net_temp.txt')
+
+
+opt['net_file'] = net_file
+opt['net_temp_file'] = net_temp_file
+
+
 
 vocab_node = loader.Vocab(net_file, [0, 1])
 vocab_label = loader.Vocab(label_file, [1])
@@ -89,6 +129,8 @@ idx_test = [vocab_node.stoi[line.strip()] for line in fi]
 fi.close()
 
 idx_all = list(range(opt['num_node']))
+idx_unlabeled = list(set(idx_all)-set(idx_train))
+
 
 # model
 # initialize a relation model
@@ -104,6 +146,11 @@ idx_train = torch.LongTensor(idx_train)
 idx_dev = torch.LongTensor(idx_dev)
 idx_test = torch.LongTensor(idx_test)
 idx_all = torch.LongTensor(idx_all)
+idx_unlabeled = torch.LongTensor(idx_unlabeled)
+#inputs_q = torch.zeros(opt['num_node'], opt['num_feature'])
+#target_q = torch.zeros(opt['num_node'], opt['num_class'])
+#inputs_p = torch.zeros(opt['num_node'], opt['num_class'])
+#target_p = torch.zeros(opt['num_node'], opt['num_class'])
 
 if opt['cuda']:
     inputs = inputs.cuda()
@@ -112,6 +159,11 @@ if opt['cuda']:
     idx_dev = idx_dev.cuda()
     idx_test = idx_test.cuda()
     idx_all = idx_all.cuda()
+    #inputs_q = inputs_q.cuda()
+    #target_q = target_q.cuda()
+    #inputs_p = inputs_p.cuda()
+    #target_p = target_p.cuda()
+    
 
 inputs_gcn = torch.zeros(opt['num_node'], opt['num_feature'])
 target_gcn = torch.zeros(opt['num_node'], opt['num_class'])
@@ -131,16 +183,75 @@ def auc_data(x, y):
 	z = sorted(z, key=lambda a:a[0], reverse=True)
 	x, y = zip(*z)
 	return np.array(x), np.array(y)
+    
+    
+def get_current_consistency_weight(final_consistency_weight, epoch):
+    # Consistency ramp-up from https://arxiv.org/abs/1610.02242
+    epoch = epoch - args.consistency_rampup_starts
+    #epoch = epoch + step_in_epoch / total_steps_in_epoch
+    return final_consistency_weight *sigmoid_rampup(epoch, args.consistency_rampup_ends - args.consistency_rampup_starts )
+
+
+
+def sharpen(prob, temperature):
+    temp_reciprocal = 1.0/ temperature
+    prob = torch.pow(prob, temp_reciprocal)
+    row_sum = prob.sum(dim=1).reshape(-1,1)
+    out = prob/row_sum
+    return out
+
 
 def pre_train(epoches):
 
     init_gcn_data()
 
     results = []
-
+    
+    if args.consistency_type == 'mse':
+        consistency_criterion = softmax_mse_loss # remember to divide by the batch size
+    elif args.consistency_type == 'kl':
+        consistency_criterion = softmax_kl_loss
+    
     for epoch in range(epoches):
+        rand_index = random.randint(0,1)
+        if rand_index == 0: ## do the augmented node training
 
-        loss = trainer_gcn.update_soft(inputs_gcn, target_gcn, idx_train)
+            ## get the psudolabels for the unlabeled nodes ##
+            #import pdb; pdb.set_trace()
+            k = 10
+            temp  = torch.zeros([k, target_gcn.shape[0], target_gcn.shape[1]], dtype=target_gcn.dtype)
+            temp = temp.cuda()
+            for i in range(k):
+                temp[i,:,:] = trainer_gcn.predict_noisy(inputs_gcn)
+            target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
+
+            #target_predict = trainer_q.predict(inputs_q)
+            target_predict = sharpen(target_predict,0.1)
+            #if epoch == 500:
+            #    print (target_predict)
+            target_gcn[idx_unlabeled] = target_predict[idx_unlabeled]
+            #inputs_q_new, target_q_new, idx_train_new = get_augmented_network_input(inputs_q, target_q,idx_train,opt, net_file, net_temp_file) ## get the augmented nodes in the input space
+            #idx_train_new = 
+            #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features
+            temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
+            idx_unlabeled_subset = idx_unlabeled[temp]
+            loss , loss_usup= trainer_gcn.update_soft_aux(inputs_gcn, target_gcn, target, idx_train, idx_unlabeled_subset, opt, mixup_layer =[1])## for augmented nodes
+            mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
+            total_loss = loss + mixup_consistency*loss_usup
+            trainer_gcn.model.train()
+            trainer_gcn.optimizer.zero_grad()
+            total_loss.backward()
+            trainer_gcn.optimizer.step()
+
+        else:
+            loss = trainer_gcn.update_soft(inputs_gcn, target_gcn, idx_train)
+            total_loss = loss
+            trainer_gcn.model.train()
+            trainer_gcn.optimizer.zero_grad()
+            total_loss.backward()
+            trainer_gcn.optimizer.step()
+
+        #loss = trainer_gcn.update_soft(inputs_gcn, target_gcn, idx_train)
 
         _, preds, accuracy_dev = trainer_gcn.evaluate(inputs_gcn, target, idx_dev)
         f1_dev = f1_score(target[idx_dev].cpu().numpy(), preds.cpu().numpy(), average='macro')

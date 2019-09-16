@@ -36,3 +36,37 @@ class GCN(nn.Module):
         
         x = self.m2(x)
         return x
+    
+    
+    def forward_aux(self, x, target=None, train_idx= None, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None):
+
+        if mixup_hidden == True or mixup_input == True:
+            if mixup_hidden == True:
+                layer_mix = random.choice(layer_mix)
+            elif mixup_input == True:
+                layer_mix = 0
+
+
+            if layer_mix ==0:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+
+            x = self.m1.forward_aux(x)
+            x = F.relu(x)
+            if layer_mix == 1:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m2.forward_aux(x)
+
+            return x, target_a, target_b, lam
+
+        else:
+
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = self.m1.forward_aux(x)
+            x = F.relu(x)
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m2.forward_aux(x)
+            return x
