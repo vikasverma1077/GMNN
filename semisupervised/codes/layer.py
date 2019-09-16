@@ -23,15 +23,20 @@ class SparseMM(torch.autograd.Function):
         return grad_input
 
 
-class GraphConvolution(nn.Module):
+class message(nn.Module):
 
-    def __init__(self, opt, adj):
-        super(GraphConvolution, self).__init__()
+    def __init__(self, opt, graphs):
+        super(message, self).__init__()
         self.opt = opt
+
+        self.tp_size = opt['types']
         self.in_size = opt['in']
         self.out_size = opt['out']
-        self.adj = adj
-        self.weight = Parameter(torch.Tensor(self.in_size, self.out_size))
+
+        self.graphs = graphs
+
+        self.weight = Parameter(torch.Tensor(self.tp_size, self.in_size, self.out_size))
+
         self.reset_parameters()
 
     def reset_parameters(self):
@@ -39,10 +44,16 @@ class GraphConvolution(nn.Module):
         self.weight.data.uniform_(-stdv, stdv)
     
     def forward(self, x):
-        m = torch.mm(x, self.weight)
-        m = SparseMM(self.adj)(m)
-        return m
+        ms = []
 
-    def forward_aux(self,x):
-        m = torch.mm(x, self.weight)
+        for k in range(self.tp_size):
+            m_ = torch.mm(x, self.weight[k])
+            m_ = SparseMM(self.graphs[k])(m_)
+            m_ = m_.unsqueeze(0)
+            ms += [m_]
+
+        ms = torch.cat(ms, dim=0)
+        ms = torch.sum(ms, dim=0)
+        m = ms.squeeze(0)
+
         return m
