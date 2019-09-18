@@ -11,6 +11,9 @@ from layer import GraphConvolution
 import loader
 from shutil import copyfile
 
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
+
 def mixup_data(x, y, alpha):
     '''Compute the mixup data. Return mixed inputs, pairs of targets, and lambda'''
     if alpha > 0.:
@@ -337,9 +340,29 @@ class GNNq(nn.Module):
         
             x = F.dropout(x, self.opt['input_dropout'], training=self.training)
             x = self.m1.forward_aux(x)
+            x1 = x*1.0
             x = F.relu(x)
             x = F.dropout(x, self.opt['dropout'], training=self.training)
             x = self.m2.forward_aux(x)
+            x2 = x*1.0
+
+            #print('target', target.shape)
+
+            xm = x1
+            #xm = xm[target > 0]
+            #target = target[target > 0]
+
+            idx = torch.randperm(xm.shape[0])
+
+            xt = xm.data.cpu().numpy() * 1.0
+            xt = TSNE(n_components=2).fit_transform(xt)
+
+            take = 3000
+            xset = xt[idx[0:take]]
+            plt.scatter(xset[:,0], xset[:,1], c = target[idx[0:take]].data.cpu().numpy())
+
+            plt.show()
+
             return x
 
 class GNNp(nn.Module):

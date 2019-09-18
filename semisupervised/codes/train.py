@@ -263,7 +263,13 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
+        
+        #graphmix
         rand_index = random.randint(0,1)
+
+        #baseline
+        #rand_index = 1
+
         if rand_index == 0: ## do the augmented node training
             
             ## get the psudolabels for the unlabeled nodes ##
@@ -329,7 +335,7 @@ def pre_train(epoches):
         #trainer_q.model.adj = adj
         #trainer_q.model.m1.adj = adj
         #trainer_q.model.m2.adj = adj
-        _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) ## target_new : for augmented nodes
+        _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train, eval_train=True) ## target_new : for augmented nodes
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
@@ -369,6 +375,8 @@ def train_q(epoches):
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
     return results
+
+torch.autograd.set_detect_anomaly(True)
 
 base_results, q_results, p_results = [], [], []
 base_results += pre_train(opt['pre_epoch'])

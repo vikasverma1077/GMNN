@@ -141,7 +141,7 @@ class Trainer(object):
             loss = bce_loss(softmax(logits[idx]), mixed_target)
 
             # get the unsupervised mixup loss #
-            logits, target_a, target_b, lam = self.model.forward_aux(inputs, target=target, train_idx= idx_unlabeled, mixup_input=False, mixup_hidden = True, mixup_alpha = opt['mixup_alpha'],layer_mix= mixup_layer)
+            logits, target_a, target_b, lam = self.model.forward_aux(inputs*1.0, target=target, train_idx= idx_unlabeled, mixup_input=False, mixup_hidden = True, mixup_alpha = opt['mixup_alpha'],layer_mix= mixup_layer)
             mixed_target = lam*target_a + (1-lam)*target_b
             loss_usup = bce_loss(softmax(logits[idx_unlabeled]), mixed_target)
         else:
@@ -258,7 +258,7 @@ class Trainer(object):
         self.optimizer.step()
         return loss.item()
     
-    def evaluate(self, inputs, target, idx):
+    def evaluate(self, inputs, target, idx, eval_train=False):
         if self.opt['cuda']:
             inputs = inputs.cuda()
             target = target.cuda()
@@ -270,6 +270,9 @@ class Trainer(object):
         preds = torch.max(logits[idx], dim=1)[1]
         correct = preds.eq(target[idx]).double()
         accuracy = correct.sum() / idx.size(0)
+
+        if eval_train == True and random.uniform(0,1) < 0.001:
+            self.model.forward_aux(inputs, target=target,train_idx=idx, mixup_input=False, mixup_hidden=False, mixup_alpha=0.0, layer_mix=None)
 
         return loss.item(), preds, accuracy.item()
 
