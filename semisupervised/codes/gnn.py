@@ -349,8 +349,8 @@ class GNNq(nn.Module):
             #print('target', target.shape)
 
             xm = x1
-            #xm = xm[target > 0]
-            #target = target[target > 0]
+            xm = xm[target > 0]
+            target = target[target > 0]
 
             idx = torch.randperm(xm.shape[0])
 
