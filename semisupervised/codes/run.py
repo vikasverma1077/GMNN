@@ -17,7 +17,7 @@ opt['optimizer'] = 'adam'
 opt['lr'] = 0.01
 opt['decay'] = 0#5e-4
 opt['self_link_weight'] = 1.0
-opt['pre_epoch'] = 50
+opt['pre_epoch'] = 15
 opt['epoch'] = 5
 opt['iter'] = 5
 opt['use_gold'] = 1
@@ -26,6 +26,17 @@ opt['gamma'] = 10
 
 opt['log_step'] = 1000
 opt['seed'] = 1
+
+
+opt['mixup_alpha'] = 0.1
+
+
+### ict hyperparameters ###
+opt['ema_decay'] = 0.999
+opt['consistency_type'] = "mse"
+opt['consistency_rampup_starts'] = 5
+opt['consistency_rampup_ends'] = 10
+opt['mixup_consistency'] = 0.1
 
 def ensure_dir(d):
     if not os.path.exists(d):
@@ -51,6 +62,13 @@ def run(opt):
     #opt_['save'] = local_path
     os.system(generate_command(opt_))
 
-run(opt)
+for k in range(1):
+    seed = k + 1
+    opt['seed'] = seed
+
+    print(opt['mixup_alpha'])
+    print(opt['mixup_consistency'])
+
+    run(opt)
 
 

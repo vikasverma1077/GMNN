@@ -8,10 +8,19 @@ import torch.nn.functional as F
 from gcn import GCN
 import torch_utils
 
+
+bce_loss = nn.BCELoss().cuda()
+softmax = nn.Softmax(dim=1).cuda()
+class_criterion = nn.CrossEntropyLoss().cuda()
+def mixup_criterion(y_a, y_b, lam):
+            return lambda criterion, pred: lam * criterion(pred, y_a) + (1 - lam) * criterion(pred, y_b)
+
+
 class Trainer(object):
     """ A wrapper class for the training and evaluation of models. """
-    def __init__(self, opt, model):
+    def __init__(self, opt, model, ema= False):
         # options
+        self.ema = ema
         self.opt = opt
         # model
         self.model = model
@@ -23,7 +32,8 @@ class Trainer(object):
         if opt['cuda']:
             self.criterion.cuda()
         # intialize the optimizer
-        self.optimizer = torch_utils.get_optimizer(self.opt['optimizer'], self.parameters, self.opt['lr'], self.opt['decay'])
+        if  self.ema == False:
+            self.optimizer = torch_utils.get_optimizer(self.opt['optimizer'], self.parameters, self.opt['lr'], self.opt['decay'])
 
     def reset(self):
         self.model.reset()
@@ -65,7 +75,7 @@ class Trainer(object):
         
         #loss.backward()
         #self.optimizer.step()
-        return loss.item()
+        return loss
     
     
     def update_soft_aux(self, inputs, target,target_discrete, idx, idx_unlabeled, opt, mixup_layer):
@@ -140,7 +150,7 @@ class Trainer(object):
     def predict_noisy(self, inputs, tau=1):
         if self.opt['cuda']:
             inputs = inputs.cuda()
-
+        inputs = F.dropout(inputs, 0.5, training=True)
         #self.model.eval()
         logits = self.model(inputs) / tau
 

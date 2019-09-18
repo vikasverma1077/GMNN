@@ -26,6 +26,7 @@ parser.add_argument('--hidden_dim', type=int, default=16, help='RNN hidden state
 parser.add_argument('--input_dropout', type=float, default=0.5, help='Input and RNN dropout rate.')
 parser.add_argument('--dropout', type=float, default=0.5, help='Input and RNN dropout rate.')
 parser.add_argument('--optimizer', type=str, default='adam', help='Optional info for the experiment.')
+parser.add_argument('--mixup_alpha', type=float, default=1.0, help='alpha for mixing')
 parser.add_argument('--lr', type=float, default=0.01, help='Applies to SGD and Adagrad.')
 parser.add_argument('--decay', type=float, default=5e-4)
 parser.add_argument('--self_link_weight', type=float, default=1.0)
@@ -87,17 +88,6 @@ dev_file = opt['dataset'] + '/dev.txt'
 test_file = opt['dataset'] + '/test.txt'
 
 
-exp_dir = os.path.join(os.getcwd(),args.save)
-if not os.path.exists(exp_dir):
-    os.makedirs(exp_dir)
-net_temp_file = os.path.join(exp_dir,'net_temp.txt')
-
-
-opt['net_file'] = net_file
-opt['net_temp_file'] = net_temp_file
-
-
-
 vocab_node = loader.Vocab(net_file, [0, 1])
 vocab_label = loader.Vocab(label_file, [1])
 vocab_feature = loader.Vocab(feature_file, [1])
@@ -139,6 +129,16 @@ if opt['cuda']:
 
 gcn = GCN(opt, slices)
 trainer_gcn = Trainer(opt, gcn)
+
+gcn_ema = GCN(opt, slices)
+
+for ema_param, param in zip(gcn_ema.parameters(), gcn.parameters()):
+    ema_param.data= param.data
+
+for param in gcn_ema.parameters():
+    param.detach_()
+
+trainer_gcn_ema = Trainer(opt, gcn_ema, ema = True)
 
 inputs = torch.Tensor(feature.one_hot)
 target = torch.LongTensor(label.itol)
@@ -183,8 +183,16 @@ def auc_data(x, y):
 	z = sorted(z, key=lambda a:a[0], reverse=True)
 	x, y = zip(*z)
 	return np.array(x), np.array(y)
-    
-    
+
+
+def update_ema_variables(model, ema_model, alpha, epoch):
+    # Use the true average until the exponential average is more correct
+    alpha = min(1 - 1 / (epoch + 1), alpha)
+    #print (alpha)
+    for ema_param, param in zip(ema_model.parameters(), model.parameters()):
+        ema_param.data.mul_(alpha).add_(1 - alpha, param.data)
+
+
 def get_current_consistency_weight(final_consistency_weight, epoch):
     # Consistency ramp-up from https://arxiv.org/abs/1610.02242
     epoch = epoch - args.consistency_rampup_starts
@@ -201,8 +209,8 @@ def sharpen(prob, temperature):
     return out
 
 
-def pre_train(epoches):
 
+def pre_train(epoches):
     init_gcn_data()
 
     results = []
@@ -218,14 +226,15 @@ def pre_train(epoches):
 
             ## get the psudolabels for the unlabeled nodes ##
             #import pdb; pdb.set_trace()
+            
             k = 10
             temp  = torch.zeros([k, target_gcn.shape[0], target_gcn.shape[1]], dtype=target_gcn.dtype)
             temp = temp.cuda()
             for i in range(k):
                 temp[i,:,:] = trainer_gcn.predict_noisy(inputs_gcn)
             target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
-
-            #target_predict = trainer_q.predict(inputs_q)
+            
+            #target_predict = trainer_gcn.predict(inputs_gcn)
             target_predict = sharpen(target_predict,0.1)
             #if epoch == 500:
             #    print (target_predict)
@@ -259,7 +268,11 @@ def pre_train(epoches):
         _, preds, accuracy_test = trainer_gcn.evaluate(inputs_gcn, target, idx_test)
         f1_test = f1_score(target[idx_test].cpu().numpy(), preds.cpu().numpy(), average='macro')
 
-        results += [(-loss, f1_test)]
+        results += [(f1_dev, f1_test)]
+        print(epoch, f1_dev, f1_test)
+
+
+        #update_ema_variables(gcn, gcn_ema, opt['ema_decay'], epoch)
 
     return results
 

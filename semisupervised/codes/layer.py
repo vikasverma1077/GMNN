@@ -57,3 +57,18 @@ class message(nn.Module):
         m = ms.squeeze(0)
 
         return m
+
+    def forward_aux(self, x):
+        ms = []
+
+        for k in range(self.tp_size):
+            m_ = torch.mm(x, self.weight[k])
+            #m_ = SparseMM(self.graphs[k])(m_)
+            m_ = m_.unsqueeze(0)
+            ms += [m_]
+
+            ms = torch.cat(ms, dim=0)
+            ms = torch.sum(ms, dim=0)
+            m = ms.squeeze(0)
+
+            return m

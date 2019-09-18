@@ -6,6 +6,19 @@ from torch.nn import init
 from torch.autograd import Variable
 import torch.nn.functional as F
 from layer import message
+import random
+
+
+def mixup_gnn_hidden(x, target, train_idx, alpha):
+    if alpha > 0.:
+        lam = np.random.beta(alpha, alpha)#, size = train_idx.shape[0])#+0.001
+    else:
+        lam = 1.
+    permuted_train_idx = train_idx[torch.randperm(train_idx.shape[0])]
+    x[train_idx] = lam*x[train_idx]+ (1-lam)*x[permuted_train_idx]
+    return x, target[train_idx], target[permuted_train_idx],lam
+
+
 
 class GCN(nn.Module):
     def __init__(self, opt, graphs):
