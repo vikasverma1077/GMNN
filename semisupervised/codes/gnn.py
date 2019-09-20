@@ -454,30 +454,36 @@ class SpGAT(nn.Module):
 
     
     def comp_one_att_head(self, x, head_ind): 
+        x = F.dropout(x, self.opt['dropout'], training=self.training)
         att = self.attentions[head_ind]
         return att(x, self.adj)
 
     def forward(self, x):
         #print('running spgat!')
-        x = F.dropout(x, self.opt['dropout'], training=self.training)
+        #x = F.dropout(x, self.opt['dropout'], training=self.training)
         #print('ran dropout!')
         #print('num attentions', len(self.attentions))
 
+        
         att_layer_lst = []
-        for att_ind in range(len(self.attentions)):
-            att_layer_lst.append(torch.utils.checkpoint.checkpoint(lambda arg_x, arg_ind: self.comp_one_att_head(arg_x, arg_ind), x, att_ind))
 
-        #for att_ind in range(len(self.attentions)):
-        #    att = self.attentions[att_ind]
-        #    print('ran one attn layer!')
-        #    att_layer_lst.append(att(x,self.adj))
-        #    print('shape', att_layer_lst[-1].shape)
+        do_check = False
+        if do_check:
+            for att_ind in range(len(self.attentions)):
+                att_layer_lst.append(torch.utils.checkpoint.checkpoint(lambda arg_x, arg_ind: self.comp_one_att_head(arg_x, arg_ind), x, att_ind))
+        else:
+            for att_ind in range(len(self.attentions)):
+                att = self.attentions[att_ind]
+                att_layer_lst.append(att(x,self.adj))
+        
         x = torch.cat(att_layer_lst, dim=1)
 
         #x = torch.cat([att(x, self.adj) for att in self.attentions], dim=1)
         #print('ran all attn layer!', x.shape)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = F.elu(self.out_att(x, self.adj))
+
+
         #print('finished spgat layers!', x.shape)
         return x
 

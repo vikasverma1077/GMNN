@@ -39,11 +39,17 @@ def run(opt):
     opt_ = copy.deepcopy(opt)
     os.system(generate_command(opt_))
 
-for k in range(1):
-    seed = k + 1
-    print(opt['mixup_alpha'])
-    print(opt['mixup_consistency'])
-    opt['seed'] = seed
-    run(opt)
+for alpha in [1.0, 2.0]:
+    for const in [10.0, 20.0]:
+    
+        opt['mixup_alpha'] = alpha
+        opt['mixup_consistency'] = const
+
+        for k in range(1):
+            seed = k + 1
+            print(opt['mixup_alpha'])
+            print(opt['mixup_consistency'])
+            opt['seed'] = seed
+            run(opt)
 
 

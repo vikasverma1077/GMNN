@@ -78,7 +78,7 @@ parser.add_argument('--consistency_rampup_ends', default=30, type=int, metavar='
 parser.add_argument('--mixup_consistency', default=1.0, type=float,
                     help='max consistency coeff for mixup usup loss')
 
-parser.add_argument('--nheads', type=int, default=6, help='Number of head attentions.')
+parser.add_argument('--nheads', type=int, default=2, help='Number of head attentions.')
 parser.add_argument('--alpha', type=float, default=0.2, help='Alpha for the leaky_relu.')
 parser.add_argument('--patience', type=int, default=100, help='Patience')
 
