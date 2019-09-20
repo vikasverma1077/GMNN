@@ -10,9 +10,17 @@ import os
 from layer import GraphConvolution
 import loader
 from shutil import copyfile
+import seaborn as sns
+from scipy.linalg import svdvals
 
 from sklearn.manifold import TSNE
+import matplotlib
 import matplotlib.pyplot as plt
+
+
+matplotlib.rcParams.update({'font.size': 18})
+matplotlib.rcParams.update({'figure.figsize' : (8, 6)})
+
 
 def mixup_data(x, y, alpha):
     '''Compute the mixup data. Return mixed inputs, pairs of targets, and lambda'''
@@ -338,6 +346,9 @@ class GNNq(nn.Module):
         
         else:
         
+            x = x[train_idx]
+            target = target[train_idx]
+
             x = F.dropout(x, self.opt['input_dropout'], training=self.training)
             x = self.m1.forward_aux(x)
             x1 = x*1.0
@@ -346,11 +357,16 @@ class GNNq(nn.Module):
             x = self.m2.forward_aux(x)
             x2 = x*1.0
 
-            #print('target', target.shape)
 
             xm = x1
-            xm = xm[target > 0]
-            target = target[target > 0]
+
+            eigs = []
+            for ta in range(0, target.max().item()+1):
+                eigs.append(svdvals(xm[target.data.cpu().numpy() == ta].data.cpu().numpy()))
+
+                print("x_" + str(ta) + " = " + str(eigs[-1].tolist()))
+
+            #print(sum(eigs)/len(eigs)).round(8))
 
             idx = torch.randperm(xm.shape[0])
 
@@ -359,7 +375,14 @@ class GNNq(nn.Module):
 
             take = 3000
             xset = xt[idx[0:take]]
-            plt.scatter(xset[:,0], xset[:,1], c = target[idx[0:take]].data.cpu().numpy())
+            #plt.scatter(xset[:,0], xset[:,1], c = target[idx[0:take]].data.cpu().numpy(), cmap = 'tab10')
+
+            #['red', 'green', 'blue', 'brown', 'grey', 'magenta']
+            colors = sns.color_palette('bright')
+            random.seed(46)
+            random.shuffle(colors)
+
+            sns.scatterplot(xset[:,0], xset[:,1], hue = target[idx[0:take]].data.cpu().numpy(), palette = colors[0:target.max().item()+1], legend=None)
 
             plt.show()
 

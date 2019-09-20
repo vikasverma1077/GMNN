@@ -271,7 +271,7 @@ class Trainer(object):
         correct = preds.eq(target[idx]).double()
         accuracy = correct.sum() / idx.size(0)
 
-        if eval_train == True and random.uniform(0,1) < 0.001:
+        if eval_train == True and random.uniform(0,1) < 1.1:
             self.model.forward_aux(inputs, target=target,train_idx=idx, mixup_input=False, mixup_hidden=False, mixup_alpha=0.0, layer_mix=None)
 
         return loss.item(), preds, accuracy.item()

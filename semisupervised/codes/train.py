@@ -335,9 +335,9 @@ def pre_train(epoches):
         #trainer_q.model.adj = adj
         #trainer_q.model.m1.adj = adj
         #trainer_q.model.m2.adj = adj
-        _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train, eval_train=True) ## target_new : for augmented nodes
+        _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train, eval_train=False) ## target_new : for augmented nodes
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
-        _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
+        _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test, eval_train=(epoch==3600))
         _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
         if epoch%400 == 0:

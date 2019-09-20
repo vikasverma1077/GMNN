@@ -14,14 +14,14 @@ opt['optimizer'] = 'adam'
 opt['lr'] = 0.01
 opt['decay'] = 5e-4
 opt['self_link_weight'] = 1.0
-opt['pre_epoch'] = 2000
+opt['pre_epoch'] = 4000
 opt['epoch'] = 100
 opt['iter'] = 1
 opt['use_gold'] = 1
 opt['draw'] = 'smp'
 opt['tau'] = 0.0
 opt['save'] = 'exp_cora'
-opt['mixup_alpha'] =1.0
+opt['mixup_alpha'] = 1.0
 
 
 ### ict hyperparameters ###
