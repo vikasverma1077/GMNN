@@ -15,7 +15,7 @@ opt['lr'] = 0.005
 opt['decay'] = 5e-4
 opt['self_link_weight'] = 1.0
 opt['pre_epoch'] = 2000
-opt['tau'] = 0.0
+opt['tau'] = 0.1
 opt['save'] = 'exp_pubmed'
 
 ### ict hyperparameters ###
@@ -45,3 +45,5 @@ for k in range(1):
     print(opt['mixup_consistency'])
     opt['seed'] = seed
     run(opt)
+
+

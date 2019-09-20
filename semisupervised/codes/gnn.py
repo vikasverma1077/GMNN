@@ -10,6 +10,7 @@ import os
 from layer import *
 import loader
 from shutil import copyfile
+import torch.utils.checkpoint
 
 def mixup_data(x, y, alpha):
     '''Compute the mixup data. Return mixed inputs, pairs of targets, and lambda'''
@@ -450,11 +451,34 @@ class SpGAT(nn.Module):
         if opt['cuda']:
             self.cuda()
 
+
+    
+    def comp_one_att_head(self, x, head_ind): 
+        att = self.attentions[head_ind]
+        return att(x, self.adj)
+
     def forward(self, x):
+        #print('running spgat!')
         x = F.dropout(x, self.opt['dropout'], training=self.training)
-        x = torch.cat([att(x, self.adj) for att in self.attentions], dim=1)
+        #print('ran dropout!')
+        #print('num attentions', len(self.attentions))
+
+        att_layer_lst = []
+        for att_ind in range(len(self.attentions)):
+            att_layer_lst.append(torch.utils.checkpoint.checkpoint(lambda arg_x, arg_ind: self.comp_one_att_head(arg_x, arg_ind), x, att_ind))
+
+        #for att_ind in range(len(self.attentions)):
+        #    att = self.attentions[att_ind]
+        #    print('ran one attn layer!')
+        #    att_layer_lst.append(att(x,self.adj))
+        #    print('shape', att_layer_lst[-1].shape)
+        x = torch.cat(att_layer_lst, dim=1)
+
+        #x = torch.cat([att(x, self.adj) for att in self.attentions], dim=1)
+        #print('ran all attn layer!', x.shape)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = F.elu(self.out_att(x, self.adj))
+        #print('finished spgat layers!', x.shape)
         return x
 
     def forward_aux(self, x, target=None, train_idx= None, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None):
