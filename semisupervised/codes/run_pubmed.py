@@ -39,7 +39,7 @@ def run(opt):
     opt_ = copy.deepcopy(opt)
     os.system(generate_command(opt_))
 
-for k in range(1):
+for k in range(5):
     seed = k + 1
     print(opt['mixup_alpha'])
     print(opt['mixup_consistency'])
