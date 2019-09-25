@@ -1,0 +1,48 @@
+/home/vermavik/virtualenv/al/lib/python3.6/site-packages/torch/utils/checkpoint.py:25: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn("None of the inputs have requires_grad=True. Gradients will be None")
+mix_alpha0.0
+mix_consis0.5
+epoch :   0,loss:0.6338075995,loss_usup:0.6361369491, train_acc:0.633, dev_acc:0.568, test_acc:0.489, test_acc_ema:0.489
+epoch : 400,loss:0.0909878537,loss_usup:0.4623728096, train_acc:0.917, dev_acc:0.776, test_acc:0.737, test_acc_ema:0.737
+epoch : 800,loss:0.0812293589,loss_usup:0.3227964640, train_acc:0.917, dev_acc:0.732, test_acc:0.714, test_acc_ema:0.714
+epoch :1200,loss:0.3696903884,loss_usup:0.2781594992, train_acc:0.850, dev_acc:0.722, test_acc:0.723
+epoch :1600,loss:0.4141957760,loss_usup:0.3194284439, train_acc:0.817, dev_acc:0.696, test_acc:0.709
+input dropout: 0.5, dropout: 0.5, lr: 0.01, tau: 0.1, alpha: 0.0, consistency: 0.5
+Test acc 76.600
+
+/home/vermavik/virtualenv/al/lib/python3.6/site-packages/torch/utils/checkpoint.py:25: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn("None of the inputs have requires_grad=True. Gradients will be None")
+mix_alpha0.0
+mix_consis0.5
+epoch :   0,loss:0.6319200397,loss_usup:0.6361762881, train_acc:0.700, dev_acc:0.562, test_acc:0.586, test_acc_ema:0.586
+epoch : 400,loss:0.0684768707,loss_usup:0.3431731462, train_acc:0.950, dev_acc:0.784, test_acc:0.766, test_acc_ema:0.766
+epoch : 800,loss:0.0601237826,loss_usup:0.3118694723, train_acc:0.933, dev_acc:0.746, test_acc:0.733, test_acc_ema:0.733
+epoch :1200,loss:0.3917095661,loss_usup:0.2793587446, train_acc:0.833, dev_acc:0.712, test_acc:0.708
+epoch :1600,loss:0.0894363970,loss_usup:0.3099668622, train_acc:0.883, dev_acc:0.722, test_acc:0.715, test_acc_ema:0.715
+input dropout: 0.5, dropout: 0.5, lr: 0.01, tau: 0.1, alpha: 0.0, consistency: 0.5
+Test acc 76.700
+
+/home/vermavik/virtualenv/al/lib/python3.6/site-packages/torch/utils/checkpoint.py:25: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn("None of the inputs have requires_grad=True. Gradients will be None")
+mix_alpha0.0
+mix_consis0.5
+epoch :   0,loss:0.6316781640,loss_usup:0.6355833411, train_acc:0.533, dev_acc:0.436, test_acc:0.469, test_acc_ema:0.469
+epoch : 400,loss:0.3203388155,loss_usup:0.4734594226, train_acc:0.950, dev_acc:0.786, test_acc:0.763
+epoch : 800,loss:0.0721412152,loss_usup:0.3661793470, train_acc:0.900, dev_acc:0.750, test_acc:0.727, test_acc_ema:0.727
+epoch :1200,loss:0.1386775076,loss_usup:0.3741157055, train_acc:0.833, dev_acc:0.718, test_acc:0.710, test_acc_ema:0.710
+epoch :1600,loss:0.4034378827,loss_usup:0.4212034941, train_acc:0.833, dev_acc:0.708, test_acc:0.717
+input dropout: 0.5, dropout: 0.5, lr: 0.01, tau: 0.1, alpha: 0.0, consistency: 0.5
+Test acc 76.900
+
+/home/vermavik/virtualenv/al/lib/python3.6/site-packages/torch/utils/checkpoint.py:25: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn("None of the inputs have requires_grad=True. Gradients will be None")
+mix_alpha0.0
+mix_consis0.5
+epoch :   0,loss:0.6393374801,loss_usup:0.6358075738, train_acc:0.600, dev_acc:0.432, test_acc:0.444, test_acc_ema:0.444
+epoch : 400,loss:0.3189254403,loss_usup:0.4205475152, train_acc:0.950, dev_acc:0.782, test_acc:0.751
+epoch : 800,loss:0.3170994520,loss_usup:0.4141262174, train_acc:0.900, dev_acc:0.748, test_acc:0.730
+epoch :1200,loss:0.1132947579,loss_usup:0.3323644996, train_acc:0.800, dev_acc:0.720, test_acc:0.701, test_acc_ema:0.701
+epoch :1600,loss:0.1063484475,loss_usup:0.3719454408, train_acc:0.850, dev_acc:0.710, test_acc:0.721, test_acc_ema:0.721
+input dropout: 0.5, dropout: 0.5, lr: 0.01, tau: 0.1, alpha: 0.0, consistency: 0.5
+Test acc 77.300
+

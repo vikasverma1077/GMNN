@@ -23,10 +23,10 @@ parser.add_argument('--dataset', type=str, default='../data_subset/citeseer/n5v5
 parser.add_argument('--save', type=str, default='exp', help = 'name of the folder where the results are saved')
 parser.add_argument('--hidden_dim', type=int, default=128, help='Hidden dimension.')
 parser.add_argument('--input_dropout', type=float, default=0.5, help='Input dropout rate.')
-parser.add_argument('--dropout', type=float, default=0.5, help='Dropout rate.')
+parser.add_argument('--dropout', type=float, default=0.0, help='Dropout rate.')
 parser.add_argument('--optimizer', type=str, default='adam', help='Optimizer.')
-parser.add_argument('--lr', type=float, default=0.01, help='Learning rate.')
-parser.add_argument('--decay', type=float, default=5e-4, help='Weight decay for optimization')
+parser.add_argument('--lr', type=float, default=0.001, help='Learning rate.')
+parser.add_argument('--decay', type=float, default=1e-4, help='Weight decay for optimization')
 parser.add_argument('--mixup_alpha', type=float, default=1.0, help='alpha for mixing')
 parser.add_argument('--self_link_weight', type=float, default=1.0, help='Weight of self-links.')
 parser.add_argument('--pre_epoch', type=int, default=400, help='Number of pre-training epochs.')
@@ -348,7 +348,7 @@ def run(seed, test_acc = False):
             _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
             _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
             results += [(accuracy_dev, accuracy_test)]
-            if epoch%50 == 0:
+            if epoch%200 == 0:
                 if rand_index == 0:
                     print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
                 else : 

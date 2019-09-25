@@ -1,6 +1,6 @@
 import numpy as np
 import scipy.sparse as sp
-with np.load('/u/79/vermav1/unix/github/gnn-benchmark/data/npz/ms_academic_phy.npz') as loader:
+with np.load('/home/vermavik/github/gnn-benchmark/data/npz/ms_academic_phy.npz', allow_pickle= True) as loader:
         loader = dict(loader)
         adj_matrix = sp.csr_matrix((loader['adj_data'], loader['adj_indices'], loader['adj_indptr']),
                                    shape=loader['adj_shape'])
@@ -37,9 +37,9 @@ adj = np.maximum( adj, adj.transpose() )
 
 
 # create adj matrix
-with open("/u/79/vermav1/unix/github/GMNN/coauthor_physics/adj.txt","w") as file:
+with open("/home/vermavik/github/GMNN/semisupervised/data_subset/coauthor_physics/adj.txt","w") as file:
     for i in np.arange(adj.shape[0]):
-        print (i)
+        #print (i)
         for j in np.arange(adj.shape[1]):
             if adj[i,j]!=0:
                 file.write(str(i)+'\t'+str(j)+'\t'+str(1)+'\n')
@@ -49,10 +49,10 @@ with open("/u/79/vermav1/unix/github/GMNN/coauthor_physics/adj.txt","w") as file
 
 ## create features
 attr = attr_matrix.todense()
-with open("/u/79/vermav1/unix/github/GMNN/coauthor_physics/feature.txt","w") as file:
+with open("/home/vermavik/github/GMNN/semisupervised/data_subset/coauthor_physics/feature.txt","w") as file:
     for i in np.arange(attr.shape[0]):
         line = str(i)+'\t'
-        print (i)
+        #print (i)
         for j in np.arange(attr.shape[1]):
             if attr[i,j]!=0:
                 line = line+str(j)+':'+str(attr[i,j])+' '
@@ -63,9 +63,9 @@ with open("/u/79/vermav1/unix/github/GMNN/coauthor_physics/feature.txt","w") as 
 
 
 # create labels
-with open("/u/79/vermav1/unix/github/GMNN/coauthor_physics/label.txt","w") as file:
+with open("/home/vermavik/github/GMNN/semisupervised/data_subset/coauthor_physics/label.txt","w") as file:
     for i in np.arange(labels.shape[0]):
         line = str(i)+'\t'+str(labels[i])+'\n'
-        print (i)
+        #print (i)
         file.write(line)
     file.close()
