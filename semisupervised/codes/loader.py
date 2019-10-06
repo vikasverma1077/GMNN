@@ -145,30 +145,22 @@ class Graph(object):
             elif w == w_:
                 edges_ += [(u, v, w)]
 
+        self.edges = [[u, v] for u, v, w in edges_]
 
-        for k in vocab:
-            edges_ += [(k, k, self_link_weight)]
+
+        #for k in vocab:
+        #    edges_ += [(k, k, self_link_weight)]
         
-        d = dict()
-        for u, v, w in edges_:
-            d[u] = d.get(u, 0.0) + w
+        #d = dict()
+        #for u, v, w in edges_:
+        #    d[u] = d.get(u, 0.0) + w
         
-        self.edges = [(u, v, w/math.sqrt(d[u]*d[v])) for u, v, w in edges_]
+        #self.edges = [(u, v, w/math.sqrt(d[u]*d[v])) for u, v, w in edges_]
 
     def get_sparse_adjacency(self, cuda=True):
-        shape = torch.Size([self.vocab_n.vocab_size, self.vocab_n.vocab_size])
+        us, vs = zip(*self.edges)
 
-        us, vs, ws = [], [], []
-        for u, v, w in self.edges:
-            us += [u]
-            vs += [v]
-            ws += [w]
-        index = torch.LongTensor([us, vs])
-        value = torch.Tensor(ws)
-        if cuda:
-            index = index.cuda()
-            value = value.cuda()
-        adj = torch.sparse.FloatTensor(index, value, shape)
+        adj = torch.LongTensor(list([us, vs]))
         if cuda:
             adj = adj.cuda()
 

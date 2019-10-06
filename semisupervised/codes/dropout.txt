@@ -1,0 +1,48 @@
+input dropout: 0.0, dropout: 0.0, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 81.200
+
+input dropout: 0.2, dropout: 0.0, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 81.400
+
+input dropout: 0.5, dropout: 0.0, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 81.500
+
+input dropout: 0.6, dropout: 0.0, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 81.300
+
+input dropout: 0.0, dropout: 0.2, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 81.900
+
+input dropout: 0.2, dropout: 0.2, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 81.800
+
+input dropout: 0.5, dropout: 0.2, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 80.100
+
+input dropout: 0.6, dropout: 0.2, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 80.900
+
+input dropout: 0.0, dropout: 0.5, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 79.900
+
+input dropout: 0.2, dropout: 0.5, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 80.800
+
+input dropout: 0.5, dropout: 0.5, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 81.500
+
+input dropout: 0.6, dropout: 0.5, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 80.800
+
+input dropout: 0.0, dropout: 0.6, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 80.000
+
+input dropout: 0.2, dropout: 0.6, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 81.200
+
+input dropout: 0.5, dropout: 0.6, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 79.700
+
+input dropout: 0.6, dropout: 0.6, lr: 0.005, tau: 0.1, alpha: 1.0, consistency: 1.0
+Test acc 78.800
+

@@ -10,6 +10,7 @@ import os
 from layer import *
 import loader
 from shutil import copyfile
+from torch_geometric.nn import GATConv
 
 def mixup_data(x, y, alpha):
     '''Compute the mixup data. Return mixed inputs, pairs of targets, and lambda'''
@@ -488,3 +489,57 @@ class SpGAT(nn.Module):
             x = F.dropout(x, self.opt['dropout'], training=self.training)
             x = self.out_att.forward_aux(x, self.adj)
             return x
+
+
+class GAT(nn.Module):
+    def __init__(self, opt, adj):
+        """Sparse version of GAT."""
+        super(GAT, self).__init__()
+        self.opt = opt
+        self.adj = adj
+
+        self.conv1 = GATConv(opt['num_feature'], opt['hidden_dim'], heads=opt['nheads'], dropout=opt['dropout'])
+        self.conv2 = GATConv(
+            opt['nheads'] * opt['hidden_dim'], opt['num_class'], heads=1, concat=True, dropout=opt['dropout'])
+
+        if opt['cuda']:
+            self.cuda()
+
+    def forward(self, x):
+        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+        x = F.elu(self.conv1(x, self.adj))
+        x = F.dropout(x, self.opt['dropout'], training=self.training)
+        x = self.conv2(x, self.adj)
+        return x
+
+    def forward_aux(self, x, target=None, train_idx= None, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None):
+        
+        if mixup_hidden == True or mixup_input == True:
+            if mixup_hidden == True:
+                layer_mix = random.choice(layer_mix)
+            elif mixup_input == True:
+                layer_mix = 0
+
+    
+            if layer_mix ==0:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = F.relu(torch.mm(x, self.conv1.weight))
+
+            if layer_mix == 1:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = F.relu(torch.mm(x, self.conv2.weight))
+            
+            return x, target_a, target_b, lam
+        
+        else:
+        
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = F.relu(torch.mm(x, self.conv1.weight))
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = F.relu(torch.mm(x, self.conv2.weight))
+            return x
+

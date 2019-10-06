@@ -20,13 +20,13 @@ opt['save'] = 'exp_cora'
 
 ### ict hyperparameters ###
 
-opt['mixup_alpha'] = 1.0
+opt['mixup_alpha'] = 2.0
 
 opt['ema_decay'] = 0.999
 opt['consistency_type'] = "mse"
 opt['consistency_rampup_starts'] = 500
 opt['consistency_rampup_ends'] = 1000
-opt['mixup_consistency'] = 10.0
+opt['mixup_consistency'] = 1.0
 
 
 
@@ -41,9 +41,9 @@ def run(opt):
     os.system(generate_command(opt_))
 
 
-for k in range(0, 10):
+for k in range(1):
     seed = k + 1
 
     run(opt)
 
-                            #exit()
+    exit()
