@@ -37,6 +37,7 @@ def generate_command(opt):
     cmd = 'python3 train.py'
     for opt, val in opt.items():
         cmd += ' --' + opt + ' ' + str(val)
+    print(cmd)
     return cmd
 
 def run(opt):

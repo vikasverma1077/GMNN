@@ -77,7 +77,17 @@ class EntityFeature(object):
         fi.close()
 
     def to_one_hot(self, binary=False):
+
+        sparse_onehot = torch.sparse.FloatTensor(len(self.vocab_n), len(self.vocab_f))
+
+        print('made sparse', sparse_onehot.shape)
+        #print('one hot size', len(self.vocab_f), len(self.vocab_n))
+
+        #sparse_onehot[10,10] = 0.5
+        #sparse_onehot[5,9] = 1
+
         self.one_hot = [[0 for j in range(len(self.vocab_f))] for i in range(len(self.vocab_n))]
+        
         for k in range(len(self.vocab_n)):
             sm = 0
             for fid, wt in self.itof[k]:

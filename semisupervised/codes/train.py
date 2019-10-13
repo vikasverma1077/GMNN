@@ -88,6 +88,8 @@ if args.cpu:
 elif args.cuda:
     torch.cuda.manual_seed(args.seed)
 
+print('cuda?', args.cuda)
+
 opt = vars(args)
 
 
@@ -106,6 +108,7 @@ if not os.path.exists(exp_dir):
     os.makedirs(exp_dir)
 net_temp_file = os.path.join(exp_dir,'net_temp.txt')
 
+print('setup-2')
 
 opt['net_file'] = net_file
 opt['net_temp_file'] = net_temp_file
@@ -121,14 +124,18 @@ opt['num_node'] = len(vocab_node)
 opt['num_feature'] = len(vocab_feature)
 opt['num_class'] = len(vocab_label)
 
+print('vocab loaded')
 
 graph = loader.Graph(file_name=net_file, entity=[vocab_node, 0, 1])
 label = loader.EntityLabel(file_name=label_file, entity=[vocab_node, 0], label=[vocab_label, 1])
 feature = loader.EntityFeature(file_name=feature_file, entity=[vocab_node, 0], feature=[vocab_feature, 1])
 #import pdb; pdb.set_trace()
 graph.to_symmetric(opt['self_link_weight'])
+print("about to do feature one hot")
 feature.to_one_hot(binary=True)
 adj = graph.get_sparse_adjacency(opt['cuda'])
+
+print('got sparse adjacency')
 
 with open(train_file, 'r') as fi:
     idx_train = [vocab_node.stoi[line.strip()] for line in fi]
@@ -137,6 +144,8 @@ with open(dev_file, 'r') as fi:
 with open(test_file, 'r') as fi:
     idx_test = [vocab_node.stoi[line.strip()] for line in fi]
 idx_all = list(range(opt['num_node']))
+
+print('setup-1')
 
 #import pdb; pdb.set_trace()
 idx_unlabeled = list(set(idx_all)-set(idx_train))
@@ -153,6 +162,7 @@ target_q = torch.zeros(opt['num_node'], opt['num_class'])
 inputs_p = torch.zeros(opt['num_node'], opt['num_class'])
 target_p = torch.zeros(opt['num_node'], opt['num_class'])
 
+print('put on gpu')
 if opt['cuda']:
     inputs = inputs.cuda()
     target = target.cuda()
@@ -171,6 +181,8 @@ gnnq = GNNq(opt, adj)
 #gnnq = GNN_mix(opt, adj)
 trainer_q = Trainer(opt, gnnq)
 
+print('setup0')
+
 # Build the ema model
 gnnq_ema = GNNq(opt, adj)
 
@@ -182,7 +194,7 @@ for param in gnnq_ema.parameters():
 trainer_q_ema = Trainer(opt, gnnq_ema, ema = False)
 
 
-
+print('setup1')
 
 gnnp = GNNp(opt, adj)
 trainer_p = Trainer(opt, gnnp)

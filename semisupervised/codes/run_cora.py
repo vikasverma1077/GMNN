@@ -23,7 +23,6 @@ opt['tau'] = 0.0
 opt['save'] = 'exp_cora'
 opt['mixup_alpha'] =1.0
 
-
 ### ict hyperparameters ###
 opt['ema_decay'] = 0.999
 opt['consistency_type'] = "mse"
@@ -37,6 +36,7 @@ def generate_command(opt):
     cmd = 'python3 train.py'
     for opt, val in opt.items():
         cmd += ' --' + opt + ' ' + str(val)
+    print(cmd)
     return cmd
 
 def run(opt):
