@@ -288,7 +288,9 @@ class GNNq(nn.Module):
         self.m2.reset_parameters()
 
     def forward(self, x):
-        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+        '''TODO can't do input dropout'''
+        #x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+        
         x = self.m1(x)
         x = F.relu(x)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
@@ -321,9 +323,11 @@ class GNNq(nn.Module):
             if layer_mix ==0:
                 x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
 
-            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            '''todo can't do input dropout on sparse layer'''
+            #x = F.dropout(x, self.opt['input_dropout'], training=self.training)
     
             x = self.m1.forward_aux(x)
+
             x = F.relu(x)
             if layer_mix == 1:
                 x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)

@@ -80,14 +80,21 @@ class EntityFeature(object):
 
         sparse_onehot = torch.sparse.FloatTensor(len(self.vocab_n), len(self.vocab_f))
 
-        print('made sparse', sparse_onehot.shape)
+        #print('made sparse', sparse_onehot.shape)
         #print('one hot size', len(self.vocab_f), len(self.vocab_n))
-
         #sparse_onehot[10,10] = 0.5
         #sparse_onehot[5,9] = 1
 
-        self.one_hot = [[0 for j in range(len(self.vocab_f))] for i in range(len(self.vocab_n))]
+        #list of indices and values.  
+
+        #sparse_onehot[(10,5)] = 3.0
+
+        #self.one_hot = [[0 for j in range(len(self.vocab_f))] for i in range(len(self.vocab_n))]
         
+        keylst1 = []
+        keylst2 = []
+        vallst = []
+
         for k in range(len(self.vocab_n)):
             sm = 0
             for fid, wt in self.itof[k]:
@@ -97,7 +104,26 @@ class EntityFeature(object):
             for fid, wt in self.itof[k]:
                 if binary:
                     wt = 1.0
-                self.one_hot[k][fid] = wt/sm ### one_hot value (1) is divided by total number of features present in the node. I dont understand this.
+                #self.one_hot[k][fid] = wt/sm ### one_hot value (1) is divided by total number of features present in the node. I dont understand this.
+                keylst1.append([k, fid])
+                vallst.append(wt/sm)
+
+        print('lens', len(keylst1), len(vallst))
+
+        #keylst1 = keylst1[:5]
+        #vallst = vallst[:5]
+
+        indices = torch.LongTensor(keylst1)
+        values = torch.FloatTensor(vallst)
+
+        print('indices shape', indices.shape)
+        print('values shape', values.shape)
+
+        print(indices, values)
+
+        self.one_hot_sparse = torch.sparse.FloatTensor(indices.t(), values, torch.Size([indices[:,0].max() + 1, indices[:,1].max() + 1]))
+
+        print('sparse one hot done!')
 
 class Graph(object):
     def __init__(self, file_name, entity, weight=None):

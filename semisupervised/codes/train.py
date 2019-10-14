@@ -150,14 +150,19 @@ print('setup-1')
 #import pdb; pdb.set_trace()
 idx_unlabeled = list(set(idx_all)-set(idx_train))
 #idx_unlabeled = random.sample(idx_unlabeled, len(idx_train))
-inputs = torch.Tensor(feature.one_hot)
+#inputs = torch.Tensor(feature.one_hot)
+
+inputs = feature.one_hot_sparse
+
+print('inputs shape', inputs.shape)
+
 target = torch.LongTensor(label.itol)
 idx_train = torch.LongTensor(idx_train)
 idx_dev = torch.LongTensor(idx_dev)
 idx_test = torch.LongTensor(idx_test)
 idx_all = torch.LongTensor(idx_all)
 idx_unlabeled = torch.LongTensor(idx_unlabeled)
-inputs_q = torch.zeros(opt['num_node'], opt['num_feature'])
+inputs_q = torch.sparse.FloatTensor(opt['num_node'], opt['num_feature'])#zeros(opt['num_node'], opt['num_feature'])
 target_q = torch.zeros(opt['num_node'], opt['num_class'])
 inputs_p = torch.zeros(opt['num_node'], opt['num_class'])
 target_p = torch.zeros(opt['num_node'], opt['num_class'])
