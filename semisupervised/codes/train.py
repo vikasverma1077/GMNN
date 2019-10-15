@@ -282,7 +282,8 @@ def run(seed, test_acc = False):
                 
                 ## get the psudolabels for the unlabeled nodes ##
                 #import pdb; pdb.set_trace()
-                
+                trainer_q.model.train()
+                trainer_q.optimizer.zero_grad()
                 k = 10
                 temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
                 temp = temp.cuda()
@@ -303,13 +304,14 @@ def run(seed, test_acc = False):
                 loss , loss_usup= trainer_q.update_soft_aux(inputs_q, target_q, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[1])## for augmented nodes
                 mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
                 total_loss = loss + mixup_consistency*loss_usup
-                trainer_q.model.train()
-                trainer_q.optimizer.zero_grad()
+                #trainer_q.model.train()
+                #trainer_q.optimizer.zero_grad()
                 total_loss.backward()
                 trainer_q.optimizer.step()
     
             else:
-                
+                trainer_q.model.train()
+                trainer_q.optimizer.zero_grad() 
                 loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
                 
                 """
@@ -332,8 +334,8 @@ def run(seed, test_acc = False):
                 """
                 
                 total_loss = loss
-                trainer_q.model.train()
-                trainer_q.optimizer.zero_grad()
+                #trainer_q.model.train()
+                #trainer_q.optimizer.zero_grad()
                 total_loss.backward()
                 trainer_q.optimizer.step()
             #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
