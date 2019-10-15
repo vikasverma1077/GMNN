@@ -8,7 +8,7 @@ opt = dict()
 
 opt['dataset'] = '../data/pubmed'
 opt['hidden_dim'] = 16
-opt['input_dropout'] = 0.2
+opt['input_dropout'] = 0.5
 opt['dropout'] = 0
 opt['optimizer'] = 'adam'
 opt['lr'] = 0.01

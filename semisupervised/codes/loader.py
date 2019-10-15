@@ -31,7 +31,6 @@ class Vocab(object):
                         self.itos.append(string)
                         self.vocab_size += 1
         fi.close()
-
     def __len__(self):
         return self.vocab_size
 
@@ -41,7 +40,6 @@ class EntityLabel(object):
         self.vocab_n, self.col_n = entity
         self.vocab_l, self.col_l = label
         self.itol = [-1 for k in range(self.vocab_n.vocab_size)]
-
         fi = open(file_name, 'r')
         for line in fi:
             items = line.strip().split('\t')
