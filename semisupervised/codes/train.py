@@ -223,7 +223,8 @@ def pre_train(epoches):
     for epoch in range(epoches):
         rand_index = random.randint(0,1)
         if rand_index == 0: ## do the augmented node training
-
+	    trainer_q.model.train()
+            trainer_q.optimizer.zero_grad()
             ## get the psudolabels for the unlabeled nodes ##
             #import pdb; pdb.set_trace()
             
@@ -247,16 +248,18 @@ def pre_train(epoches):
             loss , loss_usup= trainer_gcn.update_soft_aux(inputs_gcn, target_gcn, target, idx_train, idx_unlabeled_subset, opt, mixup_layer =[1])## for augmented nodes
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
-            trainer_gcn.model.train()
-            trainer_gcn.optimizer.zero_grad()
+            #trainer_gcn.model.train()
+            #trainer_gcn.optimizer.zero_grad()
             total_loss.backward()
             trainer_gcn.optimizer.step()
 
         else:
+	    trainer_q.model.train()
+            trainer_q.optimizer.zero_grad()
             loss = trainer_gcn.update_soft(inputs_gcn, target_gcn, idx_train)
             total_loss = loss
-            trainer_gcn.model.train()
-            trainer_gcn.optimizer.zero_grad()
+            #trainer_gcn.model.train()
+            #trainer_gcn.optimizer.zero_grad()
             total_loss.backward()
             trainer_gcn.optimizer.step()
 
