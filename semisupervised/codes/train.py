@@ -277,7 +277,8 @@ def pre_train(epoches):
         ### create mix of feature and labels
         rand_index = random.randint(0,1)
         if rand_index == 0: ## do the augmented node training
-            
+            trainer_q.model.train()
+            trainer_q.optimizer.zero_grad()
             ## get the psudolabels for the unlabeled nodes ##
             #import pdb; pdb.set_trace()
             
@@ -302,8 +303,8 @@ def pre_train(epoches):
             loss , loss_usup= trainer_q.update_soft_aux(inputs_q, target_q, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[1])## for augmented nodes
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
-            trainer_q.model.train()
-            trainer_q.optimizer.zero_grad()
+            #trainer_q.model.train()
+            #trainer_q.optimizer.zero_grad()
             total_loss.backward()
             trainer_q.optimizer.step()
 
@@ -312,6 +313,8 @@ def pre_train(epoches):
         else:
             
             #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
+            trainer_q.model.train()
+            trainer_q.optimizer.zero_grad()
             loss = trainer_q.update(inputs, target, idx_train)
             
             """
