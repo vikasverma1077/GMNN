@@ -117,6 +117,7 @@ vocab_node = loader.Vocab(net_file, [0, 1])
 vocab_label = loader.Vocab(label_file, [1])
 vocab_feature = loader.Vocab(feature_file, [1])
 
+#import pdb; pdb.set_trace()
 opt['num_node'] = len(vocab_node)
 opt['num_feature'] = len(vocab_feature)
 opt['num_class'] = len(vocab_label)
@@ -265,7 +266,8 @@ def pre_train(epoches):
         ### create mix of feature and labels
         rand_index = random.randint(0,1)
         if rand_index == 0: ## do the augmented node training
-            
+            trainer_q.model.train()
+            trainer_q.optimizer.zero_grad()
             ## get the psudolabels for the unlabeled nodes ##
             #import pdb; pdb.set_trace()
             
@@ -274,8 +276,7 @@ def pre_train(epoches):
             temp = temp.cuda()
             for i in range(k):
                 temp[i,:,:] = trainer_q.predict_noisy(inputs_q)
-            target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
-            
+            target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q) 
             #target_predict = trainer_q.predict(inputs_q)
             target_predict = sharpen(target_predict,0.1)
             #if epoch == 500:
@@ -289,13 +290,14 @@ def pre_train(epoches):
             loss , loss_usup= trainer_q.update_soft_aux(inputs_q, target_q, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[1])## for augmented nodes
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
-            trainer_q.model.train()
-            trainer_q.optimizer.zero_grad()
+            #trainer_q.model.train()
+            #trainer_q.optimizer.zero_grad()
             total_loss.backward()
             trainer_q.optimizer.step()
 
         else:
-            
+            trainer_q.model.train()
+            trainer_q.optimizer.zero_grad()
             loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
             
             """
@@ -318,8 +320,8 @@ def pre_train(epoches):
             """
             
             total_loss = loss
-            trainer_q.model.train()
-            trainer_q.optimizer.zero_grad()
+            #trainer_q.model.train()
+            #trainer_q.optimizer.zero_grad()
             total_loss.backward()
             trainer_q.optimizer.step()
         #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
@@ -334,7 +336,7 @@ def pre_train(epoches):
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
-        if epoch%400 == 0:
+        if epoch%200 == 0:
             if rand_index == 0:
                 print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
             else : 
