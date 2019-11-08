@@ -29,7 +29,7 @@ parser.add_argument('--lr', type=float, default=0.001, help='Learning rate.')
 parser.add_argument('--decay', type=float, default=1e-4, help='Weight decay for optimization')
 parser.add_argument('--mixup_alpha', type=float, default=1.0, help='alpha for mixing')
 parser.add_argument('--self_link_weight', type=float, default=1.0, help='Weight of self-links.')
-parser.add_argument('--pre_epoch', type=int, default=400, help='Number of pre-training epochs.')
+parser.add_argument('--pre_epoch', type=int, default=2000, help='Number of pre-training epochs.')
 parser.add_argument('--epoch', type=int, default=200, help='Number of training epochs per iteration.')
 parser.add_argument('--iter', type=int, default=10, help='Number of training iterations.')
 parser.add_argument('--use_gold', type=int, default=1, help='Whether using the ground-truth label of labeled objects, 1 for using, 0 for not using.')
@@ -70,9 +70,9 @@ parser.add_argument('--ema_decay', default=0.999, type=float, metavar='ALPHA',
 parser.add_argument('--consistency_type', default="mse", type=str, metavar='TYPE',
                     choices=['mse', 'kl'],
                     help='consistency loss type to use')
-parser.add_argument('--consistency_rampup_starts', default=100, type=int, metavar='EPOCHS',
+parser.add_argument('--consistency_rampup_starts', default=500, type=int, metavar='EPOCHS',
                     help='epoch at which consistency loss ramp-up starts')
-parser.add_argument('--consistency_rampup_ends', default=300, type=int, metavar='EPOCHS',
+parser.add_argument('--consistency_rampup_ends', default=1000, type=int, metavar='EPOCHS',
                     help='epoch at which consistency loss ramp-up ends')
 #parser.add_argument('--mixup_sup_alpha', default=0.0, type=float,
 #                    help='for supervised loss, the alpha parameter for the beta distribution from where the mixing lambda is drawn')
@@ -107,9 +107,9 @@ def run(seed, test_acc = False):
     net_file = opt['dataset'] + '/net.txt'
     label_file = opt['dataset'] + '/label.txt'
     feature_file = opt['dataset'] + '/feature.txt'
-    train_file = opt['dataset'] + '/train.txt'
-    dev_file = opt['dataset'] + '/dev.txt'
-    test_file = opt['dataset'] + '/test.txt'
+    train_file = opt['dataset'] + '/train_temp.txt'
+    dev_file = opt['dataset'] + '/dev_temp.txt'
+    test_file = opt['dataset'] + '/test_temp.txt'
     
     #import pdb;pdb.set_trace()
     ### create a temporart net file
@@ -278,6 +278,7 @@ def run(seed, test_acc = False):
                 rand_index = 1
             else:
                 rand_index =  random.randint(0,1)
+            rand_index =0
             if rand_index == 0: ## do the augmented node training
                 
                 ## get the psudolabels for the unlabeled nodes ##
@@ -288,7 +289,7 @@ def run(seed, test_acc = False):
                 temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
                 temp = temp.cuda()
                 for i in range(k):
-                    temp[i,:,:] = trainer_q.predict_noisy(inputs_q)
+                    temp[i,:,:] = trainer_q.predict_noisy_aux(inputs_q)
                 target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
                 
                 #target_predict = trainer_q.predict(inputs_q)
@@ -314,7 +315,7 @@ def run(seed, test_acc = False):
                 trainer_q.optimizer.zero_grad() 
                 loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
                 
-                """
+                ### using the predicted labels##
                 k = 10
                 temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
                 temp = temp.cuda()
@@ -331,9 +332,10 @@ def run(seed, test_acc = False):
     
                 mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
                 total_loss = loss + mixup_consistency*loss_usup
-                """
                 
-                total_loss = loss
+                ## using the predicted_labels finishes here##
+                
+                #total_loss = loss
                 #trainer_q.model.train()
                 #trainer_q.optimizer.zero_grad()
                 total_loss.backward()
@@ -496,7 +498,7 @@ print('best_mixup_consistency_'+ str(args.mixup_consistency))
 
 
 acc_list =[]
-for i in np.arange(1):
+for i in np.arange(5):
     acc_list.append(run(seed=i, test_acc=True))
     
 acc = np.asarray(acc_list)

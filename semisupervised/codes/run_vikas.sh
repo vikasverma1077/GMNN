@@ -34,6 +34,9 @@ source /home/vermavik/virtualenv/al/bin/activate
 #python train.py --dataset ../data_subset/pubmed/n20/1 --only_gnn --do_range 0.5 --mixup_alpha_range 0.0 --consis_coeff_range 0.0
 #python train.py --dataset ../data_subset/pubmed/n20/2 --only_gnn --do_range 0.5 --mixup_alpha_range 0.0 --consis_coeff_range 0.0
 #python train.py --dataset ../data_subset/pubmed/n20/3 --only_gnn --do_range 0.5 --mixup_alpha_range 0.0 --consis_coeff_range 0.0
-python train.py --dataset ../data_subset/pubmed/n20/4 --only_gnn --do_range 0.5 --mixup_alpha_range 0.0 --consis_coeff_range 0.0
-python train.py --dataset ../data_subset/pubmed/n20/5 --only_gnn --do_range 0.5 --mixup_alpha_range 0.0 --consis_coeff_range 0.0
-
+#python train.py --dataset ../data_subset/pubmed/n20/4 --only_gnn --do_range 0.5 --mixup_alpha_range 0.0 --consis_coeff_range 0.0
+python train.py --dataset ../data_subset/cora/n20/1 --hidden_dim 16 --input_dropout 0.5 --dropout 0.0 --lr 0.01 --decay 0.00001 --mixup_alpha 1.0 --mixup_consistency 1.0  --only_gnn
+python train.py --dataset ../data_subset/cora/n20/2 --hidden_dim 16 --input_dropout 0.5 --dropout 0.0 --lr 0.01 --decay 0.00001 --mixup_alpha 1.0 --mixup_consistency 1.0  --only_gnn
+python train.py --dataset ../data_subset/cora/n20/3 --hidden_dim 16 --input_dropout 0.5 --dropout 0.0 --lr 0.01 --decay 0.00001 --mixup_alpha 1.0 --mixup_consistency 1.0  --only_gnn
+python train.py --dataset ../data_subset/cora/n20/4 --hidden_dim 16 --input_dropout 0.5 --dropout 0.0 --lr 0.01 --decay 0.00001 --mixup_alpha 1.0 --mixup_consistency 1.0  --only_gnn
+python train.py --dataset ../data_subset/cora/n20/5 --hidden_dim 16 --input_dropout 0.5 --dropout 0.0 --lr 0.01 --decay 0.00001 --mixup_alpha 1.0 --mixup_consistency 1.0  --only_gnn
