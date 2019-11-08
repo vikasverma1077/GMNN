@@ -22,15 +22,15 @@ from losses import *
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='data')
 parser.add_argument('--save', type=str, default='/')
-parser.add_argument('--hidden_dim', type=int, default=16, help='RNN hidden state size.')
+parser.add_argument('--hidden_dim', type=int, default=128, help='RNN hidden state size.')
 parser.add_argument('--input_dropout', type=float, default=0.5, help='Input and RNN dropout rate.')
-parser.add_argument('--dropout', type=float, default=0.5, help='Input and RNN dropout rate.')
+parser.add_argument('--dropout', type=float, default=0.0, help='Input and RNN dropout rate.')
 parser.add_argument('--optimizer', type=str, default='adam', help='Optional info for the experiment.')
-parser.add_argument('--mixup_alpha', type=float, default=1.0, help='alpha for mixing')
+parser.add_argument('--mixup_alpha', type=float, default=0.1, help='alpha for mixing')
 parser.add_argument('--lr', type=float, default=0.01, help='Applies to SGD and Adagrad.')
-parser.add_argument('--decay', type=float, default=5e-4)
+parser.add_argument('--decay', type=float, default=0)
 parser.add_argument('--self_link_weight', type=float, default=1.0)
-parser.add_argument('--pre_epoch', type=int, default=200)
+parser.add_argument('--pre_epoch', type=int, default=150)
 parser.add_argument('--epoch', type=int, default=200)
 parser.add_argument('--iter', type=int, default=10)
 parser.add_argument('--use_gold', type=int, default=1)
@@ -49,9 +49,9 @@ parser.add_argument('--ema_decay', default=0.999, type=float, metavar='ALPHA',
 parser.add_argument('--consistency_type', default="mse", type=str, metavar='TYPE',
                      choices=['mse', 'kl'],
                      help='consistency loss type to use')
-parser.add_argument('--consistency_rampup_starts', default=30, type=int, metavar='EPOCHS',
+parser.add_argument('--consistency_rampup_starts', default=75, type=int, metavar='EPOCHS',
                      help='epoch at which consistency loss ramp-up starts')
-parser.add_argument('--consistency_rampup_ends', default=30, type=int, metavar='EPOCHS',
+parser.add_argument('--consistency_rampup_ends', default=150, type=int, metavar='EPOCHS',
                      help='lepoch at which consistency loss ramp-up ends')
 #parser.add_argument('--mixup_sup_alpha', default=0.0, type=float,
 #                    help='for supervised loss, the alpha parameter for the beta distribution from where the mixing lambda is drawn')
@@ -61,7 +61,7 @@ parser.add_argument('--consistency_rampup_ends', default=30, type=int, metavar='
 #                    help='apply mixup in hidden layers')
 #parser.add_argument('--num_mix_layer', default=3, type=int,
 #                    help='number of hidden layers on which mixup is applied in addition to input layer')
-parser.add_argument('--mixup_consistency', default=1.0, type=float,
+parser.add_argument('--mixup_consistency', default=0.1, type=float,
                      help='max consistency coeff for mixup usup loss')
 
 
