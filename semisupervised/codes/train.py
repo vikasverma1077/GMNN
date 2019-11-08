@@ -223,38 +223,38 @@ def pre_train(epoches):
     for epoch in range(epoches):
         rand_index = random.randint(0,1)
         if rand_index == 0: ## do the augmented node training
-	    trainer_q.model.train()
-            trainer_q.optimizer.zero_grad()
-            ## get the psudolabels for the unlabeled nodes ##
-            #import pdb; pdb.set_trace()
-            
-            k = 10
-            temp  = torch.zeros([k, target_gcn.shape[0], target_gcn.shape[1]], dtype=target_gcn.dtype)
-            temp = temp.cuda()
-            for i in range(k):
-                temp[i,:,:] = trainer_gcn.predict_noisy(inputs_gcn)
-            target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
-            
-            #target_predict = trainer_gcn.predict(inputs_gcn)
-            target_predict = sharpen(target_predict,0.1)
-            #if epoch == 500:
-            #    print (target_predict)
-            target_gcn[idx_unlabeled] = target_predict[idx_unlabeled]
-            #inputs_q_new, target_q_new, idx_train_new = get_augmented_network_input(inputs_q, target_q,idx_train,opt, net_file, net_temp_file) ## get the augmented nodes in the input space
-            #idx_train_new = 
-            #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features
-            temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
-            idx_unlabeled_subset = idx_unlabeled[temp]
-            loss , loss_usup= trainer_gcn.update_soft_aux(inputs_gcn, target_gcn, target, idx_train, idx_unlabeled_subset, opt, mixup_layer =[1])## for augmented nodes
-            mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
-            total_loss = loss + mixup_consistency*loss_usup
-            #trainer_gcn.model.train()
-            #trainer_gcn.optimizer.zero_grad()
-            total_loss.backward()
-            trainer_gcn.optimizer.step()
+    	        trainer_q.model.train()
+                trainer_q.optimizer.zero_grad()
+                ## get the psudolabels for the unlabeled nodes ##
+                #import pdb; pdb.set_trace()
+                
+                k = 10
+                temp  = torch.zeros([k, target_gcn.shape[0], target_gcn.shape[1]], dtype=target_gcn.dtype)
+                temp = temp.cuda()
+                for i in range(k):
+                    temp[i,:,:] = trainer_gcn.predict_noisy(inputs_gcn)
+                target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
+                
+                #target_predict = trainer_gcn.predict(inputs_gcn)
+                target_predict = sharpen(target_predict,0.1)
+                #if epoch == 500:
+                #    print (target_predict)
+                target_gcn[idx_unlabeled] = target_predict[idx_unlabeled]
+                #inputs_q_new, target_q_new, idx_train_new = get_augmented_network_input(inputs_q, target_q,idx_train,opt, net_file, net_temp_file) ## get the augmented nodes in the input space
+                #idx_train_new = 
+                #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features
+                temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
+                idx_unlabeled_subset = idx_unlabeled[temp]
+                loss , loss_usup= trainer_gcn.update_soft_aux(inputs_gcn, target_gcn, target, idx_train, idx_unlabeled_subset, opt, mixup_layer =[1])## for augmented nodes
+                mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
+                total_loss = loss + mixup_consistency*loss_usup
+                #trainer_gcn.model.train()
+                #trainer_gcn.optimizer.zero_grad()
+                total_loss.backward()
+                trainer_gcn.optimizer.step()
 
         else:
-	    trainer_q.model.train()
+            trainer_q.model.train()
             trainer_q.optimizer.zero_grad()
             loss = trainer_gcn.update_soft(inputs_gcn, target_gcn, idx_train)
             total_loss = loss
