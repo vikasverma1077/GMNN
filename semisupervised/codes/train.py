@@ -79,6 +79,7 @@ parser.add_argument('--mixup_consistency', default=1.0, type=float,
 
 args = parser.parse_args()
 
+print('args', args)
 
 torch.manual_seed(args.seed)
 np.random.seed(args.seed)
@@ -281,11 +282,17 @@ def pre_train(epoches):
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
         rand_index = random.randint(0,1)
+        #rand_index = 1
+        if random.uniform(0,1) < 0.01:
+            #print("Using gcn")
+            print("Using graphmix")
         if rand_index == 0: ## do the augmented node training
             
             ## get the psudolabels for the unlabeled nodes ##
             #import pdb; pdb.set_trace()
             
+            trainer_q.model.train()
+
             k = 10
             temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
             temp = temp.cuda()
@@ -312,7 +319,8 @@ def pre_train(epoches):
             trainer_q.optimizer.step()
 
         else:
-            
+            #print('trainer q soft update')
+            trainer_q.model.train()
             loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
             
             """

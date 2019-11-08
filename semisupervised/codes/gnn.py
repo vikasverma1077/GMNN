@@ -11,6 +11,8 @@ from layer import GraphConvolution
 import loader
 from shutil import copyfile
 
+from sparse_dropout import sparse_dropout
+
 def mixup_data(x, y, alpha):
     '''Compute the mixup data. Return mixed inputs, pairs of targets, and lambda'''
     if alpha > 0.:
@@ -114,7 +116,7 @@ class GNN_mix(nn.Module):
             if layer_mix ==0:
                 x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
 
-            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = sparse_dropout(x, self.opt['input_dropout'], training=self.training)
     
             x = self.m1(x)
             x = F.relu(x)
@@ -140,7 +142,7 @@ class GNN_mix(nn.Module):
 
             return x, target_a, target_b, lam
         else:
-            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = sparse_dropout(x, self.opt['input_dropout'], training=self.training)
             x = self.m1(x)
             x = F.relu(x)
             x = F.dropout(x, self.opt['dropout'], training=self.training)
@@ -290,19 +292,20 @@ class GNNq(nn.Module):
     def forward(self, x):
         '''TODO can't do input dropout'''
         #x = F.dropout(x, self.opt['input_dropout'], training=self.training)
-        
+ 
+        x = sparse_dropout(x, self.opt['input_dropout'], training=self.training)
+
         x = self.m1(x)
         x = F.relu(x)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = self.m2(x)
         return x
     
-    
     def forward_mix(self, x, target, target_discrete, idx, opt, mixup_layer):
         layer = random.choice(mixup_layer)
         if layer == 0:
             x, target, idx = get_augmented_network_input(self, x, target, target_discrete, idx,opt)
-        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+        x = sparse_dropout(x, self.opt['input_dropout'], training=self.training)
         x = self.m1(x)
         x = F.relu(x)
         if layer == 1:
@@ -324,6 +327,7 @@ class GNNq(nn.Module):
                 x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
 
             '''todo can't do input dropout on sparse layer'''
+            x = sparse_dropout(x, self.opt['input_dropout'], training=self.training)
             #x = F.dropout(x, self.opt['input_dropout'], training=self.training)
     
             x = self.m1.forward_aux(x)
@@ -339,7 +343,7 @@ class GNNq(nn.Module):
         
         else:
         
-            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = sparse_dropout(x, self.opt['input_dropout'], training=self.training)
             x = self.m1.forward_aux(x)
             x = F.relu(x)
             x = F.dropout(x, self.opt['dropout'], training=self.training)
@@ -366,7 +370,7 @@ class GNNp(nn.Module):
         self.m2.reset_parameters()
 
     def forward(self, x):
-        x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+        x = sparse_dropout(x, self.opt['input_dropout'], training=self.training)
         x = self.m1(x)
         x = F.relu(x)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
