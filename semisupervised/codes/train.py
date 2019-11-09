@@ -26,7 +26,7 @@ parser.add_argument('--hidden_dim', type=int, default=128, help='RNN hidden stat
 parser.add_argument('--input_dropout', type=float, default=0.5, help='Input and RNN dropout rate.')
 parser.add_argument('--dropout', type=float, default=0.0, help='Input and RNN dropout rate.')
 parser.add_argument('--optimizer', type=str, default='adam', help='Optional info for the experiment.')
-parser.add_argument('--mixup_alpha', type=float, default=0.1, help='alpha for mixing')
+parser.add_argument('--mixup_alpha', type=float, default=1.0, help='alpha for mixing')
 parser.add_argument('--lr', type=float, default=0.01, help='Applies to SGD and Adagrad.')
 parser.add_argument('--decay', type=float, default=0)
 parser.add_argument('--self_link_weight', type=float, default=1.0)
@@ -221,7 +221,7 @@ def pre_train(epoches):
         consistency_criterion = softmax_kl_loss
     
     for epoch in range(epoches):
-        rand_index = random.randint(0,1)
+        rand_index = 0 #random.randint(0,1)
         if rand_index == 0:
             trainer_gcn.model.train()
             trainer_gcn.optimizer.zero_grad()
@@ -257,7 +257,7 @@ def pre_train(epoches):
             trainer_gcn.model.train()
             trainer_gcn.optimizer.zero_grad()
             loss = trainer_gcn.update_soft(inputs_gcn, target_gcn, idx_train)
-            
+            """
             k = 10
             temp  = torch.zeros([k, target_gcn.shape[0], target_gcn.shape[1]], dtype=target_gcn.dtype)
             temp = temp.cuda()
@@ -265,7 +265,7 @@ def pre_train(epoches):
                 temp[i,:,:] = trainer_gcn.predict_noisy(inputs_gcn)
             target_predict = temp.mean(dim = 0)# trainer_q.predict(inputs_q)
             target_predict = sharpen(target_predict,0.1)
-            target_q[idx_unlabeled] = target_predict[idx_unlabeled]
+            target_gcn[idx_unlabeled] = target_predict[idx_unlabeled]
             
             temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
             idx_unlabeled_subset = idx_unlabeled[temp]
@@ -274,8 +274,8 @@ def pre_train(epoches):
 
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
-            
-            #total_loss = loss
+            """
+            total_loss = loss
             #trainer_gcn.model.train()
             #trainer_gcn.optimizer.zero_grad()
             total_loss.backward()
