@@ -222,8 +222,8 @@ def pre_train(epoches):
     
     for epoch in range(epoches):
         rand_index = random.randint(0,1)
-        if rand_index == 0: ## do the augmented node training
-    	    trainer_gcn.model.train()
+        if rand_index == 0:
+            trainer_gcn.model.train()
             trainer_gcn.optimizer.zero_grad()
             ## get the psudolabels for the unlabeled nodes ##
             #import pdb; pdb.set_trace()
@@ -290,7 +290,7 @@ def pre_train(epoches):
         f1_test = f1_score(target[idx_test].cpu().numpy(), preds.cpu().numpy(), average='macro')
 
         results += [(f1_dev, f1_test)]
-        print(epoch, f1_dev, f1_test)
+        #print(epoch, f1_dev, f1_test)
 
 
         #update_ema_variables(gcn, gcn_ema, opt['ema_decay'], epoch)
