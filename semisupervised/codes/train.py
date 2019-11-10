@@ -22,19 +22,19 @@ import loader
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='data')
 parser.add_argument('--save', type=str, default='exp', help = 'name of the folder where the results are saved')
-parser.add_argument('--hidden_dim', type=int, default=16, help='Hidden dimension.')
+parser.add_argument('--hidden_dim', type=int, default=8, help='Hidden dimension.')
 parser.add_argument('--input_dropout', type=float, default=0.5, help='Input dropout rate.')
 parser.add_argument('--dropout', type=float, default=0.5, help='Dropout rate.')
 parser.add_argument('--optimizer', type=str, default='adam', help='Optimizer.')
-parser.add_argument('--lr', type=float, default=0.01, help='Learning rate.')
+parser.add_argument('--lr', type=float, default=0.005, help='Learning rate.')
 parser.add_argument('--decay', type=float, default=5e-4, help='Weight decay for optimization')
 parser.add_argument('--mixup_alpha', type=float, default=1.0, help='alpha for mixing')
 parser.add_argument('--self_link_weight', type=float, default=1.0, help='Weight of self-links.')
-parser.add_argument('--pre_epoch', type=int, default=200, help='Number of pre-training epochs.')
+parser.add_argument('--pre_epoch', type=int, default=2000, help='Number of pre-training epochs.')
 parser.add_argument('--epoch', type=int, default=200, help='Number of training epochs per iteration.')
 parser.add_argument('--iter', type=int, default=10, help='Number of training iterations.')
 parser.add_argument('--use_gold', type=int, default=1, help='Whether using the ground-truth label of labeled objects, 1 for using, 0 for not using.')
-parser.add_argument('--tau', type=float, default=1.0, help='Annealing temperature in sampling.')
+parser.add_argument('--tau', type=float, default=0.1, help='Annealing temperature in sampling.')
 parser.add_argument('--draw', type=str, default='max', help='Method for drawing object labels, max for max-pooling, smp for sampling.')
 parser.add_argument('--seed', type=int, default=1)
 parser.add_argument('--cuda', type=bool, default=torch.cuda.is_available())
@@ -63,9 +63,9 @@ parser.add_argument('--ema_decay', default=0.999, type=float, metavar='ALPHA',
 parser.add_argument('--consistency_type', default="mse", type=str, metavar='TYPE',
                     choices=['mse', 'kl'],
                     help='consistency loss type to use')
-parser.add_argument('--consistency_rampup_starts', default=30, type=int, metavar='EPOCHS',
+parser.add_argument('--consistency_rampup_starts', default=500, type=int, metavar='EPOCHS',
                     help='epoch at which consistency loss ramp-up starts')
-parser.add_argument('--consistency_rampup_ends', default=30, type=int, metavar='EPOCHS',
+parser.add_argument('--consistency_rampup_ends', default=1000, type=int, metavar='EPOCHS',
                     help='lepoch at which consistency loss ramp-up ends')
 #parser.add_argument('--mixup_sup_alpha', default=0.0, type=float,
 #                    help='for supervised loss, the alpha parameter for the beta distribution from where the mixing lambda is drawn')
