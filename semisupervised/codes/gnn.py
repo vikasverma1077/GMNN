@@ -346,6 +346,15 @@ class GNNq(nn.Module):
         
         else:
         
+            x = F.dropout(x, self.opt['input_dropout'], training=self.training)
+            x = self.m1.forward_aux(x)
+            x = F.relu(x)
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m2.forward_aux(x)
+            return x
+    
+    
+    def forward_plot_tsne(self, x, target=None, train_idx= None, fig_name=''):
             x = x[train_idx]
             target = target[train_idx]
 
@@ -384,10 +393,11 @@ class GNNq(nn.Module):
 
             sns.scatterplot(xset[:,0], xset[:,1], hue = target[idx[0:take]].data.cpu().numpy(), palette = colors[0:target.max().item()+1], legend=None)
 
-            plt.show()
+            plt.savefig(figname)
 
             return x
-
+    
+    
 class GNNp(nn.Module):
     def __init__(self, opt, adj):
         super(GNNp, self).__init__()
