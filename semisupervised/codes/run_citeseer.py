@@ -14,7 +14,7 @@ opt['optimizer'] = 'adam'
 opt['lr'] = 0.01
 opt['decay'] = 5e-4
 opt['self_link_weight'] = 1.0
-opt['pre_epoch'] = 4000
+opt['pre_epoch']  = 2000
 opt['epoch'] = 100
 opt['iter'] = 1
 opt['use_gold'] = 1
@@ -41,7 +41,7 @@ def run(opt):
     opt_ = copy.deepcopy(opt)
     os.system(generate_command(opt_))
 
-for k in range(5):
+for k in range(1):
     seed = k + 1
     print(opt['mixup_alpha'])
     print(opt['mixup_consistency'])

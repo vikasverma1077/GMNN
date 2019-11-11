@@ -14,6 +14,8 @@ import seaborn as sns
 from scipy.linalg import svdvals
 
 from sklearn.manifold import TSNE
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib
 import matplotlib.pyplot as plt
 
@@ -354,7 +356,8 @@ class GNNq(nn.Module):
             return x
     
     
-    def forward_plot_tsne(self, x, target=None, train_idx= None, fig_name=''):
+    def forward_plot_tsne(self, x, target=None, train_idx= None, figname=''):
+            #import pdb; pdb.set_trace()
             x = x[train_idx]
             target = target[train_idx]
 
@@ -394,7 +397,7 @@ class GNNq(nn.Module):
             sns.scatterplot(xset[:,0], xset[:,1], hue = target[idx[0:take]].data.cpu().numpy(), palette = colors[0:target.max().item()+1], legend=None)
 
             plt.savefig(figname)
-
+            plt.close()
             return x
     
     

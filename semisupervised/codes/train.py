@@ -268,7 +268,7 @@ def pre_train(epoches):
         rand_index = random.randint(0,1)
 
         #baseline
-        #rand_index = 1
+        rand_index = 1
 
         if rand_index == 0: ## do the augmented node training
             
@@ -306,7 +306,7 @@ def pre_train(epoches):
             trainer_q.optimizer.zero_grad()
             loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
             
-            """
+            
             k = 10
             temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
             temp = temp.cuda()
@@ -323,9 +323,9 @@ def pre_train(epoches):
 
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
-            """
             
-            total_loss = loss
+            
+            #total_loss = loss
             #trainer_q.model.train()
             #trainer_q.optimizer.zero_grad()
             total_loss.backward()
@@ -342,11 +342,13 @@ def pre_train(epoches):
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test, eval_train=(epoch==3600))
         _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
-        if epoch%400 == 0:
+        if (epoch+1)%200 == 0:
             if rand_index == 0:
                 print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
             else : 
                  print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss.item(), accuracy_train, accuracy_dev, accuracy_test))
+            ### plot the tsne###
+            _ = gnnq.forward_plot_tsne(inputs_q, target, idx_test, figname=str(epoch)+'.png')
         if accuracy_dev > best:
             best = accuracy_dev
             state = dict([('model', copy.deepcopy(trainer_q.model.state_dict())), ('optim', copy.deepcopy(trainer_q.optimizer.state_dict()))])
