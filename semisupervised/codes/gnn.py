@@ -35,7 +35,9 @@ def mixup_gnn_hidden(x, target, train_idx, alpha):
     #lam = lam.reshape(train_idx.shape[0],1)
     #lam = torch.from_numpy(lam).cuda().type(torch.float32)
     permuted_train_idx = train_idx[torch.randperm(train_idx.shape[0])]
-    x[train_idx] = lam*x[train_idx]+ (1-lam)*x[permuted_train_idx]
+    temp1 = x[train_idx]
+    temp2 = x[permuted_train_idx]
+    x[train_idx] = lam*temp1+ (1-lam)*temp2
     #target[train_idx] = lam*target[train_idx]+ (1-lam)*target[permuted_train_idx]
     """
     ### mix the unlabeded nodes###
@@ -531,8 +533,7 @@ class GAT(nn.Module):
                 x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
 
             x = F.dropout(x, self.opt['dropout'], training=self.training)
-            x = F.relu(torch.mm(x, self.conv2.weight))
-            
+            x = F.relu(torch.mm(x, self.conv2.weight)
             return x, target_a, target_b, lam
         
         else:
