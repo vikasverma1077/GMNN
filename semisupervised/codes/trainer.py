@@ -8,6 +8,7 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 from torch.optim import Optimizer
 from losses import *
+from infomax import *
 
 kld_loss = nn.KLDivLoss(reduction='mean').cuda()
 bce_loss = nn.BCELoss().cuda()
@@ -128,8 +129,8 @@ class Trainer(object):
             idx = idx.cuda()
             idx_unlabeled = idx_unlabeled.cuda()
 
-        self.model.train()
-        self.optimizer.zero_grad()
+        #self.model.train()
+        #self.optimizer.zero_grad()
 
         #import pdb ;pdb.set_trace()
         mixup = True
@@ -161,6 +162,32 @@ class Trainer(object):
             #loss_usup = softmax_mse_loss(softmax(logits[idx_unlabeled]), target[idx_unlabeled])/target[idx_unlabeled].shape[0]
         
         return loss, loss_usup
+    
+    
+    
+    def get_max_mi_loss(self, inputs,idx_unlabeled):
+        """loss for maximizing mutual information between the FCN and GCN representations"""
+        if self.opt['cuda']:
+            inputs = inputs.cuda()
+            target = target.cuda()
+            idx = idx.cuda()
+            idx_unlabeled = idx_unlabeled.cuda()
+            
+        x = F.dropout(x, self.opt['input_dropout'], training=self.training)## add same dropout noise to input
+        out_gcn, h_gcn = forward_h_and_output(inputs[idx_unlabeled])
+        out_fcn, h_fcn = forward_aux_h_and_output(inputs[idx_unlabeled])
+        
+        out_gcn = self.model.ff1_layer0(out_gcn)
+        out_fcn = self.model.ff1_layer0(out_fcn)
+        
+        
+        measure = 'JSD'
+        loss = global_global_loss_(out_gcn, out_fcn, measure)
+        
+
+        
+        return loss
+    
 
     def update_soft_mix(self, inputs, target, idx):
         if self.opt['cuda']:

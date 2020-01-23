@@ -46,3 +46,19 @@ class GraphConvolution(nn.Module):
     def forward_aux(self,x):
         m = torch.mm(x, self.weight)
         return m
+    
+class FF(nn.Module):
+    def __init__(self, input_dim, dim):
+        super().__init__()
+        self.block = nn.Sequential(
+            nn.Linear(input_dim, dim),
+            nn.ReLU(),
+            nn.Linear(dim, dim),
+            nn.ReLU(),
+            nn.Linear(dim, dim),
+            nn.ReLU()
+        )
+        self.linear_shortcut = nn.Linear(input_dim, dim)
+
+    def forward(self, x):
+        return self.block(x) + self.linear_shortcut(x)
