@@ -343,10 +343,10 @@ class GNNq(nn.Module):
         else:
         
             x = F.dropout(x, self.opt['input_dropout'], training=self.training)
-            x = self.m1.forward_aux(x)
+            x = self.m3.forward_aux(x)
             x = F.relu(x)
             x = F.dropout(x, self.opt['dropout'], training=self.training)
-            x = self.m2.forward_aux(x)
+            x = self.m4.forward_aux(x)
             return x
 
 class GNNp(nn.Module):
