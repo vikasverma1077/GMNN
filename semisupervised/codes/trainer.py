@@ -7,7 +7,9 @@ from torch.nn import init
 from torch.autograd import Variable
 import torch.nn.functional as F
 from torch.optim import Optimizer
+from losses import *
 
+kld_loss = nn.KLDivLoss(reduction='mean').cuda()
 bce_loss = nn.BCELoss().cuda()
 softmax = nn.Softmax(dim=1).cuda()
 class_criterion = nn.CrossEntropyLoss().cuda()
@@ -143,7 +145,10 @@ class Trainer(object):
             # get the unsupervised mixup loss #
             logits, target_a, target_b, lam = self.model.forward_aux(inputs, target=target, train_idx= idx_unlabeled, mixup_input=False, mixup_hidden = True, mixup_alpha = opt['mixup_alpha'],layer_mix= mixup_layer)
             mixed_target = lam*target_a + (1-lam)*target_b
-            loss_usup = bce_loss(softmax(logits[idx_unlabeled]), mixed_target)
+            #loss_usup = bce_loss(softmax(logits[idx_unlabeled]), mixed_target) # BCE loss
+            #loss_usup = kld_loss(softmax(logits[idx_unlabeled]), mixed_target) # KLD loss
+            #import pdb; pdb.set_trace()
+            loss_usup = softmax_mse_loss(softmax(logits[idx_unlabeled]), mixed_target)/mixed_target.shape[0] # MSE loss
         else:
             logits = self.model.forward_aux(inputs, target=None, train_idx= idx, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
             logits = torch.log_softmax(logits, dim=-1)
@@ -151,8 +156,9 @@ class Trainer(object):
             
 
             logits = self.model.forward_aux(inputs, target=None, train_idx= idx_unlabeled, mixup_input= False, mixup_hidden = False, mixup_alpha = 0.0,layer_mix=None)
-            logits = torch.log_softmax(logits, dim=-1)
+            #logits = torch.log_softmax(logits, dim=-1)
             loss_usup = -torch.mean(torch.sum(target[idx_unlabeled] * logits[idx_unlabeled], dim=-1))
+            #loss_usup = softmax_mse_loss(softmax(logits[idx_unlabeled]), target[idx_unlabeled])/target[idx_unlabeled].shape[0]
         
         return loss, loss_usup
 
@@ -320,7 +326,7 @@ class Trainer(object):
         logits = self.model.forward_aux(inputs) / tau
 
         logits = torch.softmax(logits, dim=-1).detach()
-
+        #logits = logits.detach()
         return logits
     
     
