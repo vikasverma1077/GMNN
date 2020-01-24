@@ -292,7 +292,14 @@ class GNNq(nn.Module):
         
         #opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         #self.m3 = GraphConvolution(opt_, adj)### used for auxiliary network. it will be used a fully-connected layer. for ease of implementation I used GCN layer.
+        
+        ## separate parameters for FCN
+        opt_ = dict([('in', opt['num_feature']), ('out', opt['hidden_dim'])])
+        self.m3 = GraphConvolution(opt_, adj)
 
+        opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
+        self.m4 = GraphConvolution(opt_, adj)
+        
         if opt['cuda']:
             self.cuda()
 
@@ -349,10 +356,10 @@ class GNNq(nn.Module):
         else:
         
             x = F.dropout(x, self.opt['input_dropout'], training=self.training)
-            x = self.m1.forward_aux(x)
+            x = self.m3.forward_aux(x)
             x = F.relu(x)
             x = F.dropout(x, self.opt['dropout'], training=self.training)
-            x = self.m2.forward_aux(x)
+            x = self.m4.forward_aux(x)
             return x
         
     def forward_h_and_output(self, x):
