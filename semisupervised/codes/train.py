@@ -354,10 +354,10 @@ def pre_train(epoches):
         _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
         results += [(accuracy_dev, accuracy_test)]
         if epoch%200 == 0:
-            #if rand_index == 0:
-            #    print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
-            #else : 
-            print ('epoch :{:4d},loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, loss.item(), accuracy_train, accuracy_dev, accuracy_test))
+            if rand_index == 0:
+                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f},mi_loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), mi_loss.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
+            else : 
+                print ('epoch :{:4d},loss:{:.10f}, mi_loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, gcn_loss.item(), mi_loss.item(), accuracy_train, accuracy_dev, accuracy_test))
         if accuracy_dev > best:
             best = accuracy_dev
             state = dict([('model', copy.deepcopy(trainer_q.model.state_dict())), ('optim', copy.deepcopy(trainer_q.optimizer.state_dict()))])
