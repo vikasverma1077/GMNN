@@ -70,7 +70,7 @@ class Trainer(object):
         self.optimizer.step()
         return loss.item()
 
-    def update_soft(self, inputs, target, idx):
+    def update_soft(self, inputs, target, idx, usup_loss = False):
         if self.opt['cuda']:
             inputs = inputs.cuda()
             target = target.cuda()
@@ -78,12 +78,14 @@ class Trainer(object):
 
         #self.model.train()
         #self.optimizer.zero_grad()
-
-        logits= self.model(inputs)
-        logits = torch.log_softmax(logits, dim=-1)
+        if usup_loss ==  False:
+            logits= self.model(inputs)
+            logits = torch.log_softmax(logits, dim=-1)
         #import pdb; pdb.set_trace()
-        loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
-        
+            loss = -torch.mean(torch.sum(target[idx] * logits[idx], dim=-1))
+        else:
+            logits= self.model(inputs)
+            loss = softmax_mse_loss(softmax(logits[idx]), target[idx])/target[idx].shape[0]
         #loss.backward()
         #self.optimizer.step()
         return loss

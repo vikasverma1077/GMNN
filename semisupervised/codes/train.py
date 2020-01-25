@@ -264,7 +264,7 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
-        rand_index =  random.randint(0,1)
+        rand_index =1#  random.randint(0,1)
         if rand_index == 0: ## do the augmented node training
             trainer_q.model.train()
             trainer_q.optimizer.zero_grad()
@@ -304,7 +304,7 @@ def pre_train(epoches):
             trainer_q.optimizer.zero_grad()
             loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
             
-            """
+            
             k = 10
             temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
             temp = temp.cuda()
@@ -317,11 +317,11 @@ def pre_train(epoches):
             temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
             idx_unlabeled_subset = idx_unlabeled[temp]
             
-            loss_usup = trainer_q.update_soft(inputs_q, target_q, idx_unlabeled_subset)
+            loss_usup = trainer_q.update_soft(inputs_q, target_q, idx_unlabeled_subset, usup_loss = False)
 
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
-            """
+            
             
             total_loss = loss
             #trainer_q.model.train()
