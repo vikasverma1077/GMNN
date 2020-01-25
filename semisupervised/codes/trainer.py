@@ -169,16 +169,16 @@ class Trainer(object):
         """loss for maximizing mutual information between the FCN and GCN representations"""
         if self.opt['cuda']:
             inputs = inputs.cuda()
-            target = target.cuda()
-            idx = idx.cuda()
+            #target = target.cuda()
+            #idx = idx.cuda()
             idx_unlabeled = idx_unlabeled.cuda()
             
-        x = F.dropout(x, self.opt['input_dropout'], training=self.training)## add same dropout noise to input
-        out_gcn, h_gcn = forward_h_and_output(inputs[idx_unlabeled])
-        out_fcn, h_fcn = forward_aux_h_and_output(inputs[idx_unlabeled])
-        
-        out_gcn = self.model.ff1_layer0(out_gcn)
-        out_fcn = self.model.ff1_layer0(out_fcn)
+        inputs = F.dropout(inputs, self.opt['input_dropout'], training=self.model.training)## add same dropout noise to input
+        out_gcn, h_gcn = self.model.forward_h_and_output(inputs)
+        out_fcn, h_fcn = self.model.forward_aux_h_and_output(inputs)
+        #import pdb; pdb.set_trace()
+        out_gcn = self.model.ff1_layer0(h_gcn[idx_unlabeled])
+        out_fcn = self.model.ff2_layer0(h_fcn[idx_unlabeled])
         
         
         measure = 'JSD'
