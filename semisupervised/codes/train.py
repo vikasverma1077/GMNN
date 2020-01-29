@@ -168,6 +168,7 @@ if opt['cuda']:
     target_p = target_p.cuda()
 
 gnnq = GNNq(opt, adj)
+#import pdb; pdb.set_trace()
 #gnnq = MLP(opt)
 #gnnq = GNN_mix(opt, adj)
 trainer_q = Trainer(opt, gnnq)
@@ -176,7 +177,7 @@ trainer_q = Trainer(opt, gnnq)
 gnnq_ema = GNNq(opt, adj)
 
 for ema_param, param in zip(gnnq_ema.parameters(), gnnq.parameters()):
-            ema_param.data= param.data
+            ema_param.data= param.data.clone()
 
 for param in gnnq_ema.parameters():
             param.detach_()
@@ -264,18 +265,17 @@ def pre_train(epoches):
         #loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #import pdb; pdb.set_trace()
         ### create mix of feature and labels
-        trainer_q.model.train()
-        trainer_q.optimizer.zero_grad()
+        #trainer_q.model.train()
+        #trainer_q.optimizer.zero_grad()
         
-        rand_index =  random.randint(0,1)
+        rand_index = 0#random.randint(0,1)
+        #print(rand_index)
         if rand_index == 0: ## do the augmented node training
-        
-        
-            #trainer_q.model.train()
-            #trainer_q.optimizer.zero_grad()
+            trainer_q.model.train()
+            trainer_q.optimizer.zero_grad()
             ## get the psudolabels for the unlabeled nodes ##
             #import pdb; pdb.set_trace()
-            
+             
             ## compute FCN loss###
             k = 10
             temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
@@ -287,30 +287,44 @@ def pre_train(epoches):
             target_predict = sharpen(target_predict,0.1)
             #if epoch == 500:
             #    print (target_predict)
-            target_q[idx_unlabeled] = target_predict[idx_unlabeled]
+            target_q_local = target_q.clone()
+            target_q_local[idx_unlabeled] = target_predict[idx_unlabeled]
             #inputs_q_new, target_q_new, idx_train_new = get_augmented_network_input(inputs_q, target_q,idx_train,opt, net_file, net_temp_file) ## get the augmented nodes in the input space
             #idx_train_new = 
             #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features
             temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
             idx_unlabeled_subset = idx_unlabeled[temp]
-            loss , loss_usup= trainer_q.update_soft_aux(inputs_q, target_q, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[1])## for augmented nodes
+            loss , loss_usup= trainer_q.update_soft_aux(inputs_q, target_q_local, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[1])## for augmented nodes
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
-            
+            #import pdb; pdb.set_trace()
             fcn_loss = loss + mixup_consistency*loss_usup
+            #mi_loss = trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled)#, detach_gcn=True)
+            mi_loss = 0
+            total_loss = fcn_loss #+ 0.1*mi_loss
+            total_loss.backward()
+            trainer_q.optimizer.step()   
+            #loss = 0 
+            #loss_usup = 0
+            #print('fcn'+str(fcn_loss.item()))
         #loss_gnn = trainer_q.update_soft(inputs_q, target_q, idx_train)
         #total_loss  =  total_loss + 2.0*loss_gnn
-        #trainer_q.model.train()
+        #trainer_iq.model.train()
         
         #trainer_q.optimizer.zero_grad()
         #total_loss.backward()
         #trainer_q.optimizer.step()
 
-        else:
+        if rand_index == 1:
             trainer_q.model.train()
             trainer_q.optimizer.zero_grad()
             ## compute GCN loss
             gcn_loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
-        
+            #import pdb; pdb.set_trace()
+            mi_loss = trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled)#, detach_fcn=True)
+            total_loss = gcn_loss + 0.1*mi_loss
+            total_loss.backward()
+            trainer_q.optimizer.step()
+            #print('gcn'+str(gcn_loss.item()))
             """
             k = 10
             temp  = torch.zeros([k, target_q.shape[0], target_q.shape[1]], dtype=target_q.dtype)
@@ -329,7 +343,18 @@ def pre_train(epoches):
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
         """
-        
+        """
+        trainer_q.model.train()
+        trainer_q.optimizer.zero_grad()
+        if rand_index == 0:
+            mi_loss = 0.001*trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled, detach_gcn=True)
+        elif rand_index ==1 :
+            mi_loss = 0.001*trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled, detach_fcn=True)
+        mi_loss.backward()
+        trainer_q.optimizer.step()
+        """
+
+        """
         ## compute MI loss ### 
         mi_loss = trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled)
         
@@ -337,10 +362,11 @@ def pre_train(epoches):
             total_loss = fcn_loss + mi_loss
         else: 
             total_loss = gcn_loss + mi_loss
+        """
         #trainer_q.model.train()
         #trainer_q.optimizer.zero_grad()
-        total_loss.backward()
-        trainer_q.optimizer.step()
+        #total_loss.backward()
+        #trainer_q.optimizer.step()
         #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
         #loss_aux = loss
         #loss, loss_aux = trainer_q.update_soft_aux(inputs_q, target_q, idx_train, epoch, opt)## for auxiliary net with shared parameters
@@ -348,25 +374,25 @@ def pre_train(epoches):
         #trainer_q.model.adj = adj
         #trainer_q.model.m1.adj = adj
         #trainer_q.model.m2.adj = adj
+        
         _, preds, accuracy_train = trainer_q.evaluate(inputs_q, target, idx_train) ## target_new : for augmented nodes
         _, preds, accuracy_dev = trainer_q.evaluate(inputs_q, target, idx_dev)
         _, preds, accuracy_test = trainer_q.evaluate(inputs_q, target, idx_test)
         _, preds, accuracy_test_ema = trainer_q_ema.evaluate(inputs_q, target, idx_test)
+        
         results += [(accuracy_dev, accuracy_test)]
         if epoch%200 == 0:
             if rand_index == 0:
-                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f},mi_loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), mi_loss.item(), accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
+                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f},mi_loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), mi_loss, accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
             else : 
-                print ('epoch :{:4d},loss:{:.10f}, mi_loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, gcn_loss.item(), mi_loss.item(), accuracy_train, accuracy_dev, accuracy_test))
+                print ('epoch :{:4d},loss:{:.10f}, mi_loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, gcn_loss.item(),mi_loss, accuracy_train, accuracy_dev, accuracy_test))
         if accuracy_dev > best:
             best = accuracy_dev
             state = dict([('model', copy.deepcopy(trainer_q.model.state_dict())), ('optim', copy.deepcopy(trainer_q.optimizer.state_dict()))])
     #trainer_q.model.load_state_dict(state['model'])
     #trainer_q.optimizer.load_state_dict(state['optim'])
-        
+            
         update_ema_variables(gnnq, gnnq_ema, opt['ema_decay'], epoch)
-    
-        
     return results
 
 def train_p(epoches):

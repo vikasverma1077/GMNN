@@ -59,7 +59,7 @@ class GNN_mix(nn.Module):
         #self.linear_m1_2 = nn.Linear(50,opt['num_class'] )
         
         opt_ = dict([('in', 1000), ('out', 500)])
-        self.m2 = GraphConvolution(opt_, adj)
+        self.m2  = GraphConvolution(opt_, adj)
         
         #self.linear_m2_1 = nn.Linear(50,20)
         #self.linear_m2_2 = nn.Linear(20,opt['num_class'] )
@@ -277,7 +277,7 @@ class GNNq(nn.Module):
         opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         self.m2 = GraphConvolution(opt_, adj)
         
-        
+                
         ### layers for FCN###
         opt_ = dict([('in', opt['num_feature']), ('out', opt['hidden_dim'])])
         self.m3 = GraphConvolution(opt_, adj)
@@ -285,20 +285,12 @@ class GNNq(nn.Module):
         opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         self.m4 = GraphConvolution(opt_, adj)
         
-        
         ## layers for MI estimation and maximization ###
         self.ff1_layer0 = FF(opt['hidden_dim'], opt['hidden_dim'])
         self.ff2_layer0 = FF(opt['hidden_dim'], opt['hidden_dim'])
         
         #opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         #self.m3 = GraphConvolution(opt_, adj)### used for auxiliary network. it will be used a fully-connected layer. for ease of implementation I used GCN layer.
-        
-        ## separate parameters for FCN
-        opt_ = dict([('in', opt['num_feature']), ('out', opt['hidden_dim'])])
-        self.m3 = GraphConvolution(opt_, adj)
-
-        opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
-        self.m4 = GraphConvolution(opt_, adj)
         
         if opt['cuda']:
             self.cuda()
@@ -309,10 +301,10 @@ class GNNq(nn.Module):
 
     def forward(self, x):
         x = F.dropout(x, self.opt['input_dropout'], training=self.training)
-        x = self.m1(x)
+        x, _ = self.m1(x)
         x = F.relu(x)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
-        x = self.m2(x)
+        x = self.m2.forward_aux(x)
         return x
     
     
@@ -343,13 +335,13 @@ class GNNq(nn.Module):
 
             x = F.dropout(x, self.opt['input_dropout'], training=self.training)
     
-            x = self.m3.forward_aux(x)
+            x , _ = self.m1.forward(x)
             x = F.relu(x)
             if layer_mix == 1:
                 x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
 
             x = F.dropout(x, self.opt['dropout'], training=self.training)
-            x = self.m4.forward_aux(x)
+            x = self.m2.forward_aux(x)
             
             return x, target_a, target_b, lam
         
@@ -364,21 +356,21 @@ class GNNq(nn.Module):
         
     def forward_h_and_output(self, x):
         """ return the h and output from the GCN on the clean input"""
-        h = self.m1(x)
-        h = F.relu(h)
-        out = self.m2(h)
-        return out, h
+        h_graph, h = self.m1(x)
+        h_graph_relu = F.relu(h_graph)
+        out_graph, out = self.m2(h_graph_relu)
+        return out, h_graph_relu
     
     
     
     def forward_aux_h_and_output(self, x):
         """ return the h and output from the FCN on the clean input"""
         #x = F.dropout(x, self.opt['input_dropout'], training=self.training)
-        h = self.m1.forward_aux(x)
-        h = F.relu(h)
+        h = self.m3.forward_aux(x)
+        h_relu = F.relu(h)
         #x = F.dropout(x, self.opt['dropout'], training=self.training)
-        out = self.m2.forward_aux(h)
-        return out, h
+        out = self.m4.forward_aux(h_relu)
+        return out, h_relu
 
 class GNNp(nn.Module):
     def __init__(self, opt, adj):

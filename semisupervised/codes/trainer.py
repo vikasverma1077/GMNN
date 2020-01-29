@@ -35,6 +35,7 @@ def change_lr(optimizer, new_lr):
     for param_group in optimizer.param_groups:
         param_group['lr'] = new_lr
 
+mse_loss = nn.MSELoss().cuda()
 bce_loss = nn.BCELoss().cuda()
 softmax = nn.Softmax(dim=1).cuda()
 
@@ -48,6 +49,7 @@ class Trainer(object):
         if opt['cuda']:
             self.criterion.cuda()
         if  self.ema == True:
+            #import pdb; pdb.set_trace()
             self.optimizer = get_optimizer(self.opt['optimizer'], self.parameters, self.opt['lr'], self.opt['decay'])
 
     def reset(self):
@@ -164,8 +166,8 @@ class Trainer(object):
         return loss, loss_usup
     
     
-    
-    def get_max_mi_loss(self, inputs,idx_unlabeled):
+
+    def get_max_mi_loss(self, inputs,idx_unlabeled, detach_fcn = False, detach_gcn= False):
         """loss for maximizing mutual information between the FCN and GCN representations"""
         if self.opt['cuda']:
             inputs = inputs.cuda()
@@ -177,13 +179,16 @@ class Trainer(object):
         out_gcn, h_gcn = self.model.forward_h_and_output(inputs)
         out_fcn, h_fcn = self.model.forward_aux_h_and_output(inputs)
         #import pdb; pdb.set_trace()
-        out_gcn = self.model.ff1_layer0(h_gcn[idx_unlabeled])
-        out_fcn = self.model.ff2_layer0(h_fcn[idx_unlabeled])
+        mi_gcn = self.model.ff1_layer0(h_gcn)#[idx_unlabeled])
+        mi_fcn = self.model.ff2_layer0(h_fcn)#[idx_unlabeled])
         
-        
+        if detach_fcn == True:
+            mi_fcn = mi_fcn.detach()
+        if detach_gcn == True:
+            mi_gcn = mi_gcn.detach()
         measure = 'JSD'
-        loss = global_global_loss_(out_gcn, out_fcn, measure)
-        
+        loss = global_global_loss_(mi_gcn, mi_fcn, measure)
+        #loss = mse_loss(mi_gcn, mi_fcn)
 
         
         return loss
@@ -335,7 +340,7 @@ class Trainer(object):
         if self.opt['cuda']:
             inputs = inputs.cuda()
 
-        #self.model.eval()
+        self.model.train()
 
         logits = self.model(inputs) / tau
 

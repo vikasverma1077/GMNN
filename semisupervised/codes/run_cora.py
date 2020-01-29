@@ -29,7 +29,7 @@ opt['ema_decay'] = 0.999
 opt['consistency_type'] = "mse"
 opt['consistency_rampup_starts'] = 500
 opt['consistency_rampup_ends'] = 1000
-opt['mixup_consistency'] = 100.0
+opt['mixup_consistency'] = 10.0
 
 
 
@@ -44,7 +44,7 @@ def run(opt):
     os.system(generate_command(opt_))
 
 
-for k in range(1):
+for k in range(5):
     seed = k + 1
     opt['seed'] = seed
 
