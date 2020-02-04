@@ -29,7 +29,7 @@ opt['ema_decay'] = 0.999
 opt['consistency_type'] = "mse"
 opt['consistency_rampup_starts'] = 500
 opt['consistency_rampup_ends'] = 1000
-opt['mixup_consistency'] =10.0
+opt['mixup_consistency'] =200.0
 
 def generate_command(opt):
     cmd = 'python3 train.py'
