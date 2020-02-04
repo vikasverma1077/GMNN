@@ -53,12 +53,12 @@ class FF(nn.Module):
         self.block = nn.Sequential(
             nn.Linear(input_dim, dim),
             nn.ReLU(),
-            nn.Linear(dim, dim),
-            nn.ReLU(),
-            nn.Linear(dim, dim),
-            nn.ReLU()
+            #nn.Linear(dim, dim),
+            #nn.ReLU(),
+            #nn.Linear(dim, dim),
+            #nn.ReLU()
         )
         self.linear_shortcut = nn.Linear(input_dim, dim)
 
     def forward(self, x):
-        return self.block(x) + self.linear_shortcut(x)
+        return self.block(x) #+ self.linear_shortcut(x)

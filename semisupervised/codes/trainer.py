@@ -167,7 +167,7 @@ class Trainer(object):
     
     
 
-    def get_max_mi_loss(self, inputs,idx_unlabeled, detach_fcn = False, detach_gcn= False):
+    def get_max_mi_loss(self, inputs,idx_unlabeled,random_layer = False, detach_fcn = False, detach_gcn= False):
         """loss for maximizing mutual information between the FCN and GCN representations"""
         if self.opt['cuda']:
             inputs = inputs.cuda()
@@ -179,17 +179,30 @@ class Trainer(object):
         out_gcn, h_gcn = self.model.forward_h_and_output(inputs)
         out_fcn, h_fcn = self.model.forward_aux_h_and_output(inputs)
         #import pdb; pdb.set_trace()
-        mi_gcn = self.model.ff1_layer0(h_gcn)#[idx_unlabeled])
-        mi_fcn = self.model.ff2_layer0(h_fcn)#[idx_unlabeled])
+        if random_layer == False:
+            mi_gcn = self.model.ff1_layer0(h_gcn)#[idx_unlabeled])
+            mi_fcn = self.model.ff2_layer0(h_fcn)#[idx_unlabeled])
+
+        if random_layer == True:
+            rand_number =  random.randint(0,1)
+            #if rand_number==0:
+            mi_gcn0 = self.model.ff1_layer0(h_gcn)#[idx_unlabeled])
+            mi_fcn0 = self.model.ff2_layer0(h_fcn)#[idx_unlabeled])
+            #else:
+            mi_gcn1 = self.model.ff1_layer1(out_gcn)#[idx_unlabeled])
+            mi_fcn1 = self.model.ff2_layer1(out_fcn)#[idx_unlabeled])
         
         if detach_fcn == True:
-            mi_fcn = mi_fcn.detach()
+            mi_fcn0 = mi_fcn0.detach()
+            mi_fcn1 = mi_fcn1.detach()
         if detach_gcn == True:
-            mi_gcn = mi_gcn.detach()
+            mi_gcn0 = mi_gcn0.detach()
+            mi_gcn1 = mi_gcn1.detach()
         measure = 'JSD'
-        loss = global_global_loss_(mi_gcn, mi_fcn, measure)
+        loss0 = global_global_loss_(mi_gcn0, mi_fcn0, measure)
+        loss1 = global_global_loss_(mi_gcn1, mi_fcn1, measure)
         #loss = mse_loss(mi_gcn, mi_fcn)
-
+        loss = (loss0+loss1)/2
         
         return loss
     

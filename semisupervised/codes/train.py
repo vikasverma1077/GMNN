@@ -268,7 +268,7 @@ def pre_train(epoches):
         #trainer_q.model.train()
         #trainer_q.optimizer.zero_grad()
         
-        rand_index = 0#random.randint(0,1)
+        rand_index = 0# random.randint(0,1)
         #print(rand_index)
         if rand_index == 0: ## do the augmented node training
             trainer_q.model.train()
@@ -287,22 +287,22 @@ def pre_train(epoches):
             target_predict = sharpen(target_predict,0.1)
             #if epoch == 500:
             #    print (target_predict)
-            target_q_local = target_q.clone()
-            target_q_local[idx_unlabeled] = target_predict[idx_unlabeled]
+            #target_q_local = target_q.clone()
+            target_q[idx_unlabeled] = target_predict[idx_unlabeled]
             #inputs_q_new, target_q_new, idx_train_new = get_augmented_network_input(inputs_q, target_q,idx_train,opt, net_file, net_temp_file) ## get the augmented nodes in the input space
             #idx_train_new = 
             #loss = trainer_q.update_soft_mix(inputs_q, target_q, idx_train)## for mixing features
             temp = torch.randint(0, idx_unlabeled.shape[0], size=(idx_train.shape[0],))## index of the samples chosen from idx_unlabeled
             idx_unlabeled_subset = idx_unlabeled[temp]
-            loss , loss_usup= trainer_q.update_soft_aux(inputs_q, target_q_local, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[1])## for augmented nodes
+            loss, loss_usup = trainer_q.update_soft_aux(inputs_q, target_q, target, idx_train, idx_unlabeled_subset, adj,  opt, mixup_layer =[1])## for augmented nodes
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             #import pdb; pdb.set_trace()
             fcn_loss = loss + mixup_consistency*loss_usup
-            #mi_loss = trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled)#, detach_gcn=True)
-            mi_loss = 0
-            total_loss = fcn_loss #+ 0.1*mi_loss
-            total_loss.backward()
-            trainer_q.optimizer.step()   
+            #mi_loss = trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled, random_layer = True, detach_gcn=True)
+            #mi_loss = 0
+            total_loss = fcn_loss #+ 1*mi_loss
+            #total_loss.backward()
+            #trainer_q.optimizer.step()   
             #loss = 0 
             #loss_usup = 0
             #print('fcn'+str(fcn_loss.item()))
@@ -314,16 +314,16 @@ def pre_train(epoches):
         #total_loss.backward()
         #trainer_q.optimizer.step()
 
-        if rand_index == 1:
-            trainer_q.model.train()
-            trainer_q.optimizer.zero_grad()
+        if rand_index == 0:
+            #trainer_q.model.train()
+            #trainer_q.optimizer.zero_grad()
             ## compute GCN loss
             gcn_loss = trainer_q.update_soft(inputs_q, target_q, idx_train)
             #import pdb; pdb.set_trace()
-            mi_loss = trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled)#, detach_fcn=True)
-            total_loss = gcn_loss + 0.1*mi_loss
-            total_loss.backward()
-            trainer_q.optimizer.step()
+            #mi_loss = trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled, random_layer = True, detach_fcn=True)
+            total_loss = gcn_loss #+ 1*mi_loss
+            #total_loss.backward()
+            #trainer_q.optimizer.step()
             #print('gcn'+str(gcn_loss.item()))
             """
             k = 10
@@ -342,7 +342,7 @@ def pre_train(epoches):
     
             mixup_consistency = get_current_consistency_weight(opt['mixup_consistency'], epoch)
             total_loss = loss + mixup_consistency*loss_usup
-        """
+            """
         """
         trainer_q.model.train()
         trainer_q.optimizer.zero_grad()
@@ -354,19 +354,21 @@ def pre_train(epoches):
         trainer_q.optimizer.step()
         """
 
-        """
-        ## compute MI loss ### 
-        mi_loss = trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled)
         
+        ## compute MI loss ### 
+        mi_loss = trainer_q.get_max_mi_loss(inputs_q,idx_unlabeled, random_layer = True)
+        """
         if rand_index == 0:
             total_loss = fcn_loss + mi_loss
         else: 
             total_loss = gcn_loss + mi_loss
         """
+        #mi_loss = 0
         #trainer_q.model.train()
         #trainer_q.optimizer.zero_grad()
-        #total_loss.backward()
-        #trainer_q.optimizer.step()
+        total_loss = fcn_loss+ gcn_loss +mi_loss
+        total_loss.backward()
+        trainer_q.optimizer.step()
         #loss = trainer_q.update_soft_aux(inputs_q, target_q, idx_train)## for training aux networks
         #loss_aux = loss
         #loss, loss_aux = trainer_q.update_soft_aux(inputs_q, target_q, idx_train, epoch, opt)## for auxiliary net with shared parameters
@@ -383,7 +385,7 @@ def pre_train(epoches):
         results += [(accuracy_dev, accuracy_test)]
         if epoch%200 == 0:
             if rand_index == 0:
-                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f},mi_loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup.item(), mi_loss, accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
+                print ('epoch :{:4d},loss:{:.10f},loss_usup:{:.10f},mi_loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}, test_acc_ema:{:.3f}'.format(epoch, loss.item(),loss_usup, mi_loss, accuracy_train, accuracy_dev, accuracy_test, accuracy_test_ema))
             else : 
                 print ('epoch :{:4d},loss:{:.10f}, mi_loss:{:.10f}, train_acc:{:.3f}, dev_acc:{:.3f}, test_acc:{:.3f}'.format(epoch, gcn_loss.item(),mi_loss, accuracy_train, accuracy_dev, accuracy_test))
         if accuracy_dev > best:

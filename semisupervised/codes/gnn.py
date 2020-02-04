@@ -288,6 +288,9 @@ class GNNq(nn.Module):
         ## layers for MI estimation and maximization ###
         self.ff1_layer0 = FF(opt['hidden_dim'], opt['hidden_dim'])
         self.ff2_layer0 = FF(opt['hidden_dim'], opt['hidden_dim'])
+
+        self.ff1_layer1 = FF(opt['num_class'], opt['num_class'])
+        self.ff2_layer1 = FF(opt['num_class'], opt['num_class'])
         
         #opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         #self.m3 = GraphConvolution(opt_, adj)### used for auxiliary network. it will be used a fully-connected layer. for ease of implementation I used GCN layer.
@@ -304,7 +307,7 @@ class GNNq(nn.Module):
         x, _ = self.m1(x)
         x = F.relu(x)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
-        x = self.m2.forward_aux(x)
+        x, _ = self.m2(x)
         return x
     
     
@@ -335,13 +338,13 @@ class GNNq(nn.Module):
 
             x = F.dropout(x, self.opt['input_dropout'], training=self.training)
     
-            x , _ = self.m1.forward(x)
-            x = F.relu(x)
+            x  = self.m3.forward_aux(x)
+            #x = F.relu(x)
             if layer_mix == 1:
                 x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
-
+            x = F.relu(x)
             x = F.dropout(x, self.opt['dropout'], training=self.training)
-            x = self.m2.forward_aux(x)
+            x = self.m4.forward_aux(x)
             
             return x, target_a, target_b, lam
         
@@ -359,7 +362,7 @@ class GNNq(nn.Module):
         h_graph, h = self.m1(x)
         h_graph_relu = F.relu(h_graph)
         out_graph, out = self.m2(h_graph_relu)
-        return out, h_graph_relu
+        return out_graph, h_graph_relu
     
     
     

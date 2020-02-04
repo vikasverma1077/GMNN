@@ -7,7 +7,7 @@ import datetime
 opt = dict()
 
 opt['dataset'] = '../data/cora'
-opt['hidden_dim'] = 16
+opt['hidden_dim'] = 64
 opt['input_dropout'] = 0.5
 opt['dropout'] = 0
 opt['optimizer'] = 'adam'
@@ -29,7 +29,7 @@ opt['ema_decay'] = 0.999
 opt['consistency_type'] = "mse"
 opt['consistency_rampup_starts'] = 500
 opt['consistency_rampup_ends'] = 1000
-opt['mixup_consistency'] = 10.0
+opt['mixup_consistency'] = 100.0
 
 
 
@@ -44,7 +44,7 @@ def run(opt):
     os.system(generate_command(opt_))
 
 
-for k in range(5):
+for k in range(3):
     seed = k + 1
     opt['seed'] = seed
 
