@@ -11,7 +11,7 @@ opt['hidden_dim'] = 16
 opt['input_dropout'] = 0.5
 opt['dropout'] = 0
 opt['optimizer'] = 'adam'
-opt['lr'] = 0.01
+opt['lr'] = 0.001
 opt['decay'] = 5e-4
 opt['self_link_weight'] = 1.0
 opt['pre_epoch'] = 2000
@@ -29,7 +29,7 @@ opt['ema_decay'] = 0.999
 opt['consistency_type'] = "mse"
 opt['consistency_rampup_starts'] = 500
 opt['consistency_rampup_ends'] = 1000
-opt['mixup_consistency'] = 10.0
+opt['mixup_consistency'] = 1.0
 
 
 
@@ -48,8 +48,8 @@ for k in range(5):
     seed = k + 1
     opt['seed'] = seed
 
-    print('mixup_alpha_'+opt['mixup_alpha'])
-    print('mixup_consistency_'+opt['mixup_consistency'])
+    print('mixup_alpha_'+str(opt['mixup_alpha']))
+    print('mixup_consistency_'+str(opt['mixup_consistency']))
 
     run(opt)
     

@@ -312,7 +312,7 @@ class Trainer(object):
 
         #self.model.eval()
 
-        logits = self.model(inputs) / tau
+        logits = self.model.forward_aux(inputs) / tau
 
         logits = torch.softmax(logits, dim=-1).detach()
 

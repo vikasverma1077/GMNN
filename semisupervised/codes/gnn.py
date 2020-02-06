@@ -271,11 +271,14 @@ class GNNq(nn.Module):
         self.opt = opt
         self.adj = adj
 
-        opt_ = dict([('in', opt['num_feature']), ('out', opt['hidden_dim'])])
+        opt_ = dict([('in', opt['num_feature']), ('out', 32)])
         self.m1 = GraphConvolution(opt_, adj)
-
-        opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
+        
+        opt_ = dict([('in', 32), ('out', opt['hidden_dim'])])
         self.m2 = GraphConvolution(opt_, adj)
+        
+        opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
+        self.m3 = GraphConvolution(opt_, adj)
         
         #opt_ = dict([('in', opt['hidden_dim']), ('out', opt['num_class'])])
         #self.m3 = GraphConvolution(opt_, adj)### used for auxiliary network. it will be used a fully-connected layer. for ease of implementation I used GCN layer.
@@ -286,13 +289,17 @@ class GNNq(nn.Module):
     def reset(self):
         self.m1.reset_parameters()
         self.m2.reset_parameters()
-
+        self.m3.reset_parameters()
     def forward(self, x):
         x = F.dropout(x, self.opt['input_dropout'], training=self.training)
         x = self.m1(x)
         x = F.relu(x)
         x = F.dropout(x, self.opt['dropout'], training=self.training)
         x = self.m2(x)
+        x = F.relu(x)
+        x = F.dropout(x, self.opt['dropout'], training=self.training)
+        x = self.m3(x)
+        
         return x
     
     
@@ -331,6 +338,14 @@ class GNNq(nn.Module):
             x = F.dropout(x, self.opt['dropout'], training=self.training)
             x = self.m2.forward_aux(x)
             
+            x = F.relu(x)
+
+            if layer_mix == 2:
+                x, target_a, target_b, lam = mixup_gnn_hidden(x, target, train_idx, mixup_alpha)
+
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m3.forward_aux(x)
+        
             return x, target_a, target_b, lam
         
         else:
@@ -340,6 +355,10 @@ class GNNq(nn.Module):
             x = F.relu(x)
             x = F.dropout(x, self.opt['dropout'], training=self.training)
             x = self.m2.forward_aux(x)
+            x = F.relu(x)
+            x = F.dropout(x, self.opt['dropout'], training=self.training)
+            x = self.m3.forward_aux(x)
+        
             return x
 
 class GNNp(nn.Module):
